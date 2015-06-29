@@ -22,13 +22,21 @@ struct spt_MSG{   //跟会员其实是一样的，但是还是先分开了
 	string nation;
 	char zip[5];
 };
-struct server_MSG{
+
+//服务记录
+//该类由于需要通过网络发送
+//因此需要实现char* Serialization()序列化函数
+
+class ServerRecord{
+private:
 	int Y,M,D;  //提供者输入的那个时间，就是服务的时间
 	int yy,mm,dd,h,m,s;  //提交这个服务表单的时间
 	string mem_name;
 	string mem_id[9];
 	string server_id[6];
 	double price;
+public:
+	char* Serialization();
 };
 
 
