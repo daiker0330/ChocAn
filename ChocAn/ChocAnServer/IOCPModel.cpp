@@ -2,7 +2,6 @@
 #include "stdafx.h"
 
 
-
 #define WORKER_THREADS_PER_PROCESSOR 2
 // 同时投递的Accept请求的数量
 #define MAX_POST_ACCEPT              10
@@ -21,7 +20,7 @@
 
 using namespace std;
 
-Network::Network(void) :
+CIOCPModel::CIOCPModel(void) :
 m_nThreads(0),
 m_hShutdownEvent(NULL),
 m_hIOCompletionPort(NULL),
@@ -33,13 +32,13 @@ m_pListenContext(NULL)
 	m_strIP = "127.0.0.1";
 }
 
-Network::~Network(void)
+CIOCPModel::~CIOCPModel(void)
 {
 	// 确保资源彻底释放
 	this->Stop();
 }
 
-void Network::SetIPAddress()
+void CIOCPModel::SetIPAddress()
 {
 	printf("Please Enter the IP address( l = localhost ):\n");
 	string ip_add;
@@ -58,10 +57,10 @@ void Network::SetIPAddress()
 
 ///////////////////////////////////////////////////////////////////
 // 工作者线程：  为IOCP请求服务的工作者线程
-DWORD WINAPI Network::_WorkerThread(LPVOID lpParam)
+DWORD WINAPI CIOCPModel::_WorkerThread(LPVOID lpParam)
 {
 	THREADPARAMS_WORKER* pParam = (THREADPARAMS_WORKER*)lpParam;
-	Network* pIOCPModel = (Network*)pParam->pIOCPModel;
+	CIOCPModel* pIOCPModel = (CIOCPModel*)pParam->pIOCPModel;
 	int nThreadNo = (int)pParam->nThreadNo;
 
 	//printf("thread start up, ID: %d.", nThreadNo);
@@ -176,7 +175,7 @@ DWORD WINAPI Network::_WorkerThread(LPVOID lpParam)
 
 ////////////////////////////////////////////////////////////////////
 // 初始化WinSock 2.2
-bool Network::LoadSocketLib()
+bool CIOCPModel::LoadSocketLib()
 {
 	WSADATA wsaData;
 	int nResult;
@@ -193,7 +192,7 @@ bool Network::LoadSocketLib()
 
 //////////////////////////////////////////////////////////////////
 //	启动服务器
-bool Network::Start()
+bool CIOCPModel::Start()
 {
 	// 初始化线程互斥量
 	InitializeCriticalSection(&m_csContextList);
@@ -231,7 +230,7 @@ bool Network::Start()
 
 ////////////////////////////////////////////////////////////////////
 //	开始发送系统退出消息，退出完成端口和线程资源
-void Network::Stop()
+void CIOCPModel::Stop()
 {
 	if (m_pListenContext != NULL && m_pListenContext->m_Socket != INVALID_SOCKET)
 	{
@@ -259,7 +258,7 @@ void Network::Stop()
 
 ////////////////////////////////
 // 初始化完成端口
-bool Network::_InitializeIOCP()
+bool CIOCPModel::_InitializeIOCP()
 {
 	// 建立第一个完成端口
 	m_hIOCompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
@@ -293,7 +292,7 @@ bool Network::_InitializeIOCP()
 
 /////////////////////////////////////////////////////////////////
 // 初始化Socket
-bool Network::_InitializeListenSocket()
+bool CIOCPModel::_InitializeListenSocket()
 {
 	// AcceptEx 和 GetAcceptExSockaddrs 的GUID，用于导出函数指针
 	GUID GuidAcceptEx = WSAID_ACCEPTEX;
@@ -420,7 +419,7 @@ bool Network::_InitializeListenSocket()
 
 ////////////////////////////////////////////////////////////
 //	最后释放掉所有资源
-void Network::_DeInitialize()
+void CIOCPModel::_DeInitialize()
 {
 	// 删除客户端列表的互斥量
 	DeleteCriticalSection(&m_csContextList);
@@ -456,7 +455,7 @@ void Network::_DeInitialize()
 
 //////////////////////////////////////////////////////////////////
 // 投递Accept请求
-bool Network::_PostAccept(PER_IO_CONTEXT* pAcceptIoContext)
+bool CIOCPModel::_PostAccept(PER_IO_CONTEXT* pAcceptIoContext)
 {
 	//ASSERT(INVALID_SOCKET != m_pListenContext->m_Socket);
 
@@ -490,7 +489,7 @@ bool Network::_PostAccept(PER_IO_CONTEXT* pAcceptIoContext)
 
 ////////////////////////////////////////////////////////////
 // 在有客户端连入的时候，进行处理
-bool Network::_DoAccpet(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoContext)
+bool CIOCPModel::_DoAccpet(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoContext)
 {
 	SOCKADDR_IN* ClientAddr = NULL;
 	SOCKADDR_IN* LocalAddr = NULL;
@@ -551,7 +550,7 @@ bool Network::_DoAccpet(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoC
 
 ////////////////////////////////////////////////////////////////////
 // 投递接收数据请求
-bool Network::_PostRecv(PER_IO_CONTEXT* pIoContext)
+bool CIOCPModel::_PostRecv(PER_IO_CONTEXT* pIoContext)
 {
 	// 初始化变量
 	DWORD dwFlags = 0;
@@ -576,7 +575,7 @@ bool Network::_PostRecv(PER_IO_CONTEXT* pIoContext)
 
 /////////////////////////////////////////////////////////////////
 // 在有接收的数据到达的时候，进行处理
-bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoContext)
+bool CIOCPModel::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoContext)
 {
 	// 先把上一次的数据显示出现，然后就重置状态，发出下一个Recv请求
 	SOCKADDR_IN* ClientAddr = &pSocketContext->m_ClientAddr;
@@ -587,61 +586,75 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 
 	printf("receive  %s:%d message:%s\n", inet_ntoa(ClientAddr->sin_addr), ntohs(ClientAddr->sin_port), pIoContext->m_wsaBuf.buf);
 
-	char *msg, *recv_msg;
+	CMessage msg, *recv_msg;
 	//string user = "daiker", psd = "12345", msg_str;
 
 	//创建消息指针,获取消息内容
-	recv_msg = pIoContext->m_szBuffer;
-
-	msg = (char*)malloc(sizeof(char) * 256);
-
-	int type=0;
-
-	printf("type:%x\n", type);
+	recv_msg = (CMessage*)pIoContext->m_szBuffer;
 
 	//处理消息
-	switch (type)
+	switch (recv_msg->type1)
 	{
 	case MSG_NULL:
 	{
-		_Null(recv_msg, msg);
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_NULL");
+#endif // _DEBUG
 		break;
 	}
 	case MSG_SIGNIN_REQUEST:
 	{
-		_SignIn(recv_msg, msg);
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_SIGNIN_REQUEST");
+#endif // _DEBUG
+
 		break;
 	}
 	case MSG_ISVALID_REQUEST:
 	{
-		_IsValid(recv_msg, msg);
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_ISVALID_REQUEST");
+#endif // _DEBUG
 		break;
 	}
 	case MSG_SEVRNAME_REQUEST:
 	{
-		_GetServerName(recv_msg, msg);
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_SEVRNAME_REQUEST");
+#endif // _DEBUG
 		break;
 	}
 	case MSG_SEVRPRICE_REQUEST:
 	{
-		_GetServerPrice(recv_msg, msg);
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_SEVRPRICE_REQUEST");
+#endif // _DEBUG
 		break;
 	}
 	case MSG_SERVRECORD_REQUEST:
 	{
-		_SaveServerRecord(recv_msg, msg);
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_SERVRECORD_REQUEST");
+#endif // _DEBUG
 		break;
 	}
 	case MSG_PRODSUM_REQUEST:
 	{
-		_GetProviderSum(recv_msg, msg);
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_PRODSUM_REQUEST");
+#endif // _DEBUG
 		break;
 	}
 	}
 
 	//回复消息
-	printf("send:%s\n", msg);
-	send(pSocketContext->m_Socket, msg, sizeof(char)*256, 0);
+	//send(pSocketContext->m_Socket, (char*)&msg, sizeof(CMessage), 0);
+
+	//printf("type1:%d\n", recv_msg->type1);
+	//printf("type2:%d\n", recv_msg->type2);
+	//printf("str1:%s\n", recv_msg->str1);
+	//printf("str2:%s\n", recv_msg->str2);
+	//printf("msg:%s\n", recv_msg->msg);
 
 	// 然后开始投递下一个WSARecv请求
 	return _PostRecv(pIoContext);
@@ -649,7 +662,7 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 
 /////////////////////////////////////////////////////
 // 将句柄(Socket)绑定到完成端口中
-bool Network::_AssociateWithIOCP(PER_SOCKET_CONTEXT *pContext)
+bool CIOCPModel::_AssociateWithIOCP(PER_SOCKET_CONTEXT *pContext)
 {
 	// 将用于和客户端通信的SOCKET绑定到完成端口中
 	HANDLE hTemp = CreateIoCompletionPort((HANDLE)pContext->m_Socket, m_hIOCompletionPort, (DWORD)pContext, 0);
@@ -673,7 +686,7 @@ bool Network::_AssociateWithIOCP(PER_SOCKET_CONTEXT *pContext)
 
 //////////////////////////////////////////////////////////////
 // 将客户端的相关信息存储到数组中
-void Network::_AddToContextList(PER_SOCKET_CONTEXT *pHandleData)
+void CIOCPModel::_AddToContextList(PER_SOCKET_CONTEXT *pHandleData)
 {
 	EnterCriticalSection(&m_csContextList);
 
@@ -684,7 +697,7 @@ void Network::_AddToContextList(PER_SOCKET_CONTEXT *pHandleData)
 
 ////////////////////////////////////////////////////////////////
 //	移除某个特定的Context
-void Network::_RemoveContext(PER_SOCKET_CONTEXT *pSocketContext)
+void CIOCPModel::_RemoveContext(PER_SOCKET_CONTEXT *pSocketContext)
 {
 	EnterCriticalSection(&m_csContextList);
 
@@ -709,7 +722,7 @@ void Network::_RemoveContext(PER_SOCKET_CONTEXT *pSocketContext)
 
 ////////////////////////////////////////////////////////////////
 // 清空客户端信息
-void Network::_ClearContextList()
+void CIOCPModel::_ClearContextList()
 {
 	EnterCriticalSection(&m_csContextList);
 
@@ -725,11 +738,9 @@ void Network::_ClearContextList()
 
 ////////////////////////////////////////////////////////////////
 // 启动网络组建
-void Network::Init()
+void CIOCPModel::Init()
 {
 	SetIPAddress();
-
-	printf("Enter the 'p' to end the Network module.\n");
 
 	if (false == LoadSocketLib())
 	{
@@ -753,7 +764,7 @@ void Network::Init()
 
 ////////////////////////////////////////////////////////////////////
 // 获得本机的IP地址
-string Network::GetLocalIP()
+string CIOCPModel::GetLocalIP()
 {
 	// 获得本机主机名
 	char hostname[MAX_PATH] = { 0 };
@@ -777,7 +788,7 @@ string Network::GetLocalIP()
 
 ///////////////////////////////////////////////////////////////////
 // 获得本机中处理器的数量
-int Network::_GetNoOfProcessors()
+int CIOCPModel::_GetNoOfProcessors()
 {
 	SYSTEM_INFO si;
 
@@ -791,7 +802,7 @@ int Network::_GetNoOfProcessors()
 // 使用的方法是尝试向这个socket发送数据，判断这个socket调用的返回值
 // 因为如果客户端网络异常断开(例如客户端崩溃或者拔掉网线等)的时候，服务器端是无法收到客户端断开的通知的
 
-bool Network::_IsSocketAlive(SOCKET s)
+bool CIOCPModel::_IsSocketAlive(SOCKET s)
 {
 	int nByteSent = send(s, "", 0, 0);
 	if (-1 == nByteSent) return false;
@@ -800,7 +811,7 @@ bool Network::_IsSocketAlive(SOCKET s)
 
 ///////////////////////////////////////////////////////////////////
 // 显示并处理完成端口上的错误
-bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
+bool CIOCPModel::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 {
 	// 如果是超时了，就再继续等吧  
 	if (WAIT_TIMEOUT == dwErr)
@@ -850,60 +861,57 @@ bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 	}
 }
 
+
 //====================================================================================
 //
-//				       服务器所需函数定义
+//				       远程过程调用接口实现
 //
 //====================================================================================
 
-/////////////////////////////////////////////////////////////////////
-// 发送指定内容的邮件到指定邮箱
+////////////////////////////////////////////////////////////////////
+// 提供者登陆终端
 
-bool Network::send_email(string email_addr, string email_title, string email_content, string file_addr)
-{
-	return true;
-}
+//bool CIOCPModel::SignIn(char id[9])
+//{
+//	//TODO:提供者登陆终端
+//}
 
-void Network::_Null(char* recv_msg, char* msg)
-{
-	OutputDebugString(L"_Null\n");
+////////////////////////////////////////////////////////////////////
+// 验证会员状态
 
-	sprintf_s(msg, 256, "false");
+//int CIOCPModel::IsValid(char id[9])
+//{
+//	//TODO:验证会员状态
+//}
 
-}
+////////////////////////////////////////////////////////////////////
+// 获取服务名称
 
-void Network::_SignIn(char* recv_msg, char* msg)
-{
-	OutputDebugString(L"_SignIn\n");
+//char* CIOCPModel::GetServerName(char id[6])
+//{
+//	//TODO:获取服务名称
+//}
 
-}
+////////////////////////////////////////////////////////////////////
+// 获取服务费用
 
-void Network::_IsValid(char* recv_msg, char* msg)
-{
-	OutputDebugString(L"_IsValid\n");
+//double CIOCPModel::GetServerPrice(char id[6])
+//{
+//	//TODO:获取服务费用
+//}
 
-}
+////////////////////////////////////////////////////////////////////
+// ChocAn记账
 
-void Network::_GetServerName(char* recv_msg, char* msg)
-{
-	OutputDebugString(L"_GetServerName\n");
+//bool CIOCPModel::SaveServerRecord(ServerRecord sr)
+//{
+//	//TODO:ChocAn记账
+//}
 
-}
+////////////////////////////////////////////////////////////////////
+// 获取本周费用合计
 
-void Network::_GetServerPrice(char* recv_msg, char* msg)
-{
-	OutputDebugString(L"_GetServerPrice\n");
-
-}
-
-void Network::_SaveServerRecord(char* recv_msg, char* msg)
-{
-	OutputDebugString(L"_SaveServerRecord\n");
-
-}
-
-void Network::_GetProviderSum(char* recv_msg, char* msg)
-{
-	OutputDebugString(L"_GetProviderSum\n");
-
-}
+//double GetProviderSum(char id[6])
+//{
+//	//TODO:获取本周费用合计
+//}

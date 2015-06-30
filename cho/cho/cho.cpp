@@ -128,8 +128,9 @@ void dbCheck(){
 int main()
 {
 	int i,j,k;
-	Network_for_s networks;
-	Network_for_c networkc;
+	Network network;
+	//Network_for_s networks;
+	//Network_for_c networkc;
 
 	Client clt;
 	Server ser;
@@ -139,14 +140,26 @@ int main()
 
 	dbCheck();//数据库接口测试
 	
-	networks.init();
-	networkc.init();
+	network.Init();
+	//networkc.init();
 
 	clt.init();
 	clt.run();
 	ser.init();
 	ser.run();
-	getchar();
+
+
+	while (1)
+	{
+		char s;
+		cin >> s;
+		if (s == 'q')
+		{
+			network.Stop();
+			break;
+		}
+	}
+
 	return 0;
 }
 
