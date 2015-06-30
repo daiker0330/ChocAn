@@ -1,4 +1,5 @@
 #pragma once
+#include "stdafx.h"
 #include <winsock2.h>
 #include <MSWSock.h>
 #include <vector>
@@ -158,7 +159,7 @@ typedef struct _tagThreadParams_WORKER
 } THREADPARAMS_WORKER,*PTHREADPARAM_WORKER; 
 
 // CIOCPModel¿‡
-class CIOCPModel : IRemoteProcessCall
+class CIOCPModel 
 {
 public:
 	CIOCPModel(void);
@@ -201,7 +202,7 @@ public:
 
 	double GetServerPrice(char id[6]);
 
-	bool SaveServerRecord(ServerRecord sr);
+	//bool SaveServerRecord(ServerRecord sr);
 
 	double GetProviderSum(char id[6]);
 

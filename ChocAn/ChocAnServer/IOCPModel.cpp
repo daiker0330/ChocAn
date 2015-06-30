@@ -871,47 +871,47 @@ bool CIOCPModel::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 ////////////////////////////////////////////////////////////////////
 // 提供者登陆终端
 
-bool CIOCPModel::SignIn(char id[9])
-{
-	//TODO:提供者登陆终端
-}
+//bool CIOCPModel::SignIn(char id[9])
+//{
+//	//TODO:提供者登陆终端
+//}
 
 ////////////////////////////////////////////////////////////////////
 // 验证会员状态
 
-int CIOCPModel::IsValid(char id[9])
-{
-	//TODO:验证会员状态
-}
+//int CIOCPModel::IsValid(char id[9])
+//{
+//	//TODO:验证会员状态
+//}
 
 ////////////////////////////////////////////////////////////////////
 // 获取服务名称
 
-char* CIOCPModel::GetServerName(char id[6])
-{
-	//TODO:获取服务名称
-}
+//char* CIOCPModel::GetServerName(char id[6])
+//{
+//	//TODO:获取服务名称
+//}
 
 ////////////////////////////////////////////////////////////////////
 // 获取服务费用
 
-double CIOCPModel::GetServerPrice(char id[6])
-{
-	//TODO:获取服务费用
-}
+//double CIOCPModel::GetServerPrice(char id[6])
+//{
+//	//TODO:获取服务费用
+//}
 
 ////////////////////////////////////////////////////////////////////
 // ChocAn记账
 
-bool CIOCPModel::SaveServerRecord(ServerRecord sr)
-{
-	//TODO:ChocAn记账
-}
+//bool CIOCPModel::SaveServerRecord(ServerRecord sr)
+//{
+//	//TODO:ChocAn记账
+//}
 
 ////////////////////////////////////////////////////////////////////
 // 获取本周费用合计
 
-double GetProviderSum(char id[6])
-{
-	//TODO:获取本周费用合计
-}
+//double GetProviderSum(char id[6])
+//{
+//	//TODO:获取本周费用合计
+//}
