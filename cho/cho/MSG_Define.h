@@ -57,7 +57,8 @@ public:
 	string server_id;
 	double price;
 public:
-	char* Serialization();
+	string Serialization();
+	void Deserialization(string seri);
 };
 
 

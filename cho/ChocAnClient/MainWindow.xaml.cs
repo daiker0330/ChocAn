@@ -35,12 +35,13 @@ namespace ChocAnClient
             if(recv == false)
             {
                 result = "SignIn(false)";
+                ((Button)sender).Content = result;
             }
             else
             {
                 result = "SignIn(true)";
             }
-            ((Button)sender).Content = result;
+            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

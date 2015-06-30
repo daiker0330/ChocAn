@@ -70,7 +70,7 @@ namespace ChocAnClient
 
             msg = Encoding.ASCII.GetString(result, 0, receiveLength);
 
-            Console.WriteLine("recv:" + msg);
+            
 
             return msg;
         }
@@ -107,8 +107,8 @@ namespace ChocAnClient
             SendMessage(msg);
 
             recv = ReceiveMessage();
-            
-            if (recv.Equals("false"))
+            Console.WriteLine("recv:" + recv);
+            if (recv.Contains("false"))
                 return false;
             else
                 return true;
