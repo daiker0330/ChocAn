@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IRemoteProcessCall.cs" />
     <Compile Include="RemoteProcessCall.cs" />
     <Compile Include="ServerRecord.cs" />
     <Page Include="MainWindow.xaml">

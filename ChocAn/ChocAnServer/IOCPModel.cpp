@@ -51,7 +51,7 @@ void CIOCPModel::SetIPAddress()
 	{
 		m_strIP = ip_add;
 	}
-	
+
 	return;
 }
 
@@ -107,7 +107,7 @@ DWORD WINAPI CIOCPModel::_WorkerThread(LPVOID lpParam)
 			if ((0 == dwBytesTransfered) && (RECV_POSTED == pIoContext->m_OpType || SEND_POSTED == pIoContext->m_OpType))
 			{
 				printf("client %s:%d disconnect.\n", inet_ntoa(pSocketContext->m_ClientAddr.sin_addr), ntohs(pSocketContext->m_ClientAddr.sin_port));
-				
+
 				string ip_add;
 				int ip_port;
 				ip_add = inet_ntoa(pSocketContext->m_ClientAddr.sin_addr);
@@ -115,7 +115,7 @@ DWORD WINAPI CIOCPModel::_WorkerThread(LPVOID lpParam)
 
 				//TODO:连接断开
 				//CIOCPModel::dataProcess->Disconnect(ip_add, ip_port);
-				
+
 				// 释放掉对应的资源
 				pIOCPModel->_RemoveContext(pSocketContext);
 
@@ -126,26 +126,26 @@ DWORD WINAPI CIOCPModel::_WorkerThread(LPVOID lpParam)
 				switch (pIoContext->m_OpType)
 				{
 					// Accept  
-					case ACCEPT_POSTED:
-					{
-						// 处理连入请求
-						pIOCPModel->_DoAccpet(pSocketContext, pIoContext);
-					}
+				case ACCEPT_POSTED:
+				{
+					// 处理连入请求
+					pIOCPModel->_DoAccpet(pSocketContext, pIoContext);
+				}
 					break;
 
 					// RECV
-					case RECV_POSTED:
-					{
-						// 处理接收请求
-						pIOCPModel->_DoRecv(pSocketContext, pIoContext);
-					}
+				case RECV_POSTED:
+				{
+					// 处理接收请求
+					pIOCPModel->_DoRecv(pSocketContext, pIoContext);
+				}
 					break;
 
 					// SEND
-					case SEND_POSTED:
-					{
+				case SEND_POSTED:
+				{
 
-					}
+				}
 					break;
 				default:
 					printf("_WorkThread中的 pIoContext->m_OpType 参数异常.\n");
@@ -400,7 +400,7 @@ bool CIOCPModel::_InitializeListenSocket()
 
 
 	// 为AcceptEx 准备参数，然后投递AcceptEx I/O请求
-	for (int i = 0; i<MAX_POST_ACCEPT; i++)
+	for (int i = 0; i < MAX_POST_ACCEPT; i++)
 	{
 		// 新建一个IO_CONTEXT
 		PER_IO_CONTEXT* pAcceptIoContext = m_pListenContext->GetNewIoContext();
@@ -428,7 +428,7 @@ void CIOCPModel::_DeInitialize()
 	RELEASE_HANDLE(m_hShutdownEvent);
 
 	// 释放工作者线程句柄指针
-	for (int i = 0; i<m_nThreads; i++)
+	for (int i = 0; i < m_nThreads; i++)
 	{
 		RELEASE_HANDLE(m_phWorkerThreads[i]);
 	}
@@ -443,7 +443,7 @@ void CIOCPModel::_DeInitialize()
 
 	printf("release finish.\n");
 
-	
+
 }
 
 //====================================================================================
@@ -474,8 +474,8 @@ bool CIOCPModel::_PostAccept(PER_IO_CONTEXT* pAcceptIoContext)
 	}
 
 	// 投递AcceptEx
-	if (FALSE == m_lpfnAcceptEx(m_pListenContext->m_Socket, pAcceptIoContext->m_sockAccept, p_wbuf->buf, p_wbuf->len - ((sizeof(SOCKADDR_IN)+16) * 2),
-		sizeof(SOCKADDR_IN)+16, sizeof(SOCKADDR_IN)+16, &dwBytes, p_ol))
+	if (FALSE == m_lpfnAcceptEx(m_pListenContext->m_Socket, pAcceptIoContext->m_sockAccept, p_wbuf->buf, p_wbuf->len - ((sizeof(SOCKADDR_IN) + 16) * 2),
+		sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &dwBytes, p_ol))
 	{
 		if (WSA_IO_PENDING != WSAGetLastError())
 		{
@@ -497,9 +497,9 @@ bool CIOCPModel::_DoAccpet(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* p
 
 	///////////////////////////////////////////////////////////////////////////
 	// 首先取得连入客户端的地址信息
-	this->m_lpfnGetAcceptExSockAddrs(pIoContext->m_wsaBuf.buf, pIoContext->m_wsaBuf.len - ((sizeof(SOCKADDR_IN)+16) * 2),
-		sizeof(SOCKADDR_IN)+16, sizeof(SOCKADDR_IN)+16, (LPSOCKADDR*)&LocalAddr, &localLen, (LPSOCKADDR*)&ClientAddr, &remoteLen);
-	
+	this->m_lpfnGetAcceptExSockAddrs(pIoContext->m_wsaBuf.buf, pIoContext->m_wsaBuf.len - ((sizeof(SOCKADDR_IN) + 16) * 2),
+		sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, (LPSOCKADDR*)&LocalAddr, &localLen, (LPSOCKADDR*)&ClientAddr, &remoteLen);
+
 	printf("accept  %s:%d\n", inet_ntoa(ClientAddr->sin_addr), ntohs(ClientAddr->sin_port));
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -543,7 +543,7 @@ bool CIOCPModel::_DoAccpet(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* p
 	// 把Listen Socket的那个IoContext重置，准备投递新的AcceptEx
 	pIoContext->ResetBuffer();
 
-	
+
 
 	return this->_PostAccept(pIoContext);
 }
@@ -579,14 +579,14 @@ bool CIOCPModel::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIo
 {
 	// 先把上一次的数据显示出现，然后就重置状态，发出下一个Recv请求
 	SOCKADDR_IN* ClientAddr = &pSocketContext->m_ClientAddr;
-	
+
 	//TODO:编写处理消息流程
 	/////////////////////////////////////////////////////////////////
 	// 编写处理消息流程
 
 	printf("receive  %s:%d message:%s\n", inet_ntoa(ClientAddr->sin_addr), ntohs(ClientAddr->sin_port), pIoContext->m_wsaBuf.buf);
-	
-	CMessage msg,*recv_msg;
+
+	CMessage msg, *recv_msg;
 	//string user = "daiker", psd = "12345", msg_str;
 
 	//创建消息指针,获取消息内容
@@ -595,43 +595,58 @@ bool CIOCPModel::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIo
 	//处理消息
 	switch (recv_msg->type1)
 	{
-		case MSG_NULL:
-		{
-
-			break;
-		}
-		case MSG_SIGNIN_REQUEST:
-		{
-			
-			break;
-		}
-		case MSG_ISVALID_REQUEST:
-		{
-			
-			break;
-		}
-		case MSG_SEVRNAME_REQUEST:
-		{
-
-			break;
-		}
-		case MSG_SEVRPRICE_REQUEST:
-		{
-
-			break;
-		}
-		case MSG_SERVRECORD_REQUEST:
-		{
-
-			break;
-		}
-		case MSG_PRODSUM_REQUEST:
-		{
-
-			break;
-		}
+	case MSG_NULL:
+	{
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_NULL");
+#endif // _DEBUG
+		break;
 	}
-	
+	case MSG_SIGNIN_REQUEST:
+	{
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_SIGNIN_REQUEST");
+#endif // _DEBUG
+
+		break;
+	}
+	case MSG_ISVALID_REQUEST:
+	{
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_ISVALID_REQUEST");
+#endif // _DEBUG
+		break;
+	}
+	case MSG_SEVRNAME_REQUEST:
+	{
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_SEVRNAME_REQUEST");
+#endif // _DEBUG
+		break;
+	}
+	case MSG_SEVRPRICE_REQUEST:
+	{
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_SEVRPRICE_REQUEST");
+#endif // _DEBUG
+		break;
+	}
+	case MSG_SERVRECORD_REQUEST:
+	{
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_SERVRECORD_REQUEST");
+#endif // _DEBUG
+		break;
+	}
+	case MSG_PRODSUM_REQUEST:
+	{
+#ifdef _DEBUG
+		OutputDebugString(L"MSG_PRODSUM_REQUEST");
+#endif // _DEBUG
+		break;
+	}
+	}
+
 	//回复消息
 	//send(pSocketContext->m_Socket, (char*)&msg, sizeof(CMessage), 0);
 
@@ -686,7 +701,7 @@ void CIOCPModel::_RemoveContext(PER_SOCKET_CONTEXT *pSocketContext)
 {
 	EnterCriticalSection(&m_csContextList);
 
-	for (int i = 0; i<m_arrayClientContext.size(); i++)
+	for (int i = 0; i < m_arrayClientContext.size(); i++)
 	{
 		if (pSocketContext == m_arrayClientContext.at(i))
 		{
@@ -711,7 +726,7 @@ void CIOCPModel::_ClearContextList()
 {
 	EnterCriticalSection(&m_csContextList);
 
-	for (int i = 0; i<m_arrayClientContext.size(); i++)
+	for (int i = 0; i < m_arrayClientContext.size(); i++)
 	{
 		delete m_arrayClientContext.at(i);
 	}
