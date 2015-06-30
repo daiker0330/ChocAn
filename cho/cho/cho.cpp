@@ -13,21 +13,30 @@ using namespace std;
 int main()
 {
 	int i,j,k;
-	Network_for_s networks;
-	Network_for_c networkc;
+	Network network;
 
 	Client clt;
 	Server ser;
 	Database db;
 
 	db.init();
-	networks.init();
-	networkc.init();
+	network.Init();
 
 	clt.init();
 	clt.run();
 	ser.init();
 	ser.run();
+
+	while (1)
+	{
+		char s;
+		cin >> s;
+		if (s == 'q')
+		{
+			network.Stop();
+			break;
+		}
+	}
 
 	return 0;
 }

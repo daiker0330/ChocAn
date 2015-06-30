@@ -24,9 +24,6 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Network.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Client.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -39,15 +36,21 @@
     <ClInclude Include="Database.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RPCInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="cho.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Network.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp">
@@ -57,6 +60,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Database.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Network.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

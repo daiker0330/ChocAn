@@ -14,6 +14,7 @@
     <ProjectGuid>{2EBC6ADD-7A47-433B-B84F-82FACCDDE552}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>cho</RootNamespace>
+    <ProjectName>ChoAnServer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -81,8 +82,10 @@
   <ItemGroup>
     <ClInclude Include="Client.h" />
     <ClInclude Include="Database.h" />
-    <ClInclude Include="MSG_Define.h" />
     <ClInclude Include="Network.h" />
+    <ClInclude Include="Message.h" />
+    <ClInclude Include="MSG_Define.h" />
+    <ClInclude Include="RPCInterface.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
