@@ -11,7 +11,7 @@ using namespace std;
 
 namespace ChocAnClient
 {
-	interface RemoteProcessCall
+	interface IRemoteProcessCall
 	{
 		//远程过程调用接口
 		//网络模块会实现这些借口,对于客户端来说网络模块是透明的
@@ -25,25 +25,25 @@ namespace ChocAnClient
 		//功能: 终端开机后服务提供者输入他的提供者编号
 		//发送: 提供者编号
 		//返回: 登陆(true) / 失败(false)
-		bool SignIn(char* id);
+		bool SignIn(string id);
 
 		//验证会员状态
 		//功能 : 验证成员号码状态
 		//发送 : 会员编号
 		//回复 : 会员有效(1) / 无效(0) / 暂停(-1)
-		int IsValid(char* id);
+		int IsValid(string id);
 
 		//获取服务名称
 		//功能 : 根据输入的服务代号返回服务名称
 		//发送 : 服务代号
 		//回复 : 服务名称 / 不存在该服务(返回字符串"Invalid")
-		char* GetServerName(char* id);
+		string GetServerName(string id);
 
 		//获取服务费用
 		//功能 : 根据输入的服务代号返回服务费用
 		//发送 : 服务代号
 		//回复 : 服务费用 / 不存在服务(返回 - 1)
-		double GetServerPrice(char* id);
+		double GetServerPrice(string id);
 
 		//ChocAn记账
 		//子过程 : 验证会员状态, 获取服务名称, 获取服务费用
@@ -56,7 +56,7 @@ namespace ChocAnClient
 		//功能: 到周末时提供者进行费用合计
 		//发送 : 提供者编号
 		//回复 : 合计费用 / 提供者编号错误(返回 - 1)
-		double GetProviderSum(char* id);
+		double GetProviderSum(string id);
 
 		//电子邮件发送
 		//功能: 发送指定内容的邮件到指定邮箱
