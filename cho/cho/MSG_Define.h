@@ -6,46 +6,76 @@
 #include<vector>
 using namespace std;
 
+//新加入
+struct Date{
+	int yy, mm, dd;
+	Date(int y = 2015, int m = 1, int d = 1) :yy(y), mm(m), dd(d){
+	}
+	void set(int y, int m, int d){
+		yy = y;
+		mm = m;
+		dd = d;
+	}
+};
+
+
 struct member_MSG{
 	string name;
-	char id[9];
+	//修改char id[9];
+	string id;
 	string addr;
 	string city;
 	string nation;
-	char zip[5];
+	//修改char zip[5];
+	string zip;
 };
 struct spt_MSG{   //跟会员其实是一样的，但是还是先分开了
 	string name;
-	char id[9];
+	//修改char id[9];
+	string id;
 	string addr;
 	string city;
 	string nation;
-	char zip[5];
+	//修改char zip[5];
+	string zip;
+	string account;
 };
+//服务记录项
 struct server_MSG{
 	int Y,M,D;  //提供者输入的那个时间，就是服务的时间
 	int yy,mm,dd,h,m,s;  //提交这个服务表单的时间
-	string mem_name;
-	string mem_id[9];
-	string server_id[6];
+	//修改string mem_name;
+	//修改string mem_id[9];
+	//修改string server_id[6];
+	string spt_id;
+	string mem_id;
+	string server_id;
 	double price;
 };
 
 
 //这里之下是数据库看的：
 
+//写入一条记录
 struct serve_MSG{ //这个就是368页的表，按顺序的
 	int Y,M,D;  //提供者输入的那个时间，就是服务的时间
 	int yy,mm,dd,h,m,s;  //提交这个服务表单的时间
-	string mem_name;
-	string mem_id[9];
-	string server_id[6];
+	//修改string mem_name;
+	//修改string mem_id[9];
+	//修改string server_id[6];
+	string spt_id;
+	string mem_id;
+	string server_id;
 	string other;
 };
+
+//提供者目录的视图
 struct supporter_INDEX{
 	int n;//总共多少行
 	vector<string>name;
-	vector<char[9]>id;
+	//修改vector<char[9]>id;
+	//保存服务代码
+	vector<string> id;
 	vector<double>price;
 };
 
@@ -80,6 +110,7 @@ struct trans_ACCOUNT{
 	double p;//汇款金额
 	bool status;//汇款状态（已经汇了写1，没汇写0）
 	int yy,mm,dd;//如果status为1才有效，记录汇款的时间
+
 };
 
 

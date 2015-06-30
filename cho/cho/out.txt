@@ -1,0 +1,35 @@
+数据库连接成功！
+SELECT * from Provider where ID = '12070001'
+查询成功！
+SELECT * from Member where ID = '12070404'
+1
+SELECT * from Member where ID = '12070403'
+-1
+SELECT * from Member where ID = '12070410'
+0
+SELECT * from Service where ID = '000002'
+1
+SELECT * from Service where ID = '000003'
+0
+SELECT Price from Service where ID = '000001'
+100.5
+SELECT * from Service
+ID=000001，Name=Practice，Price=100.5
+ID=000002，Name=Consult，Price=60
+SELECT * from Member where ID = '12070406'
+0
+SELECT * from Provider where ID = '12070003'
+0
+SELECT distinct MemberID from ServiceRecord where DoDate >= #2015-06-20# and DoDate <= #2015-06-26#
+用户ID:
+12070401
+12070404
+12070405
+SELECT distinct ProviderID from ServiceRecord where DoDate >= #2015-06-20# and DoDate <= #2015-06-26#
+提供者ID:
+12070002
+SELECT * from Member where ID = '12070405'
+SELECT Service.Nama, Provider.Nama from ServiceRecord, Provider, Service where ServiceID = Service.ID and MemberID = '12070405' and ProviderID = Provider.ID and DoDate >= #2015-06-15# and DoDate <= #2015-06-26#
+会员信息：
+12070405,China,Beijing,Ping,ChengWeiGao,00005
+参加的服务信息：
