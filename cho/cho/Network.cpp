@@ -587,69 +587,61 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 
 	printf("receive  %s:%d message:%s\n", inet_ntoa(ClientAddr->sin_addr), ntohs(ClientAddr->sin_port), pIoContext->m_wsaBuf.buf);
 
-	CMessage msg, *recv_msg;
+	char *msg, *recv_msg;
 	//string user = "daiker", psd = "12345", msg_str;
 
 	//创建消息指针,获取消息内容
-	recv_msg = (CMessage*)pIoContext->m_szBuffer;
+	recv_msg = pIoContext->m_szBuffer;
+
+	msg = (char*)malloc(sizeof(char) * 256);
+
+	int type=0;
+
+	printf("type:%x\n", type);
 
 	//处理消息
-	switch (recv_msg->type1)
+	switch (type)
 	{
 	case MSG_NULL:
 	{
-#ifdef _DEBUG
-		OutputDebugString(L"MSG_NULL");
-#endif // _DEBUG
+		_Null(recv_msg, msg);
 		break;
 	}
 	case MSG_SIGNIN_REQUEST:
 	{
-#ifdef _DEBUG
-		OutputDebugString(L"MSG_SIGNIN_REQUEST");
-#endif // _DEBUG
-
+		_SignIn(recv_msg, msg);
 		break;
 	}
 	case MSG_ISVALID_REQUEST:
 	{
-#ifdef _DEBUG
-		OutputDebugString(L"MSG_ISVALID_REQUEST");
-#endif // _DEBUG
+		_IsValid(recv_msg, msg);
 		break;
 	}
 	case MSG_SEVRNAME_REQUEST:
 	{
-#ifdef _DEBUG
-		OutputDebugString(L"MSG_SEVRNAME_REQUEST");
-#endif // _DEBUG
+		_GetServerName(recv_msg, msg);
 		break;
 	}
 	case MSG_SEVRPRICE_REQUEST:
 	{
-#ifdef _DEBUG
-		OutputDebugString(L"MSG_SEVRPRICE_REQUEST");
-#endif // _DEBUG
+		_GetServerPrice(recv_msg, msg);
 		break;
 	}
 	case MSG_SERVRECORD_REQUEST:
 	{
-#ifdef _DEBUG
-		OutputDebugString(L"MSG_SERVRECORD_REQUEST");
-#endif // _DEBUG
+		_SaveServerRecord(recv_msg, msg);
 		break;
 	}
 	case MSG_PRODSUM_REQUEST:
 	{
-#ifdef _DEBUG
-		OutputDebugString(L"MSG_PRODSUM_REQUEST");
-#endif // _DEBUG
+		_GetProviderSum(recv_msg, msg);
 		break;
 	}
 	}
 
 	//回复消息
-	send(pSocketContext->m_Socket, (char*)&msg, sizeof(CMessage), 0);
+	printf("send:%s\n", msg);
+	send(pSocketContext->m_Socket, msg, sizeof(char)*256, 0);
 
 	// 然后开始投递下一个WSARecv请求
 	return _PostRecv(pIoContext);
@@ -867,7 +859,51 @@ bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 /////////////////////////////////////////////////////////////////////
 // 发送指定内容的邮件到指定邮箱
 
-bool send_email(string email_addr, string email_title, string email_content, string file_addr)
+bool Network::send_email(string email_addr, string email_title, string email_content, string file_addr)
 {
 	return true;
+}
+
+void Network::_Null(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_Null\n");
+
+	sprintf_s(msg, 256, "false");
+
+}
+
+void Network::_SignIn(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_SignIn\n");
+
+}
+
+void Network::_IsValid(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_IsValid\n");
+
+}
+
+void Network::_GetServerName(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_GetServerName\n");
+
+}
+
+void Network::_GetServerPrice(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_GetServerPrice\n");
+
+}
+
+void Network::_SaveServerRecord(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_SaveServerRecord\n");
+
+}
+
+void Network::_GetProviderSum(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_GetProviderSum\n");
+
 }

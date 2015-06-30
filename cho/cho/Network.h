@@ -191,25 +191,25 @@ public:
 	//功能: 终端开机后服务提供者输入他的提供者编号
 	//发送: 提供者编号
 	//返回: 登陆(true) / 失败(false)
-	//bool SignIn(char id[9]);
+	//bool SignIn(string id);
 
 	//验证会员状态
 	//功能 : 验证成员号码状态
 	//发送 : 会员编号
 	//回复 : 会员有效(1) / 无效(0) / 暂停(-1)
-	//int IsValid(char id[9]);
+	//int IsValid(string id);
 
 	//获取服务名称
 	//功能 : 根据输入的服务代号返回服务名称
 	//发送 : 服务代号
 	//回复 : 服务名称 / 不存在该服务(返回字符串"Invalid")
-	//char* GetServerName(char id[6]);
+	//string GetServerName(string id);
 
 	//获取服务费用
 	//功能 : 根据输入的服务代号返回服务费用
 	//发送 : 服务代号
 	//回复 : 服务费用 / 不存在服务(返回 - 1)
-	//double GetServerPrice(char id[6]);
+	//double GetServerPrice(string id);
 
 	//ChocAn记账
 	//子过程 : 验证会员状态, 获取服务名称, 获取服务费用
@@ -222,7 +222,7 @@ public:
 	//功能: 到周末时提供者进行费用合计
 	//发送 : 提供者编号
 	//回复 : 合计费用 / 提供者编号错误(返回 - 1)
-	//double GetProviderSum(char id[6]);
+	//double GetProviderSum(string id);
 
 private:
 
@@ -240,8 +240,6 @@ private:
 
 	// 设置监听端口
 	void SetPort( const int& nPort ) { m_nPort=nPort; }
-
-	//void static SetDataProcess(Dataprocess* p){ dataProcess = p; }
 
 	void SetIPAddress();
 
@@ -290,6 +288,15 @@ private:
 	// 判断客户端Socket是否已经断开
 	bool _IsSocketAlive(SOCKET s);
 
+	//消息处理函数
+	void _Null(char* recv_msg, char* msg);
+	void _SignIn(char* recv_msg, char* msg);
+	void _IsValid(char* recv_msg, char* msg);
+	void _GetServerName(char* recv_msg, char* msg);
+	void _GetServerPrice(char* recv_msg, char* msg);
+	void _SaveServerRecord(char* recv_msg, char* msg);
+	void _GetProviderSum(char* recv_msg, char* msg);
+
 private:
 
 	HANDLE                       m_hShutdownEvent;              // 用来通知线程系统退出的事件，为了能够更好的退出线程
@@ -313,7 +320,5 @@ private:
 	LPFN_GETACCEPTEXSOCKADDRS    m_lpfnGetAcceptExSockAddrs; 
 
 	static string _msg;
-
-	//static Dataprocess* dataProcess;
 };
 

@@ -12,23 +12,23 @@ namespace ChocAnClient
     class RemoteProcessCall : IRemoteProcessCall
     {
         //message type
-        private static short MSG_NULL				= 0x00;
-        private static short MSG_SIGNIN_REQUEST		= 0x10;
-        private static short MSG_SIGNIN_SUCCESS		= 0x11;
-        private static short MSG_SIGNIN_FAILED		= 0x12;
-        private static short MSG_ISVALID_REQUEST	= 0x20;
-        private static short MSG_ISVALID_VALID		= 0x21;
-        private static short MSG_ISVALID_INVALID	= 0x22;
-        private static short MSG_ISVALID_SUSPEND	= 0x23;
-        private static short MSG_SEVRNAME_REQUEST	= 0x30;
-        private static short MSG_SEVRNAME_RETURN	= 0x31;
-        private static short MSG_SEVRPRICE_REQUEST	= 0x40;
-        private static short MSG_SEVRPRICE_RETURN	= 0x41;
-        private static short MSG_SERVRECORD_REQUEST	= 0x50;
-        private static short MSG_SERVRECORD_SUCCESS	= 0x51;
-        private static short MSG_SERVRECORD_FAILED	= 0x52;
-        private static short MSG_PRODSUM_REQUEST	= 0x60;
-        private static short MSG_PRODSUM_RETURN		= 0x61;
+        private static int MSG_NULL = 0x00;
+        private static int MSG_SIGNIN_REQUEST = 0x10;
+        private static int MSG_SIGNIN_SUCCESS = 0x11;
+        private static int MSG_SIGNIN_FAILED = 0x12;
+        private static int MSG_ISVALID_REQUEST = 0x20;
+        private static int MSG_ISVALID_VALID = 0x21;
+        private static int MSG_ISVALID_INVALID = 0x22;
+        private static int MSG_ISVALID_SUSPEND = 0x23;
+        private static int MSG_SEVRNAME_REQUEST = 0x30;
+        private static int MSG_SEVRNAME_RETURN = 0x31;
+        private static int MSG_SEVRPRICE_REQUEST = 0x40;
+        private static int MSG_SEVRPRICE_RETURN = 0x41;
+        private static int MSG_SERVRECORD_REQUEST = 0x50;
+        private static int MSG_SERVRECORD_SUCCESS = 0x51;
+        private static int MSG_SERVRECORD_FAILED = 0x52;
+        private static int MSG_PRODSUM_REQUEST = 0x60;
+        private static int MSG_PRODSUM_RETURN = 0x61;
 
         //setting
         private int port = 12345;
@@ -62,6 +62,19 @@ namespace ChocAnClient
             }
         }
 
+        public string ReceiveMessage()
+        {
+            string msg;
+
+            int receiveLength = clientSocket.Receive(result);
+
+            msg = Encoding.ASCII.GetString(result, 0, receiveLength);
+
+            Console.WriteLine("recv:" + msg);
+
+            return msg;
+        }
+
         //interface
 
         //程序运行一开始时候被调用
@@ -73,6 +86,8 @@ namespace ChocAnClient
             {
                 clientSocket.Connect(new IPEndPoint(ip, port)); //配置服务器IP与端口
                 Console.WriteLine("连接服务器成功");
+                SendMessage("connect");
+                ReceiveMessage();
             }
             catch
             {
@@ -85,16 +100,25 @@ namespace ChocAnClient
         //功能: 终端开机后服务提供者输入他的提供者编号
         //发送: 提供者编号
         //返回: 登陆(true) / 失败(false)
-        bool SignIn(string id)
+        public bool SignIn(string id)
         {
-            return true;
+            string msg, recv;
+            msg = MSG_SIGNIN_REQUEST.ToString() + " " + id;
+            SendMessage(msg);
+
+            recv = ReceiveMessage();
+            
+            if (recv.Equals("false"))
+                return false;
+            else
+                return true;
         }
 
         //验证会员状态
         //功能 : 验证成员号码状态
         //发送 : 会员编号
         //回复 : 会员有效(1) / 无效(0) / 暂停(-1)
-        int IsValid(string id)
+        public int IsValid(string id)
         {
             return 0;
         }
@@ -103,7 +127,7 @@ namespace ChocAnClient
         //功能 : 根据输入的服务代号返回服务名称
         //发送 : 服务代号
         //回复 : 服务名称 / 不存在该服务(返回字符串"Invalid")
-        string GetServerName(string id)
+        public string GetServerName(string id)
         {
             return "";
         }
@@ -112,7 +136,7 @@ namespace ChocAnClient
         //功能 : 根据输入的服务代号返回服务费用
         //发送 : 服务代号
         //回复 : 服务费用 / 不存在服务(返回 - 1)
-        double GetServerPrice(string id)
+        public double GetServerPrice(string id)
         {
             return 0;
         }
@@ -122,7 +146,7 @@ namespace ChocAnClient
         //功能 : 存储记账信息
         //发送 : 服务记录类
         //回复 : 成功(true) / 失败(false)
-        bool SaveServerRecord(ServerRecord sr)
+        public bool SaveServerRecord(ServerRecord sr)
         {
             return true;
         }
@@ -131,19 +155,9 @@ namespace ChocAnClient
         //功能: 到周末时提供者进行费用合计
         //发送 : 提供者编号
         //回复 : 合计费用 / 提供者编号错误(返回 - 1)
-        double GetProviderSum(string id)
+        public double GetProviderSum(string id)
         {
             return 0;
         }
-
-        //电子邮件发送
-        //功能: 发送指定内容的邮件到指定邮箱
-        //发送 : 收件人邮箱, 邮件标题, 邮件内容, 邮件附件
-        //回复 : 发送成功(true) / 发送失败(false)
-        bool send_email(string email_addr, string email_title, string email_content, string file_addr)
-        {
-            return true;
-        }
-
     }
 }

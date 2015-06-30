@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace ChocAnClient
 {
-    class ServerRecord
+    public class ServerRecord
     {
-        char* Serialization();
+        public string Serialization()
+        {
+            string s = "";
+
+            return s;
+        }
     }
 }
