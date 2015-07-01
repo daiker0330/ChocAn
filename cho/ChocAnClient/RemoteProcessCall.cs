@@ -103,7 +103,7 @@ namespace ChocAnClient
         public bool SignIn(string id)
         {
             string msg, recv;
-            msg = MSG_SIGNIN_REQUEST.ToString() + ":" + id;
+            msg = MSG_SIGNIN_REQUEST.ToString() + " " + id;
             SendMessage(msg);
 
             recv = ReceiveMessage();
