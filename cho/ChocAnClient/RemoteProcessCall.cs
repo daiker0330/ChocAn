@@ -9,8 +9,10 @@ using System.Threading;
 
 namespace ChocAnClient
 {
-    class RemoteProcessCall : IRemoteProcessCall
+    public class RemoteProcessCall : IRemoteProcessCall
     {
+        public RemoteProcessCall(){}
+
         //message type
         private static int MSG_NULL = 0x00;
         private static int MSG_SIGNIN_REQUEST = 0x10;
