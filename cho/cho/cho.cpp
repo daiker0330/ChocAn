@@ -130,25 +130,25 @@ int main()
 	int i,j,k;
 
 
-	//序列化测试
-	serve_MSG msg;
-	msg.Y = 2010; msg.M = 12; msg.D = 10;
-	msg.yy = 2010; msg.mm = 12; msg.dd = 11;
-	msg.h = 20; msg.m = 12; msg.s = 59;
-	msg.spt_id = "123456789";
-	msg.mem_id = "098765432";
-	msg.server_id = "547377";
-	msg.other = "fuckfuck";
+	////序列化测试
+	//serve_MSG msg;
+	//msg.Y = 2010; msg.M = 12; msg.D = 10;
+	//msg.yy = 2010; msg.mm = 12; msg.dd = 11;
+	//msg.h = 20; msg.m = 12; msg.s = 59;
+	//msg.spt_id = "123456789";
+	//msg.mem_id = "098765432";
+	//msg.server_id = "547377";
+	//msg.other = "fuckfuck";
 
-	string tmp = msg.Serialization();
-	cout << tmp << endl;
+	//string tmp = msg.Serialization();
+	//cout << tmp << endl;
+	////system("pause");
+	//msg.Deserialization(tmp);
+	//cout << msg.Y << ' ' << msg.M << ' ' << msg.D << ' ' << msg.yy << ' ' << msg.mm << ' ' << msg.dd << ' ' << msg.h << ' ' << msg.m << ' ' << msg.s << ' ' << msg.spt_id << ' ' << msg.mem_id << ' ' << msg.server_id << ' ' << msg.other << endl;
 	//system("pause");
-	msg.Deserialization(tmp);
-	cout << msg.Y << ' ' << msg.M << ' ' << msg.D << ' ' << msg.yy << ' ' << msg.mm << ' ' << msg.dd << ' ' << msg.h << ' ' << msg.m << ' ' << msg.s << ' ' << msg.spt_id << ' ' << msg.mem_id << ' ' << msg.server_id << ' ' << msg.other << endl;
-	system("pause");
 
 
-	/*
+	
 
 
 	Network network;
@@ -161,7 +161,7 @@ int main()
 
 	//dbCheck();//数据库接口测试
 	
-	network.Init();
+	network.Init(&ser);
 
 	clt.init();
 	clt.run();
@@ -179,7 +179,7 @@ int main()
 			break;
 		}
 	}
-	*/
+	
 	return 0;
 }
 
