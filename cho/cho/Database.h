@@ -14,6 +14,7 @@ protected:
 	// //访问数据库的接口
 	DBAssistant access;
 public:
+	//需要保证输入是正确的
 	string get_spt_email(string id);
 	string get_mem_email(string id);
 	

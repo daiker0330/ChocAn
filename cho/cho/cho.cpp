@@ -129,7 +129,6 @@ int main()
 {
 	int i,j,k;
 
-
 	////序列化测试
 	//serve_MSG msg;
 	//msg.Y = 2010; msg.M = 12; msg.D = 10;
@@ -158,7 +157,6 @@ int main()
 	Database db;
 
 	db.init();
-
 	//dbCheck();//数据库接口测试
 	
 	network.Init(&ser);

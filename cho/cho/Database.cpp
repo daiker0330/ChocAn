@@ -10,14 +10,18 @@ void Database::init()
 	return;
 }
 
-//这俩还没实现======================}}}}}}}}}}}}}}}}}}}}}}}}}}}}__________!!!!!!!!!!!%$#
+//需保证输入是正确的
 string Database::get_spt_email(string id)
 {
-	return "fuck@bjut.edn.cn";
+	_bstr_t str = "SELECT Email from Provider where ID = '" + (_bstr_t)id.c_str() + "'";
+	access.ExecuteQuery(str);
+	return access.GetString("Email");
 }
 string Database::get_mem_email(string id)
 {
-	return "fuck@bjut.edu.cn";
+	_bstr_t str = "SELECT Email from Member where ID = '" + (_bstr_t)id.c_str() + "'";
+	access.ExecuteQuery(str);
+	return access.GetString("Email");
 }
 
 
@@ -311,6 +315,9 @@ bool Database::add_member(member_MSG mem){
 	if (!access.SetFieldValue(6, _variant_t(toString(1).c_str()))){
 		return false;
 	}
+	if (!access.SetFieldValue(7, _variant_t(mem.email.c_str()))){
+		return false;
+	}
 	if (!access.ExecuteUpdate()){
 		return false;
 	}
@@ -347,6 +354,9 @@ bool Database::add_supporter(spt_MSG spt){
 		return false;
 	}
 	if (!access.SetFieldValue(6, _variant_t(spt.account.c_str()))){
+		return false;
+	}
+	if (!access.SetFieldValue(7, _variant_t(spt.email.c_str()))){
 		return false;
 	}
 	if (!access.ExecuteUpdate()){

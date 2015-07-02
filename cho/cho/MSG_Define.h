@@ -60,6 +60,7 @@ struct member_MSG{
 	string nation;
 	//修改char zip[5];
 	string zip;
+	string email;
 };
 struct spt_MSG{   //跟会员其实是一样的，但是还是先分开了
 	string name;
@@ -71,6 +72,7 @@ struct spt_MSG{   //跟会员其实是一样的，但是还是先分开了
 	//修改char zip[5];
 	string zip;
 	string account;
+	string email;
 };
 
 //服务记录
