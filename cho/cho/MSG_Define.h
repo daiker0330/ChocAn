@@ -6,6 +6,9 @@
 #include<vector>
 using namespace std;
 
+const int md[13] = { 0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+
 //新加入
 struct Date{
 	int yy, mm, dd;
@@ -15,6 +18,35 @@ struct Date{
 		yy = y;
 		mm = m;
 		dd = d;
+	}
+	void sub1()
+	{
+		dd--;
+		if (dd == 0)
+		{
+			mm--;
+			dd = md[mm];
+		}
+		
+		if (mm == 0)
+		{
+			mm = 12;
+			yy--;
+			dd = md[mm];
+		}
+
+		if ((yy % 400 == 0 && yy % 100 == 0) || (yy % 100 != 0 && yy % 4 == 0))
+		{
+			if (mm == 2)
+			{
+				if (dd == 28)
+				{
+					dd++;
+				}
+			}
+		}
+
+		return;
 	}
 };
 
@@ -56,9 +88,6 @@ public:
 	string mem_id;
 	string server_id;
 	double price;
-public:
-	string Serialization();
-	void Deserialization(string seri);
 };
 
 
@@ -75,6 +104,10 @@ struct serve_MSG{ //这个就是368页的表，按顺序的
 	string mem_id;
 	string server_id;
 	string other;
+
+public:
+	string Serialization();
+	void Deserialization(string seri);
 };
 
 //提供者目录的视图
