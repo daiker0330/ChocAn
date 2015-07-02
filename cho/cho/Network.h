@@ -1,3 +1,6 @@
+#ifndef _NETWORK_H_ 
+#define _NETWORK_H_ 
+
 #pragma once
 #include "stdafx.h"
 #include <winsock2.h>
@@ -327,3 +330,4 @@ private:
 	Server* ser;
 };
 
+#endif 

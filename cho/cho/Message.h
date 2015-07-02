@@ -1,3 +1,6 @@
+#ifndef _MESSAGE_H_ 
+#define _MESSAGE_H_ 
+
 #pragma once
 
 #define MSG_NULL				0x00
@@ -30,3 +33,5 @@ public:
 	unsigned short type1;
 	char msg[254];
 };
+
+#endif 
