@@ -15,5 +15,6 @@
 #include "MSG_Define.h"
 #include "Network.h"
 #include "Message.h"
+#include "Server.h"
 
 // TODO: 在此处引用程序需要的其他头文件
