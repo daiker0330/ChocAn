@@ -77,6 +77,9 @@ namespace ChocAnClient
             recv[0] = splitStrings[0];
             recv[1] = splitStrings[1];
 
+            Console.WriteLine("type:" + recv[0]);
+            Console.WriteLine("data:" + recv[1]);
+
             return recv;
         }
 
@@ -157,6 +160,8 @@ namespace ChocAnClient
 
             String[] recv;
             recv = ReceiveMessage();
+
+            Console.WriteLine("*data:" + recv[1]);
 
             return recv[1];
         }

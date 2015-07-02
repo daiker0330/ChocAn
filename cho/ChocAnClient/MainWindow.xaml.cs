@@ -53,18 +53,33 @@ namespace ChocAnClient
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             int recv = network.IsValid("123456789");
-            if (recv == 1)
-            {
-                ((Button)sender).Content = "IsValid(" + recv.ToString() + ")";
-            }
-            else if (recv == 0)
-            {
-                ((Button)sender).Content = "IsValid(" + recv.ToString() + ")";
-            }
-            else if (recv == -1)
-            {
-                ((Button)sender).Content = "IsValid(" + recv.ToString() + ")";
-            }
+            ((Button)sender).Content = "IsValid(" + recv.ToString() + ")";
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            string recv = network.GetServerName("123456789");
+            ((Button)sender).Content = "GetServerName(" + recv.ToString() + ")";
+            
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            double recv = network.GetServerPrice("123456789");
+            ((Button)sender).Content = "GetServerPrice(" + recv.ToString() + ")";
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            ServerRecord sr = new ServerRecord();
+            bool recv = network.SaveServerRecord(sr);
+            ((Button)sender).Content = "SaveServerRecord(" + recv.ToString() + ")";
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            double recv = network.GetProviderSum("123456789");
+            ((Button)sender).Content = "GetProviderSum(" + recv.ToString() + ")";
         }
     }
 }

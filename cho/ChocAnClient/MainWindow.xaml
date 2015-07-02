@@ -3,8 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button Content="SignIn" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
-        <Button Content="Init" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
-        <Button Content="IsValid" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_2"/>
+        <Button Content="SignIn" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click"/>
+        <Button Content="Init" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_1"/>
+        <Button Content="IsValid" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_2"/>
+        <Button Content="GetServerName" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_3"/>
+        <Button Content="GetServerPrice" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_4"/>
+        <Button Content="SaveServerRecord" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_5"/>
+        <Button Content="GetProviderSum" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_6"/>
     </Grid>
 </Window>

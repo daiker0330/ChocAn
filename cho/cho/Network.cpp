@@ -968,7 +968,7 @@ void Network::_GetServerName(char* recv_msg, char* msg)
 	//res = string GetServerName(id);
 	//sprintf_s(msg, 256, "%d:%s", MSG_SEVRNAME_RETURN,res.c_str());
 
-	sprintf_s(msg, 256, "%d:%s", MSG_SEVRNAME_RETURN, "Invalid");
+	sprintf_s(msg, 256, "%d:%s:", MSG_SEVRNAME_RETURN, "Invalid");
 }
 
 void Network::_GetServerPrice(char* recv_msg, char* msg)
@@ -986,7 +986,7 @@ void Network::_GetServerPrice(char* recv_msg, char* msg)
 	//res = GetServerPrice(id);
 	//sprintf_s(msg, 256, "%d:%f", MSG_SEVRPRICE_RETURN,res);
 
-	sprintf_s(msg, 256, "%d:%f", MSG_SEVRPRICE_RETURN, 1.0);
+	sprintf_s(msg, 256, "%d:%f:", MSG_SEVRPRICE_RETURN, 1.1);
 }
 
 void Network::_SaveServerRecord(char* recv_msg, char* msg)
@@ -1032,5 +1032,5 @@ void Network::_GetProviderSum(char* recv_msg, char* msg)
 	//res = GetProviderSum(id);
 	//sprintf_s(msg, 256, "%d:%f", MSG_PRODSUM_RETURN,res);
 
-	sprintf_s(msg, 256, "%d:%f", MSG_PRODSUM_RETURN, 1.0);
+	sprintf_s(msg, 256, "%d:%f:", MSG_PRODSUM_RETURN, 2.1);
 }
