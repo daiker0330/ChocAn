@@ -173,7 +173,7 @@ public:
 
 	//程序运行一开始时候被调用
 	//负责初始化网络模块
-	void Init(Server* ser);
+	void Init();
 
 	//电子邮件发送
 	//功能: 发送指定内容的邮件到指定邮箱
@@ -323,7 +323,5 @@ private:
 	LPFN_GETACCEPTEXSOCKADDRS    m_lpfnGetAcceptExSockAddrs; 
 
 	static string _msg;
-
-	Server* ser;
 };
 

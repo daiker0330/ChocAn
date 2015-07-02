@@ -732,7 +732,7 @@ void Network::_ClearContextList()
 
 ////////////////////////////////////////////////////////////////
 // Æô¶¯ÍøÂç×é½¨
-void Network::Init(Server* ser)
+void Network::Init()
 {
 	SetIPAddress();
 
@@ -749,8 +749,6 @@ void Network::Init(Server* ser)
 		printf("start Socket error\n");
 		exit(0);
 	}
-
-	this->ser = ser;
 }
 
 
@@ -907,17 +905,17 @@ void Network::_SignIn(char* recv_msg, char* msg)
 
 	cout << "SignIn: id-" << id << endl;
 
-	res = ser->SignIn(id);
-	if (res)
-	{
-		sprintf_s(msg, 256, "%d:", MSG_SIGNIN_SUCCESS);
-	}
-	else
-	{
-		sprintf_s(msg, 256, "%d:", MSG_SIGNIN_FAILED);
-	}
+	//res = SignIn(id);
+	//if (res)
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_SIGNIN_SUCCESS);
+	//}
+	//else
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_SIGNIN_FAILED);
+	//}
 
-	//sprintf_s(msg, 256, "%d:", MSG_SIGNIN_SUCCESS);
+	sprintf_s(msg, 256, "%d:", MSG_SIGNIN_SUCCESS);
 }
 
 void Network::_IsValid(char* recv_msg, char* msg)
@@ -934,25 +932,25 @@ void Network::_IsValid(char* recv_msg, char* msg)
 
 	cout << "IsValid: id-" << id << endl;
 
-	res = ser->IsValid(id);
-	if (res == 1)
-	{
-		sprintf_s(msg, 256, "%d:", MSG_ISVALID_VALID);
-	}
-	else if (res == 0)
-	{
-		sprintf_s(msg, 256, "%d:", MSG_ISVALID_INVALID);
-	}
-	else if (res == -1)
-	{
-		sprintf_s(msg, 256, "%d:", MSG_ISVALID_SUSPEND);
-	}
-	else
-	{
-		sprintf_s(msg, 256, "%d:", MSG_ISVALID_INVALID);
-	}
+	//res = IsValid(id);
+	//if (res==1)
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_ISVALID_VALID);
+	//}
+	//else if (res==0)
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_ISVALID_INVALID);
+	//}
+	//else if (res==-1)
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_ISVALID_SUSPEND);
+	//}
+	//else
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_ISVALID_INVALID);
+	//}
 
-	//sprintf_s(msg, 256, "%d:", MSG_ISVALID_SUSPEND);
+	sprintf_s(msg, 256, "%d:", MSG_ISVALID_SUSPEND);
 }
 
 void Network::_GetServerName(char* recv_msg, char* msg)
@@ -967,10 +965,10 @@ void Network::_GetServerName(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	res = ser->GetServerName(id);
-	sprintf_s(msg, 256, "%d:%s", MSG_SEVRNAME_RETURN,res.c_str());
+	//res = string GetServerName(id);
+	//sprintf_s(msg, 256, "%d:%s", MSG_SEVRNAME_RETURN,res.c_str());
 
-	//sprintf_s(msg, 256, "%d:%s:", MSG_SEVRNAME_RETURN, "Invalid");
+	sprintf_s(msg, 256, "%d:%s:", MSG_SEVRNAME_RETURN, "Invalid");
 }
 
 void Network::_GetServerPrice(char* recv_msg, char* msg)
@@ -985,10 +983,10 @@ void Network::_GetServerPrice(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	res = ser->GetServerPrice(id);
-	sprintf_s(msg, 256, "%d:%f", MSG_SEVRPRICE_RETURN,res);
+	//res = GetServerPrice(id);
+	//sprintf_s(msg, 256, "%d:%f", MSG_SEVRPRICE_RETURN,res);
 
-	//sprintf_s(msg, 256, "%d:%f:", MSG_SEVRPRICE_RETURN, 1.1);
+	sprintf_s(msg, 256, "%d:%f:", MSG_SEVRPRICE_RETURN, 1.1);
 }
 
 void Network::_SaveServerRecord(char* recv_msg, char* msg)
@@ -1003,20 +1001,20 @@ void Network::_SaveServerRecord(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	serve_MSG sr;
-	sr.Deserialization(id);
+	//server_MSG sr;
+	//sr.Deserialization(id);
 
-	res = ser->SaveServerRecord(sr);
-	if (res)
-	{
-		sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
-	}
-	else
-	{
-		sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_FAILED);
-	}
+	//res = SaveServerRecord(sr);
+	//if (res)
+	//{
+	//	sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
+	//}
+	//else
+	//{
+	//	sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_FAILED);
+	//}
 
-	//sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
+	sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
 }
 
 void Network::_GetProviderSum(char* recv_msg, char* msg)
@@ -1031,8 +1029,8 @@ void Network::_GetProviderSum(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	res = ser->GetProviderSum(id);
-	sprintf_s(msg, 256, "%d:%f", MSG_PRODSUM_RETURN,res);
+	//res = GetProviderSum(id);
+	//sprintf_s(msg, 256, "%d:%f", MSG_PRODSUM_RETURN,res);
 
-	//sprintf_s(msg, 256, "%d:%f:", MSG_PRODSUM_RETURN, 2.1);
+	sprintf_s(msg, 256, "%d:%f:", MSG_PRODSUM_RETURN, 2.1);
 }
