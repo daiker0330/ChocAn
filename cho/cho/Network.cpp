@@ -908,20 +908,49 @@ void Network::_SignIn(char* recv_msg, char* msg)
 	//res = SignIn(id);
 	//if (res)
 	//{
-	//	sprintf_s(msg, 256, "true");
+	//	sprintf_s(msg, 256, "%d:",MSG_SIGNIN_SUCCESS);
 	//}
 	//else
 	//{
-	//	sprintf_s(msg, 256, "false");
+	//	sprintf_s(msg, 256, "%d:",MSG_SIGNIN_FAILED);
 	//}
 
-	sprintf_s(msg, 256, "false");
+	sprintf_s(msg, 256, "%d:", MSG_SIGNIN_SUCCESS);
 }
 
 void Network::_IsValid(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_IsValid\n");
 
+	string id;
+	char *p;
+	bool res;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	cout << "IsValid: id-" << id << endl;
+
+	//res = IsValid(id);
+	//if (res==1)
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_ISVALID_VALID);
+	//}
+	//else if (res==0)
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_ISVALID_INVALID);
+	//}
+	//else if (res==-1)
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_ISVALID_SUSPEND);
+	//}
+	//else
+	//{
+	//	sprintf_s(msg, 256, "%d:",MSG_ISVALID_INVALID);
+	//}
+
+	sprintf_s(msg, 256, "%d:", MSG_ISVALID_SUSPEND);
 }
 
 void Network::_GetServerName(char* recv_msg, char* msg)
