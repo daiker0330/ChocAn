@@ -107,13 +107,11 @@ namespace ChocAnClient
             SendMessage(msg);
 
             recv = ReceiveMessage();
-
-            if (recv.Contains(MSG_SIGNIN_SUCCESS.ToString()))
-                return true;
-            else if (recv.Contains(MSG_SIGNIN_FAILED.ToString()))
+            Console.WriteLine("recv:" + recv);
+            if (recv.Contains("false"))
                 return false;
             else
-                return false;
+                return true;
         }
 
         //验证会员状态
@@ -122,20 +120,7 @@ namespace ChocAnClient
         //回复 : 会员有效(1) / 无效(0) / 暂停(-1)
         public int IsValid(string id)
         {
-            string msg, recv;
-            msg = MSG_ISVALID_REQUEST.ToString() + ":" + id;
-            SendMessage(msg);
-
-            recv = ReceiveMessage();
-
-            if (recv.Contains(MSG_ISVALID_VALID.ToString()))
-                return 1;
-            else if (recv.Contains(MSG_ISVALID_INVALID.ToString()))
-                return 0;
-            else if (recv.Contains(MSG_ISVALID_SUSPEND.ToString()))
-                return -1;
-            else
-                return 0;
+            return 0;
         }
 
         //获取服务名称
