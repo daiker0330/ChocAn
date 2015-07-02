@@ -42,6 +42,10 @@ Network::~Network(void)
 void Network::SetIPAddress()
 {
 	printf("Please Enter the IP address( l = localhost ):\n");
+
+#ifdef _DEBUG
+	m_strIP = "127.0.0.1";
+#else
 	string ip_add;
 	cin >> ip_add;
 	if (ip_add == "l")
@@ -52,6 +56,7 @@ void Network::SetIPAddress()
 	{
 		m_strIP = ip_add;
 	}
+#endif // _DEBUG
 
 	return;
 }
@@ -597,6 +602,8 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 
 	int type=0;
 
+	sscanf_s(recv_msg, "%d", &type);
+
 	printf("type:%x\n", type);
 
 	//处理消息
@@ -725,7 +732,7 @@ void Network::_ClearContextList()
 
 ////////////////////////////////////////////////////////////////
 // 启动网络组建
-void Network::Init()
+void Network::Init(Server* ser)
 {
 	SetIPAddress();
 
@@ -742,6 +749,8 @@ void Network::Init()
 		printf("start Socket error\n");
 		exit(0);
 	}
+
+	this->ser = ser;
 }
 
 
@@ -850,6 +859,18 @@ bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 	}
 }
 
+char* Network::FilterMessage(char* recv_msg)
+{
+	char* p;
+	p = recv_msg;
+	while (*p != ':')
+	{
+		p++;
+	}
+	p++;
+	return p;
+}
+
 //====================================================================================
 //
 //				       服务器所需函数定义
@@ -868,7 +889,7 @@ void Network::_Null(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_Null\n");
 
-	sprintf_s(msg, 256, "false");
+	sprintf_s(msg, 256, "null");
 
 }
 
@@ -876,34 +897,142 @@ void Network::_SignIn(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_SignIn\n");
 
+	string id;
+	char *p;
+	bool res;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	cout << "SignIn: id-" << id << endl;
+
+	res = ser->SignIn(id);
+	if (res)
+	{
+		sprintf_s(msg, 256, "%d:",MSG_SIGNIN_SUCCESS);
+	}
+	else
+	{
+		sprintf_s(msg, 256, "%d:",MSG_SIGNIN_FAILED);
+	}
+
+	//sprintf_s(msg, 256, "%d:", MSG_SIGNIN_SUCCESS);
 }
 
 void Network::_IsValid(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_IsValid\n");
 
+	string id;
+	char *p;
+	bool res;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	cout << "IsValid: id-" << id << endl;
+
+	res = ser->IsValid(id);
+	if (res==1)
+	{
+		sprintf_s(msg, 256, "%d:",MSG_ISVALID_VALID);
+	}
+	else if (res==0)
+	{
+		sprintf_s(msg, 256, "%d:",MSG_ISVALID_INVALID);
+	}
+	else if (res==-1)
+	{
+		sprintf_s(msg, 256, "%d:",MSG_ISVALID_SUSPEND);
+	}
+	else
+	{
+		sprintf_s(msg, 256, "%d:",MSG_ISVALID_INVALID);
+	}
+
+	//sprintf_s(msg, 256, "%d:", MSG_ISVALID_SUSPEND);
 }
 
 void Network::_GetServerName(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_GetServerName\n");
 
+	string res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	res = ser->GetServerName(id);
+	sprintf_s(msg, 256, "%d:%s:", MSG_SEVRNAME_RETURN,res.c_str());
+
+	//sprintf_s(msg, 256, "%d:%s:", MSG_SEVRNAME_RETURN, "Invalid");
 }
 
 void Network::_GetServerPrice(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_GetServerPrice\n");
 
+	double res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	res = ser->GetServerPrice(id);
+	sprintf_s(msg, 256, "%d:%f:", MSG_SEVRPRICE_RETURN,res);
+
+	//sprintf_s(msg, 256, "%d:%f:", MSG_SEVRPRICE_RETURN, 1.1);
 }
 
 void Network::_SaveServerRecord(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_SaveServerRecord\n");
 
+	bool res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	serve_MSG sr;
+	sr.Deserialization(id);
+
+	res = ser->SaveServerRecord(sr);
+	if (res)
+	{
+		sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
+	}
+	else
+	{
+		sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_FAILED);
+	}
+
+	//sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
 }
 
 void Network::_GetProviderSum(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_GetProviderSum\n");
 
+	double res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	res = ser->GetProviderSum(id);
+	sprintf_s(msg, 256, "%d:%f:", MSG_PRODSUM_RETURN,res);
+
+	//sprintf_s(msg, 256, "%d:%f:", MSG_PRODSUM_RETURN, 2.1);
 }

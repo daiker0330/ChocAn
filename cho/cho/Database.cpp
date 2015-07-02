@@ -9,6 +9,19 @@ void Database::init()
 		puts("数据库连接成功！");
 	return;
 }
+
+//这俩还没实现======================}}}}}}}}}}}}}}}}}}}}}}}}}}}}__________!!!!!!!!!!!%$#
+string Database::get_spt_email(string id)
+{
+	return "fuck@bjut.edn.cn";
+}
+string Database::get_mem_email(string id)
+{
+	return "fuck@bjut.edu.cn";
+}
+
+
+
 //这里查询的是这个id的提供者是否存在，存在的话返回true，不存在则false
 bool Database::check_supporter_id(string id)  
 {

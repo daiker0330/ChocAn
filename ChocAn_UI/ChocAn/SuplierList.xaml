@@ -1,0 +1,8 @@
+﻿<Window x:Class="ChocAn.SuplierList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SuplierList" Height="285.652" Width="430.435">
+    <Grid>
+        <Label Content="这个正在做" />
+    </Grid>
+</Window>

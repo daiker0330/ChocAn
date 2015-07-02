@@ -9,8 +9,10 @@ using System.Threading;
 
 namespace ChocAnClient
 {
-    class RemoteProcessCall : IRemoteProcessCall
+    public class RemoteProcessCall : IRemoteProcessCall
     {
+        public RemoteProcessCall(){}
+
         //message type
         private static int MSG_NULL = 0x00;
         private static int MSG_SIGNIN_REQUEST = 0x10;
@@ -62,17 +64,25 @@ namespace ChocAnClient
             }
         }
 
-        public string ReceiveMessage()
+        public String[] ReceiveMessage()
         {
             string msg;
+            String[] recv = new String[2];
 
             int receiveLength = clientSocket.Receive(result);
 
             msg = Encoding.ASCII.GetString(result, 0, receiveLength);
 
-            Console.WriteLine("recv:" + msg);
+            char[] separator = { ':' };
+            String[] splitStrings = new String[5];
+            splitStrings = msg.Split(separator);
+            recv[0] = splitStrings[0];
+            recv[1] = splitStrings[1];
 
-            return msg;
+            Console.WriteLine("type:" + recv[0]);
+            Console.WriteLine("data:" + recv[1]);
+
+            return recv;
         }
 
         //interface
@@ -102,16 +112,19 @@ namespace ChocAnClient
         //返回: 登陆(true) / 失败(false)
         public bool SignIn(string id)
         {
-            string msg, recv;
-            msg = MSG_SIGNIN_REQUEST.ToString() + " " + id;
+            string msg;
+            msg = MSG_SIGNIN_REQUEST.ToString() + ":" + id;
             SendMessage(msg);
 
+            String[] recv;
             recv = ReceiveMessage();
-            
-            if (recv.Equals("false"))
+
+            if (recv[0].Equals(MSG_SIGNIN_SUCCESS.ToString()))
+                return true;
+            else if (recv[0].Equals(MSG_SIGNIN_FAILED.ToString()))
                 return false;
             else
-                return true;
+                return false;
         }
 
         //验证会员状态
@@ -120,7 +133,21 @@ namespace ChocAnClient
         //回复 : 会员有效(1) / 无效(0) / 暂停(-1)
         public int IsValid(string id)
         {
-            return 0;
+            string msg;
+            msg = MSG_ISVALID_REQUEST.ToString() + ":" + id;
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            if (recv[0].Equals(MSG_ISVALID_VALID.ToString()))
+                return 1;
+            else if (recv[0].Equals(MSG_ISVALID_INVALID.ToString()))
+                return 0;
+            else if (recv[0].Equals(MSG_ISVALID_SUSPEND.ToString()))
+                return -1;
+            else
+                return 0;
         }
 
         //获取服务名称
@@ -129,7 +156,16 @@ namespace ChocAnClient
         //回复 : 服务名称 / 不存在该服务(返回字符串"Invalid")
         public string GetServerName(string id)
         {
-            return "";
+            string msg;
+            msg = MSG_SEVRNAME_REQUEST.ToString() + ":" + id;
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            Console.WriteLine("*data:" + recv[1]);
+
+            return recv[1];
         }
 
         //获取服务费用
@@ -138,7 +174,14 @@ namespace ChocAnClient
         //回复 : 服务费用 / 不存在服务(返回 - 1)
         public double GetServerPrice(string id)
         {
-            return 0;
+            string msg;
+            msg = MSG_SEVRPRICE_REQUEST.ToString() + ":" + id;
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            return Convert.ToDouble(recv[1]);
         }
 
         //ChocAn记账
@@ -148,7 +191,19 @@ namespace ChocAnClient
         //回复 : 成功(true) / 失败(false)
         public bool SaveServerRecord(ServerRecord sr)
         {
-            return true;
+            string msg;
+            msg = MSG_SERVRECORD_REQUEST.ToString() + ":" + sr.Serialization();
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            if (recv[0].Equals(MSG_SERVRECORD_SUCCESS.ToString()))
+                return true;
+            else if (recv[0].Equals(MSG_SERVRECORD_FAILED.ToString()))
+                return false;
+            else
+                return false;
         }
 
         //获取本周费用合计
@@ -157,7 +212,14 @@ namespace ChocAnClient
         //回复 : 合计费用 / 提供者编号错误(返回 - 1)
         public double GetProviderSum(string id)
         {
-            return 0;
+            string msg;
+            msg = MSG_PRODSUM_REQUEST.ToString() + ":" + id;
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            return Convert.ToDouble(recv[1]);
         }
     }
 }

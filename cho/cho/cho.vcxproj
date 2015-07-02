@@ -21,7 +21,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -96,6 +96,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="DBAssistant.cpp" />
+    <ClCompile Include="MSG_Define.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="stdafx.cpp" />

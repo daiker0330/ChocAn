@@ -14,6 +14,10 @@ protected:
 	// //访问数据库的接口
 	DBAssistant access;
 public:
+	string get_spt_email(string id);
+	string get_mem_email(string id);
+	
+	
 	//总体修改，把char[]改为了string并把所有和时间相关的视图导出加入了起始时间参数
 
 	//修改bool check_supporter_id(char id[9]);  //这里查询的是这个id的提供者是否存在，存在的话返回true，不存在则false

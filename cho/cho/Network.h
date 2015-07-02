@@ -1,10 +1,13 @@
+#ifndef _NETWORK_H_ 
+#define _NETWORK_H_ 
+
 #pragma once
 #include "stdafx.h"
 #include <winsock2.h>
 #include <MSWSock.h>
 #include <vector>
 #include <iostream>
-
+#include "Server.h"
 
 using namespace std;
 
@@ -173,7 +176,7 @@ public:
 
 	//程序运行一开始时候被调用
 	//负责初始化网络模块
-	void Init();
+	void Init(Server* ser);
 
 	//电子邮件发送
 	//功能: 发送指定内容的邮件到指定邮箱
@@ -288,6 +291,9 @@ private:
 	// 判断客户端Socket是否已经断开
 	bool _IsSocketAlive(SOCKET s);
 
+	//过滤消息类型
+	char* FilterMessage(char* recv_msg);
+
 	//消息处理函数
 	void _Null(char* recv_msg, char* msg);
 	void _SignIn(char* recv_msg, char* msg);
@@ -320,5 +326,8 @@ private:
 	LPFN_GETACCEPTEXSOCKADDRS    m_lpfnGetAcceptExSockAddrs; 
 
 	static string _msg;
+
+	Server* ser;
 };
 
+#endif 
