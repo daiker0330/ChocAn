@@ -5,6 +5,6 @@
     <Grid>
         <Button Content="SignIn" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
         <Button Content="Init" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
-
+        <Button Content="IsValid" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_2"/>
     </Grid>
 </Window>

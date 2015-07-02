@@ -51,7 +51,19 @@ namespace ChocAnClient
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            network.ReceiveMessage();
+            int recv = network.IsValid("123456789");
+            if (recv == 1)
+            {
+                ((Button)sender).Content = "IsValid(" + recv.ToString() + ")";
+            }
+            else if (recv == 0)
+            {
+                ((Button)sender).Content = "IsValid(" + recv.ToString() + ")";
+            }
+            else if (recv == -1)
+            {
+                ((Button)sender).Content = "IsValid(" + recv.ToString() + ")";
+            }
         }
     }
 }
