@@ -288,9 +288,6 @@ private:
 	// 判断客户端Socket是否已经断开
 	bool _IsSocketAlive(SOCKET s);
 
-	//过滤消息类型
-	char* FilterMessage(char* recv_msg);
-
 	//消息处理函数
 	void _Null(char* recv_msg, char* msg);
 	void _SignIn(char* recv_msg, char* msg);

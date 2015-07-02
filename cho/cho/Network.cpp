@@ -42,10 +42,6 @@ Network::~Network(void)
 void Network::SetIPAddress()
 {
 	printf("Please Enter the IP address( l = localhost ):\n");
-
-#ifdef _DEBUG
-	m_strIP = "127.0.0.1";
-#else
 	string ip_add;
 	cin >> ip_add;
 	if (ip_add == "l")
@@ -56,7 +52,6 @@ void Network::SetIPAddress()
 	{
 		m_strIP = ip_add;
 	}
-#endif // _DEBUG
 
 	return;
 }
@@ -602,8 +597,6 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 
 	int type=0;
 
-	sscanf_s(recv_msg, "%d", &type);
-
 	printf("type:%x\n", type);
 
 	//处理消息
@@ -857,18 +850,6 @@ bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 	}
 }
 
-char* Network::FilterMessage(char* recv_msg)
-{
-	char* p;
-	p = recv_msg;
-	while (*p != ':')
-	{
-		p++;
-	}
-	p++;
-	return p;
-}
-
 //====================================================================================
 //
 //				       服务器所需函数定义
@@ -887,7 +868,7 @@ void Network::_Null(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_Null\n");
 
-	sprintf_s(msg, 256, "null");
+	sprintf_s(msg, 256, "false");
 
 }
 
