@@ -62,17 +62,22 @@ namespace ChocAnClient
             }
         }
 
-        public string ReceiveMessage()
+        public String[] ReceiveMessage()
         {
             string msg;
+            String[] recv = new String[2];
 
             int receiveLength = clientSocket.Receive(result);
 
             msg = Encoding.ASCII.GetString(result, 0, receiveLength);
 
-            
+            char[] separator = { ':' };
+            String[] splitStrings = new String[5];
+            splitStrings = msg.Split(separator);
+            recv[0] = splitStrings[0];
+            recv[1] = splitStrings[1];
 
-            return msg;
+            return recv;
         }
 
         //interface
@@ -102,15 +107,16 @@ namespace ChocAnClient
         //返回: 登陆(true) / 失败(false)
         public bool SignIn(string id)
         {
-            string msg, recv;
+            string msg;
             msg = MSG_SIGNIN_REQUEST.ToString() + ":" + id;
             SendMessage(msg);
 
+            String[] recv;
             recv = ReceiveMessage();
 
-            if (recv.Contains(MSG_SIGNIN_SUCCESS.ToString()))
+            if (recv[0].Equals(MSG_SIGNIN_SUCCESS.ToString()))
                 return true;
-            else if (recv.Contains(MSG_SIGNIN_FAILED.ToString()))
+            else if (recv[0].Equals(MSG_SIGNIN_FAILED.ToString()))
                 return false;
             else
                 return false;
@@ -122,17 +128,18 @@ namespace ChocAnClient
         //回复 : 会员有效(1) / 无效(0) / 暂停(-1)
         public int IsValid(string id)
         {
-            string msg, recv;
+            string msg;
             msg = MSG_ISVALID_REQUEST.ToString() + ":" + id;
             SendMessage(msg);
 
+            String[] recv;
             recv = ReceiveMessage();
 
-            if (recv.Contains(MSG_ISVALID_VALID.ToString()))
+            if (recv[0].Equals(MSG_ISVALID_VALID.ToString()))
                 return 1;
-            else if (recv.Contains(MSG_ISVALID_INVALID.ToString()))
+            else if (recv[0].Equals(MSG_ISVALID_INVALID.ToString()))
                 return 0;
-            else if (recv.Contains(MSG_ISVALID_SUSPEND.ToString()))
+            else if (recv[0].Equals(MSG_ISVALID_SUSPEND.ToString()))
                 return -1;
             else
                 return 0;
@@ -144,7 +151,14 @@ namespace ChocAnClient
         //回复 : 服务名称 / 不存在该服务(返回字符串"Invalid")
         public string GetServerName(string id)
         {
-            return "";
+            string msg;
+            msg = MSG_SEVRNAME_REQUEST.ToString() + ":" + id;
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            return recv[1];
         }
 
         //获取服务费用
@@ -153,7 +167,14 @@ namespace ChocAnClient
         //回复 : 服务费用 / 不存在服务(返回 - 1)
         public double GetServerPrice(string id)
         {
-            return 0;
+            string msg;
+            msg = MSG_SEVRPRICE_REQUEST.ToString() + ":" + id;
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            return Convert.ToDouble(recv[1]);
         }
 
         //ChocAn记账
@@ -163,7 +184,19 @@ namespace ChocAnClient
         //回复 : 成功(true) / 失败(false)
         public bool SaveServerRecord(ServerRecord sr)
         {
-            return true;
+            string msg;
+            msg = MSG_SERVRECORD_REQUEST.ToString() + ":" + sr.Serialization();
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            if (recv[0].Equals(MSG_SERVRECORD_SUCCESS.ToString()))
+                return true;
+            else if (recv[0].Equals(MSG_SERVRECORD_FAILED.ToString()))
+                return false;
+            else
+                return false;
         }
 
         //获取本周费用合计
@@ -172,7 +205,14 @@ namespace ChocAnClient
         //回复 : 合计费用 / 提供者编号错误(返回 - 1)
         public double GetProviderSum(string id)
         {
-            return 0;
+            string msg;
+            msg = MSG_PRODSUM_REQUEST.ToString() + ":" + id;
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            return Convert.ToDouble(recv[1]);
         }
     }
 }

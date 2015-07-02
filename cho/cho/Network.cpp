@@ -957,22 +957,80 @@ void Network::_GetServerName(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_GetServerName\n");
 
+	string res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	//res = string GetServerName(id);
+	//sprintf_s(msg, 256, "%d:%s", MSG_SEVRNAME_RETURN,res.c_str());
+
+	sprintf_s(msg, 256, "%d:%s", MSG_SEVRNAME_RETURN, "Invalid");
 }
 
 void Network::_GetServerPrice(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_GetServerPrice\n");
 
+	double res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	//res = GetServerPrice(id);
+	//sprintf_s(msg, 256, "%d:%f", MSG_SEVRPRICE_RETURN,res);
+
+	sprintf_s(msg, 256, "%d:%f", MSG_SEVRPRICE_RETURN, 1.0);
 }
 
 void Network::_SaveServerRecord(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_SaveServerRecord\n");
 
+	bool res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	//server_MSG sr;
+	//sr.Deserialization(id);
+
+	//res = SaveServerRecord(sr);
+	//if (res)
+	//{
+	//	sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
+	//}
+	//else
+	//{
+	//	sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_FAILED);
+	//}
+
+	sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
 }
 
 void Network::_GetProviderSum(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_GetProviderSum\n");
 
+	double res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	//res = GetProviderSum(id);
+	//sprintf_s(msg, 256, "%d:%f", MSG_PRODSUM_RETURN,res);
+
+	sprintf_s(msg, 256, "%d:%f", MSG_PRODSUM_RETURN, 1.0);
 }
