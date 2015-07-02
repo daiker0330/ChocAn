@@ -40,6 +40,7 @@ namespace ChocAnClient
             else
             {
                 result = "SignIn(true)";
+                ((Button)sender).Content = result;
             }
             
         }
