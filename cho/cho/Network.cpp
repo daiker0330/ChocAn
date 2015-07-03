@@ -44,11 +44,12 @@ Network::~Network(void)
 
 void Network::SetIPAddress()
 {
-	printf("Please Enter the IP address( l = localhost ):\n");
+	
 
 #ifdef _DEBUG
 	m_strIP = "127.0.0.1";
 #else
+	printf("Please Enter the IP address( l = localhost ):\n");
 	string ip_add;
 	cin >> ip_add;
 	if (ip_add == "l")
@@ -738,8 +739,6 @@ void Network::_ClearContextList()
 void Network::Init(Server* ser)
 {
 	SetIPAddress();
-
-	printf("Enter the 'p' to end the Network module.\n");
 
 	if (false == LoadSocketLib())
 	{

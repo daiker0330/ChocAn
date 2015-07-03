@@ -58,6 +58,7 @@ void Server::run()
 		}
 		else
 		{
+			net->Stop();
 			break;
 		}
 	}
