@@ -166,6 +166,8 @@ int main()
 	ser.init();
 	ser.run();
 
+	//ÓÊ¼ş²âÊÔ
+	//network.send_email("jsj120700@126.com", "Test", "123", "");
 
 	while (1)
 	{
