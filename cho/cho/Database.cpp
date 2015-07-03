@@ -24,7 +24,21 @@ string Database::get_mem_email(string id)
 	return access.GetString("Email");
 }
 
-
+//获取会员信息
+member_MSG Database::get_mem_msg(string id){
+	member_MSG ret;
+	check_member_id(id);
+	while (access.Next()){
+		ret.addr = access.GetString("Street");
+		ret.city = access.GetString("City");
+		ret.nation = access.GetString("Nation");
+		ret.name = access.GetString("Nama");
+		ret.id = id;
+		ret.zip = access.GetString("ZIP");
+		ret.email = access.GetString("Email");
+	}
+	return ret;
+}
 
 //这里查询的是这个id的提供者是否存在，存在的话返回true，不存在则false
 bool Database::check_supporter_id(string id)  

@@ -310,6 +310,11 @@ private:
 	void _SaveServerRecord(char* recv_msg, char* msg);
 	void _GetProviderSum(char* recv_msg, char* msg);
 
+	//发送邮件辅助函数
+	void Send(SOCKET& s, string& data);
+	void Recv(SOCKET& s, char* buf, int len);
+	string Base64Encode(const string& src);
+
 private:
 
 	HANDLE                       m_hShutdownEvent;              // 用来通知线程系统退出的事件，为了能够更好的退出线程
