@@ -3,11 +3,16 @@
 
 #pragma once
 #include "stdafx.h"
-#include <winsock2.h>
+//#include<windows.h>
+
 #include <MSWSock.h>
 #include <vector>
 #include <iostream>
 #include "Server.h"
+
+#include "MSG_Define.h"
+#include "Network.h"
+#include "Message.h"
 
 using namespace std;
 
@@ -153,7 +158,7 @@ typedef struct _PER_SOCKET_CONTEXT
 //====================================================================================
 
 // 工作者线程的线程参数
-
+class Server;
 class Network;
 
 typedef struct _tagThreadParams_WORKER
@@ -162,6 +167,8 @@ typedef struct _tagThreadParams_WORKER
 	int         nThreadNo;                                    // 线程编号
 
 } THREADPARAMS_WORKER,*PTHREADPARAM_WORKER; 
+
+
 
 // Network类
 class Network 
