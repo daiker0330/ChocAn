@@ -17,7 +17,8 @@ public:
 	//需要保证输入是正确的
 	string get_spt_email(string id);
 	string get_mem_email(string id);
-	
+	//获取提供者信息
+	member_MSG get_mem_msg(string id);
 	
 	//总体修改，把char[]改为了string并把所有和时间相关的视图导出加入了起始时间参数
 
