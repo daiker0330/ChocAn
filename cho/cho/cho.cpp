@@ -150,7 +150,7 @@ int main()
 	
 
 
-	Network network;
+	//Network network;
 
 	Client clt;
 	Server ser;
@@ -159,14 +159,14 @@ int main()
 	db.init();
 	//dbCheck();//数据库接口测试
 	
-	network.Init(&ser);
+	//network.Init(&ser);
 
 	clt.init();
 	clt.run();
 	ser.init();
 	ser.run();
 
-
+	/*
 	while (1)
 	{
 		char s;
@@ -177,7 +177,7 @@ int main()
 			break;
 		}
 	}
-	
+	*/
 	return 0;
 }
 

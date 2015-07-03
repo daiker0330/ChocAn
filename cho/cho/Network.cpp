@@ -1,6 +1,9 @@
 #pragma once
 #include "stdafx.h"
 
+#include "MSG_Define.h"
+#include "Network.h"
+#include "Message.h"
 
 
 #define WORKER_THREADS_PER_PROCESSOR 2

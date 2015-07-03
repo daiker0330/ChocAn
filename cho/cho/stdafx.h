@@ -14,9 +14,8 @@
 #include <iostream>
 #include <string>
 
-#include "MSG_Define.h"
-#include "Network.h"
-#include "Message.h"
+#include <winsock2.h>
+#include<windows.h>
 
 // TODO: 在此处引用程序需要的其他头文件
 
