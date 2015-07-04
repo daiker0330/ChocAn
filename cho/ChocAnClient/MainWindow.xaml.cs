@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace ChocAnClient
 {
@@ -28,6 +29,8 @@ namespace ChocAnClient
         public bool full_small = true;
         public double w_left = 0;
         public double w_top = 0;
+        public string suplier = "";
+        public const int MemberID_length = 8;
         /*****************UI******************************/
         public MainWindow()
         {
@@ -95,6 +98,10 @@ namespace ChocAnClient
             caozuo.Visibility = System.Windows.Visibility.Visible;
             deng.Visibility = System.Windows.Visibility.Hidden;
             JiZhang.Visibility = System.Windows.Visibility.Hidden;
+            Date.Text = System.DateTime.Now.ToString();
+            ToDate.Text = System.DateTime.Now.ToString();
+            FWDate.Text = System.DateTime.Now.ToString();
+            expander.IsEnabled= false ;
         }
         private void SignIn_Button(object sender, RoutedEventArgs e)
         {
@@ -115,6 +122,13 @@ namespace ChocAnClient
             caozuo.Visibility = System.Windows.Visibility.Visible;
             deng.Visibility = System.Windows.Visibility.Hidden;
             JiZhang.Visibility = System.Windows.Visibility.Hidden;
+
+            Hui.Text = "";
+            Date.Text = System.DateTime.Now.ToString();
+            fuWuText.Text = "";
+            NameFu.Content = "";
+            Fee.Content = "0";
+            Zhu.Text = "";
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -122,6 +136,13 @@ namespace ChocAnClient
             caozuo.Visibility = System.Windows.Visibility.Visible;
             deng.Visibility = System.Windows.Visibility.Hidden;
             JiZhang.Visibility = System.Windows.Visibility.Hidden;
+
+            ToDate.Text = System.DateTime.Now.ToString();
+            FWDate.Text = System.DateTime.Now.ToString();
+            HYM.Text = "";
+            HYH.Text = "";
+            FWDM.Text = "";
+            Fei.Text = "";
         }
 
         private void exit_MouseDown(object sender, MouseButtonEventArgs e)
@@ -155,22 +176,127 @@ namespace ChocAnClient
             SuplierList sup = new SuplierList();
             sup.Owner = this;
             sup.ShowDialog();
+            fuWuText.Text = sup.tNumber;
         }
 
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("提交到服务器");
+            ServerRecord server = new ServerRecord();
+            DateTime time = new DateTime();
+            time = Convert.ToDateTime(Date.Text);
+            server.Y = time.Year;
+            server.M = time.Month;
+            server.D = time.Day;
+            time = System.DateTime.Now;
+            server.yy = time.Year;
+            server.mm = time.Month;
+            server.dd = time.Day;
+            server.h = time.Hour;
+            server.m = time.Minute;
+            server.s = time.Second;
+            server.spt_id = suplier;
+            server.mem_id = Hui.Text;
+            server.server_id = fuWuText.Text;
+            server.other = Zhu.Text;
+          // MessageBox.Show(server.Serialization());
+         if(network.SaveServerRecord(server))
+         {
+             MessageBox.Show("记账成功");
+         }
+         else
+         {
+             MessageBox.Show("记账失败");
+         }
         }
 
         private void TiJiao_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("存盘");
+            FileStream fs = new FileStream("../../tip.txt", FileMode.Open, FileAccess.Write);
+            StreamWriter MyStreamWite = new StreamWriter(fs);
+            string str = "";
+            str+= ToDate.Text;
+            str += "^";
+            str += FWDate.Text;
+            str += "^";
+            str += HYM.Text;
+            str += "^";
+            str += HYH.Text;
+            str += "^";
+            str += FWDM.Text;
+            str += "^";
+            str += Fei.Text;
+            str += "^";
+            MyStreamWite.WriteLine(str);
+            MyStreamWite.Close();
+           
         }
 
         private void button3_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("给服务器发消息发邮件");
+           // MessageBox.Show("给服务器发消息发邮件");
+            if(network.GetProviderSum(suplier)==-1)
+            {
+                MessageBox.Show("发送失败");
+            }
+            else
+            {
+                MessageBox.Show("发送成功");
+            }
+        }
 
+        private void w1_Loaded(object sender, RoutedEventArgs e)
+        {
+            network.init();
+            Login logo = new Login(network); w1.Visibility = System.Windows.Visibility.Hidden;
+
+            logo.ShowDialog();
+           // MessageBox.Show(logo.login.Text);
+            suplier = logo.login.Text;
+            if (logo.exitbutton == true)
+            {
+                Application.Current.Shutdown();
+            }
+            w1.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void Hui_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(Hui.Text.Length==MemberID_length)
+            {
+                int state=-10;
+                state=network.IsValid(Hui.Text);
+                if (state == 1)
+                {
+                    expander.IsEnabled = true;
+                    Result.Content = "Validated";
+                }
+                else if (state == 0)
+                {
+                    expander.IsEnabled = false;
+                    Result.Content = "Invalid number";
+                }
+                else if(state==-1)
+                {
+                    expander.IsEnabled = false;
+                    Result.Content = "Member suspended";
+                }
+                else
+                {
+                    expander.IsEnabled = false;
+                    Result.Content = "传回的数不对";
+                }
+            }
+        }
+
+        private void fuWuText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+             if(fuWuText.Text.Length==6)
+             {
+                 NameFu.Content = network.GetServerName(fuWuText.Text);
+                 Fee.Content = network.GetServerPrice(fuWuText.Text);
+             }
         }
         /**************************UI的代码******************************************************************/
     }

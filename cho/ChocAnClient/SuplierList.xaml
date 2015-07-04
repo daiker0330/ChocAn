@@ -3,6 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SuplierList" Height="300" Width="300">
     <Grid>
-        
+        <ListView x:Name="l1" SelectionChanged="l1_SelectionChanged">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True">
+                    <GridViewColumn Header="Service" DisplayMemberBinding="{Binding Path=Service}" />
+                    <GridViewColumn Header="Number"  DisplayMemberBinding="{Binding Path=Number}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
