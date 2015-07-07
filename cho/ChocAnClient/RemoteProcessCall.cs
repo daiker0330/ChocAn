@@ -36,6 +36,7 @@ namespace ChocAnClient
         private int port = 12345;
         private IPAddress ip = IPAddress.Parse("127.0.0.1");
         private Socket clientSocket;
+        private bool isInit = false;
 
         //message
         private static byte[] result = new byte[1024];
@@ -54,6 +55,10 @@ namespace ChocAnClient
         {
             try
             {
+                if(!isInit)
+                {
+                    init();
+                }
                 clientSocket.Send(Encoding.ASCII.GetBytes(_msg));
                 Console.WriteLine("向服务器发送消息：{0}" + _msg);
             }
@@ -89,20 +94,30 @@ namespace ChocAnClient
 
         //程序运行一开始时候被调用
         //负责初始化网络模块
-        public void init()
+        public bool init()
         {
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
                 clientSocket.Connect(new IPEndPoint(ip, port)); //配置服务器IP与端口
-                Console.WriteLine("连接服务器成功");
-                SendMessage("connect");
-                ReceiveMessage();
+                if (clientSocket.Connected)
+                {
+                    Console.WriteLine("连接服务器成功");
+                    SendMessage("connect");
+                    ReceiveMessage();
+                    isInit = true;
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("连接服务器失败！");
+                    return false;
+                }
             }
             catch
             {
-                Console.WriteLine("连接服务器失败，请按回车键退出！");
-                return;
+                Console.WriteLine("连接服务器失败！");
+                return false;
             }
         }
 
