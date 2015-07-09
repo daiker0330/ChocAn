@@ -55,10 +55,10 @@ namespace ChocAnClient
         {
             try
             {
-                if(!isInit)
-                {
-                    init();
-                }
+                //if(!isInit)
+                //{
+                //    init();
+                //}
                 clientSocket.Send(Encoding.ASCII.GetBytes(_msg));
                 Console.WriteLine("向服务器发送消息：{0}" + _msg);
             }

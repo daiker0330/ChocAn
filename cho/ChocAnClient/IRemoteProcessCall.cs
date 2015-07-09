@@ -15,7 +15,7 @@ namespace ChocAnClient
 
 		//程序运行一开始时候被调用
 		//负责初始化网络模块
-        void init(); 
+        bool init(); 
 	
 		//提供者登陆终端
 		//功能: 终端开机后服务提供者输入他的提供者编号
@@ -53,5 +53,11 @@ namespace ChocAnClient
 		//发送 : 提供者编号
 		//回复 : 合计费用 / 提供者编号错误(返回 - 1)
         double GetProviderSum(string id);
+
+        //设置IP地址
+        void SetIp(string _ip);
+
+        //设置端口号
+        void SetPort(int _port);
     }
 }
