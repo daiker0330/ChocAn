@@ -306,6 +306,7 @@ private:
 	void _SignIn(char* recv_msg, char* msg);
 	void _IsValid(char* recv_msg, char* msg);
 	void _GetServerName(char* recv_msg, char* msg);
+	void _GetUserName(char* recv_msg, char* msg);
 	void _GetServerPrice(char* recv_msg, char* msg);
 	void _SaveServerRecord(char* recv_msg, char* msg);
 	void _GetProviderSum(char* recv_msg, char* msg);

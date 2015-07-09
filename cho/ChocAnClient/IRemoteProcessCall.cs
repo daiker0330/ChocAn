@@ -24,10 +24,16 @@ namespace ChocAnClient
         bool SignIn(string id);
 
 		//验证会员状态
-		//功能 : 验证成员号码状态
+        //功能 : 验证会员号码状态
 		//发送 : 会员编号
 		//回复 : 会员有效(1) / 无效(0) / 暂停(-1)
         int IsValid(string id);
+
+        //获取会员名称
+        //功能 : 根据输入的会员号码返回会员名称
+        //发送 : 会员号码
+        //回复 : 会员名称 / 不存在该服务(返回字符串"Invalid")
+        string GetUserName(string id);
 
 		//获取服务名称
 		//功能 : 根据输入的服务代号返回服务名称

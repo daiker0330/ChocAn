@@ -648,6 +648,11 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 		_GetProviderSum(recv_msg, msg);
 		break;
 	}
+	case MSG_USERNAME_REQUEST:
+	{
+		_GetUserName(recv_msg, msg);
+		break;
+	}
 	}
 
 	//»Ø¸´ÏûÏ¢
@@ -1076,6 +1081,24 @@ void Network::_IsValid(char* recv_msg, char* msg)
 	}
 
 	//sprintf_s(msg, 256, "%d:", MSG_ISVALID_SUSPEND);
+}
+
+void Network::_GetUserName(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_GetUserName\n");
+
+	string res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	//res = ser->GetUserName(id);
+	//sprintf_s(msg, 256, "%d:%s:", MSG_SEVRNAME_RETURN, res.c_str());
+
+	sprintf_s(msg, 256, "%d:%s:", MSG_USERNAME_RETURN, "Invalid");
 }
 
 void Network::_GetServerName(char* recv_msg, char* msg)

@@ -27,6 +27,9 @@
 #define MSG_PRODSUM_REQUEST		0x60
 #define MSG_PRODSUM_RETURN		0x61
 
+#define MSG_USERNAME_REQUEST	0x70
+#define MSG_USERNAME_RETURN		0x71
+
 class CMessage
 {
 public:

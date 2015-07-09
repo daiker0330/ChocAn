@@ -31,6 +31,8 @@ namespace ChocAnClient
         private static int MSG_SERVRECORD_FAILED = 0x52;
         private static int MSG_PRODSUM_REQUEST = 0x60;
         private static int MSG_PRODSUM_RETURN = 0x61;
+        private static int MSG_USERNAME_REQUEST = 0x70;
+        private static int MSG_USERNAME_RETURN	= 0x71;
 
         //setting
         private int port = 12345;
@@ -163,6 +165,24 @@ namespace ChocAnClient
                 return -1;
             else
                 return 0;
+        }
+
+        //获取会员名称
+        //功能 : 根据输入的会员号码返回会员名称
+        //发送 : 会员号码
+        //回复 : 会员名称 / 不存在该服务(返回字符串"Invalid")
+        public string GetUserName(string id)
+        {
+            string msg;
+            msg = MSG_USERNAME_REQUEST.ToString() + ":" + id;
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
+
+            Console.WriteLine("*data:" + recv[1]);
+
+            return recv[1];
         }
 
         //获取服务名称
