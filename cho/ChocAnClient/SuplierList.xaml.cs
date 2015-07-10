@@ -51,6 +51,7 @@ namespace ChocAnClient
             }
         }
         public string tNumber;
+        public List<Suppler> list = new List<Suppler>();
         public SuplierList()
         {
             InitializeComponent();
@@ -68,7 +69,7 @@ namespace ChocAnClient
             int count = 1;
             string Ser = "";
             string N = "";
-            List<Suppler> list = new List<Suppler>();
+            
             Suppler supe;
             // Ser = strline;
             while (strline != null)
@@ -96,8 +97,40 @@ namespace ChocAnClient
             Suppler test = l1.SelectedItem as Suppler;
             if (test != null && test is Suppler)
             {
-                MessageBox.Show("Service:" + test.Service + "\n\n" + "Number:" + test.Number);
+       //         MessageBox.Show("Service:" + test.Service + "\n\n" + "Number:" + test.Number);
                 tNumber = test.Number;
+                fuH.Content = test.Number;
+            }
+        }
+
+       
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           if(fuH.Content!="")
+           {
+               tNumber = fuH.Content.ToString();
+               
+           }
+           l.Close();
+        }
+
+        private void FM_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (FM.Text.Length == 7)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (FM.Text == list[i].Service)
+                    {
+                        fuH.Content = list[i].Number;
+                        break;
+                    }
+                    else
+                    {
+                        fuH.Content = "";
+                    }
+                }
             }
         }
     }

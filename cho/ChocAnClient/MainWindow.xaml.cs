@@ -13,6 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Windows.Media.Animation;
+
+using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace ChocAnClient
 {
@@ -23,7 +28,7 @@ namespace ChocAnClient
 
     public partial class MainWindow : Window
     {
-        string result;
+        
         RemoteProcessCall network = new RemoteProcessCall();
         /*****************UI*******************************/
         public bool full_small = true;
@@ -31,6 +36,10 @@ namespace ChocAnClient
         public double w_top = 0;
         public string suplier = "";
         public const int MemberID_length = 8;
+        bool re;
+        string result;
+        string Ip;
+        int Port;
         /*****************UI******************************/
         public MainWindow()
         {
@@ -94,14 +103,26 @@ namespace ChocAnClient
         /**************************以下是UI的代码******************************************************************/
         public void InitWindowLocalInCenter()
         {
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+           // WindowStartupLocation = WindowStartupLocation.CenterScreen;
             caozuo.Visibility = System.Windows.Visibility.Visible;
             deng.Visibility = System.Windows.Visibility.Hidden;
             JiZhang.Visibility = System.Windows.Visibility.Hidden;
             Date.Text = System.DateTime.Now.ToString();
-            ToDate.Text = System.DateTime.Now.ToString();
-            FWDate.Text = System.DateTime.Now.ToString();
             expander.IsEnabled= false ;
+            w1.Height = SystemParameters.MaximizedPrimaryScreenHeight - 8d;
+            w1.Width = SystemParameters.MaximizedPrimaryScreenWidth - 8d;
+            WindowStartupLocation = WindowStartupLocation.Manual;
+            w1.Left = 0; w1.Top = 0;
+           re = true;
+
+           FileStream fs = new FileStream("../../IpPort.ini", FileMode.Open, FileAccess.Read);
+
+           StreamReader MyStreamReader = new StreamReader(fs);
+
+           Ip = MyStreamReader.ReadLine();
+           string P = MyStreamReader.ReadLine();
+           Port=Convert.ToInt32(P);
+
         }
         private void SignIn_Button(object sender, RoutedEventArgs e)
         {
@@ -115,6 +136,20 @@ namespace ChocAnClient
             caozuo.Visibility = System.Windows.Visibility.Hidden;
             deng.Visibility = System.Windows.Visibility.Hidden;
             JiZhang.Visibility = System.Windows.Visibility.Visible;
+            OleDbConnection con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=../../QingDan.mdb");
+            con.Open();
+
+            string sql = "select * from FeeList where 提供者ID='";
+            sql += suplier;
+            sql += "'";
+            OleDbDataAdapter ad = new OleDbDataAdapter(sql, con);
+
+            DataSet ds = new DataSet();
+
+            ad.Fill(ds, "Sum");
+            data.ItemsSource = ds.Tables[0].DefaultView;
+
+            DataRowView selectItem = data.Items[0] as DataRowView;
         }
 
         private void BackHome_Button(object sender, RoutedEventArgs e)
@@ -123,12 +158,17 @@ namespace ChocAnClient
             deng.Visibility = System.Windows.Visibility.Hidden;
             JiZhang.Visibility = System.Windows.Visibility.Hidden;
 
+
             Hui.Text = "";
+            HuiName.Text = "";
             Date.Text = System.DateTime.Now.ToString();
             fuWuText.Text = "";
             NameFu.Content = "";
             Fee.Content = "0";
             Zhu.Text = "";
+            Result.Content = "";
+            expander.IsEnabled = false;
+            expander.IsExpanded = false;
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -137,12 +177,7 @@ namespace ChocAnClient
             deng.Visibility = System.Windows.Visibility.Hidden;
             JiZhang.Visibility = System.Windows.Visibility.Hidden;
 
-            ToDate.Text = System.DateTime.Now.ToString();
-            FWDate.Text = System.DateTime.Now.ToString();
-            HYM.Text = "";
-            HYH.Text = "";
-            FWDM.Text = "";
-            Fei.Text = "";
+            
         }
 
         private void exit_MouseDown(object sender, MouseButtonEventArgs e)
@@ -152,7 +187,7 @@ namespace ChocAnClient
 
         private void fullScreen_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (full_small)
+            if (!full_small)
             {
                 w1.Height = SystemParameters.MaximizedPrimaryScreenHeight - 8d;
                 w1.Width = SystemParameters.MaximizedPrimaryScreenWidth - 8d;
@@ -178,7 +213,104 @@ namespace ChocAnClient
             sup.ShowDialog();
             fuWuText.Text = sup.tNumber;
         }
+        public void Write_to_Access(ServerRecord server)
+        {
+            OleDbConnection con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=../../QingDan.mdb");
+            con.Open();
 
+            OleDbDataAdapter adapter = new OleDbDataAdapter();
+            OleDbCommand command;
+            DateTime d = System.DateTime.Now;
+            DateTime p = System.DateTime.Now;
+            command = new OleDbCommand(
+                "INSERT INTO tt(记账日期,服务日期,会员ID,服务ID,费用,会员名,注释,提供者ID)" +
+                "VALUES(?,?,?,?,?,?,?,?)", con);
+            command.Parameters.Add(
+                "记账日期", OleDbType.DBTimeStamp, 20, "记账日期");
+            command.Parameters.Add(
+                "服务日期", OleDbType.DBTimeStamp, 20, "服务日期");
+            command.Parameters.Add(
+                "会员ID", OleDbType.VarChar, 9, "会员ID");
+            command.Parameters.Add(
+                "服务ID", OleDbType.VarChar, 6, "服务ID");
+            command.Parameters.Add(
+                "费用", OleDbType.Double, 5, "费用");
+            command.Parameters.Add(
+                "会员名", OleDbType.VarChar, 15, "会员名");
+            command.Parameters.Add(
+                "注释",OleDbType.VarChar,100,"注释");
+            adapter.InsertCommand = command;
+            command.Parameters.Add(
+                "提供者ID", OleDbType.VarChar, 9, "提供者ID");
+          
+            string Str = "INSERT INTO FeeList(记账日期,服务日期,会员ID,服务ID,费用,会员名,注释,提供者ID) VALUES(";
+
+            Str += "'";
+            Str += server.yy.ToString();
+            Str += "-";
+            Str += server.mm.ToString();
+            Str += "-";
+            Str += server.dd.ToString();
+            Str += " ";
+            Str += server.h.ToString();
+            Str += ":";
+            Str += server.m.ToString();
+            Str += ":";
+            Str += server.s.ToString();
+            Str += "'";
+
+            Str += ",";
+
+            Str += "'";
+            Str += server.Y.ToString();
+            Str += "-";
+            Str += server.M.ToString();
+            Str += "-";
+            Str += server.D.ToString();
+            Str += "'";
+
+            Str += ",";
+
+            Str += "'";
+            Str += server.mem_id;
+            Str += "'";
+
+            Str += ",";
+
+            Str += "'";
+            Str += server.server_id;
+            Str += "'";
+
+            Str += ",";
+
+            Str += Fee.Content;
+
+            Str += ",";
+
+            Str += "'";
+            Str += HuiName.Text;
+            Str += "'";
+
+            Str += ",";
+
+            Str += "'";
+            Str += server.other;
+            Str += "'";
+
+            Str += ",";
+
+            Str += "'";
+            Str += server.spt_id;
+            Str += "'";
+
+            Str += ")";
+
+           // MessageBox.Show(Str);
+
+            adapter.InsertCommand.CommandText = Str;
+            adapter.InsertCommand.Connection = con;
+            adapter.InsertCommand.ExecuteNonQuery();
+        }
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("提交到服务器");
@@ -200,36 +332,34 @@ namespace ChocAnClient
             server.server_id = fuWuText.Text;
             server.other = Zhu.Text;
           // MessageBox.Show(server.Serialization());
+            Write_to_Access(server);
          if(network.SaveServerRecord(server))
          {
              MessageBox.Show("记账成功");
+             HuiName.Text = "";
+             Hui.Text = "";
+             Date.Text = System.DateTime.Now.ToString();
+             fuWuText.Text = "";
+             NameFu.Content = "";
+             Fee.Content = "0";
+             Zhu.Text = "";
+             Result.Content = "";
+             expander.IsEnabled = false;
+             expander.IsExpanded = false;
+
          }
          else
          {
              MessageBox.Show("记账失败");
          }
+
+         
         }
 
         private void TiJiao_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("存盘");
-            FileStream fs = new FileStream("../../tip.txt", FileMode.Open, FileAccess.Write);
-            StreamWriter MyStreamWite = new StreamWriter(fs);
-            string str = "";
-            str+= ToDate.Text;
-            str += "^";
-            str += FWDate.Text;
-            str += "^";
-            str += HYM.Text;
-            str += "^";
-            str += HYH.Text;
-            str += "^";
-            str += FWDM.Text;
-            str += "^";
-            str += Fei.Text;
-            str += "^";
-            MyStreamWite.WriteLine(str);
-            MyStreamWite.Close();
+          
            
         }
 
@@ -249,11 +379,16 @@ namespace ChocAnClient
         private void w1_Loaded(object sender, RoutedEventArgs e)
         {
             network.init();
-            Login logo = new Login(network); w1.Visibility = System.Windows.Visibility.Hidden;
+            network.SetIp(Ip);
+            network.SetPort(Port);
+         //  re= network.init();
+            Login logo = new Login(network,re); w1.Visibility = System.Windows.Visibility.Hidden;
 
             logo.ShowDialog();
            // MessageBox.Show(logo.login.Text);
             suplier = logo.login.Text;
+            D.Content = suplier;
+            D.Content += ":注销";
             if (logo.exitbutton == true)
             {
                 Application.Current.Shutdown();
@@ -263,6 +398,24 @@ namespace ChocAnClient
 
         private void Hui_TextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBox textBox = sender as TextBox;
+            TextChange[] change = new TextChange[e.Changes.Count];
+            e.Changes.CopyTo(change, 0);
+
+            int offset = change[0].Offset;
+            if (change[0].AddedLength > 0)
+            {
+                double num = 0;
+                if (!Double.TryParse(textBox.Text, out num))
+                {
+                    textBox.Text = textBox.Text.Remove(offset, change[0].AddedLength);
+                    textBox.Select(offset, 0);
+                }
+            }
+
+
+
+
             if(Hui.Text.Length==MemberID_length)
             {
                 int state=-10;
@@ -271,6 +424,8 @@ namespace ChocAnClient
                 {
                     expander.IsEnabled = true;
                     Result.Content = "Validated";
+                   // HuiName.Text = network.GetUserName(Hui.Text);
+                    HuiName.IsEnabled = true;
                 }
                 else if (state == 0)
                 {
@@ -292,11 +447,115 @@ namespace ChocAnClient
 
         private void fuWuText_TextChanged(object sender, TextChangedEventArgs e)
         {
-             if(fuWuText.Text.Length==6)
+            TextBox textBox = sender as TextBox;
+            TextChange[] change = new TextChange[e.Changes.Count];
+            e.Changes.CopyTo(change, 0);
+
+            int offset = change[0].Offset;
+            if (change[0].AddedLength > 0)
+            {
+                double num = 0;
+                if (!Double.TryParse(textBox.Text, out num))
+                {
+                    textBox.Text = textBox.Text.Remove(offset, change[0].AddedLength);
+                    textBox.Select(offset, 0);
+                }
+            }
+            
+            
+            
+            if(fuWuText.Text.Length==6)
              {
                  NameFu.Content = network.GetServerName(fuWuText.Text);
                  Fee.Content = network.GetServerPrice(fuWuText.Text);
              }
+        }
+
+        private void D_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            suplier = ""; Hui.Text = ""; fuWuText.Text = ""; NameFu.Content = ""; Zhu.Text = ""; Fee.Content = "0"; Result.Content = ""; HuiName.Text = "";
+            caozuo.Visibility = System.Windows.Visibility.Visible;
+            deng.Visibility = System.Windows.Visibility.Hidden;
+            JiZhang.Visibility = System.Windows.Visibility.Hidden;
+           
+            Date.Text = System.DateTime.Now.ToString();
+           
+           
+           
+            
+            expander.IsEnabled = false;
+            expander.IsExpanded = false;
+
+            Login logo = new Login(network,re); w1.Visibility = System.Windows.Visibility.Hidden;
+
+            logo.ShowDialog();
+            // MessageBox.Show(logo.login.Text);
+            suplier = logo.login.Text;
+            D.Content = suplier;
+            D.Content += ":注销";
+            if (logo.exitbutton == true)
+            {
+                Application.Current.Shutdown();
+            }
+            w1.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void Hui_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+
+            //屏蔽非法按键
+            if ((e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || e.Key == Key.Decimal)
+            {
+                if (txt.Text.Contains(".") && e.Key == Key.Decimal)
+                {
+                    e.Handled = true;
+                    return;
+                }
+                e.Handled = false;
+            }
+            else if (((e.Key >= Key.D0 && e.Key <= Key.D9) || e.Key == Key.OemPeriod) && e.KeyboardDevice.Modifiers != ModifierKeys.Shift)
+            {
+                if (txt.Text.Contains(".") && e.Key == Key.OemPeriod)
+                {
+                    e.Handled = true;
+                    return;
+                }
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void fuWuText_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+
+            //屏蔽非法按键
+            if ((e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || e.Key == Key.Decimal)
+            {
+                if (txt.Text.Contains(".") && e.Key == Key.Decimal)
+                {
+                    e.Handled = true;
+                    return;
+                }
+                e.Handled = false;
+            }
+            else if (((e.Key >= Key.D0 && e.Key <= Key.D9) || e.Key == Key.OemPeriod) && e.KeyboardDevice.Modifiers != ModifierKeys.Shift)
+            {
+                if (txt.Text.Contains(".") && e.Key == Key.OemPeriod)
+                {
+                    e.Handled = true;
+                    return;
+                }
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
         }
         /**************************UI的代码******************************************************************/
     }

@@ -1,9 +1,9 @@
 ﻿<Window  x:Name="w1" x:Class="ChocAnClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525" WindowStyle="None" VerticalAlignment="Center" HorizontalAlignment="Center" ResizeMode="NoResize" ShowInTaskbar="False" Loaded="w1_Loaded">
+        Title="MainWindow" Height="350" Width="525" WindowStyle="None" VerticalAlignment="Center" HorizontalAlignment="Center" ResizeMode="NoResize" ShowInTaskbar="False" Loaded="w1_Loaded" WindowState="Maximized">
 
- <!--   <Window.Resources>
+    <Window.Resources>
         <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
             <Grid>
                 <Ellipse x:Name="OuterRing" Width="100" Height="100" Fill="DarkGreen"/>
@@ -21,11 +21,11 @@
             <GradientStop Color="#FF000000" Offset="1"/>
             <GradientStop Color="#FF000000" Offset="1"/>
         </LinearGradientBrush>
-    </Window.Resources>-->
-    
+    </Window.Resources>
+
     <Grid>
 
-      <!--  <Grid.OpacityMask>
+          <Grid.OpacityMask>
             <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
                 <GradientStop Color="#00000000" Offset="0"/>
                 <GradientStop Color="#00000000" Offset="1"/>
@@ -45,13 +45,13 @@
                     </BeginStoryboard>
                 </EventTrigger.Actions>
             </EventTrigger>
-        </Grid.Triggers>-->
+        </Grid.Triggers>
 
         <Grid.Resources>
             <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
                 <Grid>
-                    <Ellipse Name="OuterRing" Width="100" Height="100" Fill="DarkGreen"/>
-                    <Ellipse Name="InnerRing" Width="80" Height="80" Fill="MintCream"/>
+                    <Ellipse  Name="OuterRing" Width="100" Height="100" Fill="LightGray"/>
+                    <Ellipse  Name="InnerRing" Width="80" Height="80" Fill="MintCream"/>
                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
@@ -74,157 +74,156 @@
                             <ColorAnimation
                                 Storyboard.TargetName="MySolidColorBrush"
                                 Storyboard.TargetProperty="Color"
-                                From="Blue" To="OrangeRed" Duration="0:0:25" />
+                                From="Silver" To="GhostWhite" Duration="0:0:25" />
 
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
             </Rectangle.Triggers>
         </Rectangle>
-        <StackPanel x:Name="caozuo"  HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="120"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Name="button1" Foreground="Black" FontSize="20" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="会员登录" Click="SignIn_Button" >
-                    <Button.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="359.7"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Button.RenderTransform>
-                </Button>
-                <Button Grid.Column="1" x:Name="button2" Foreground="Black" FontSize="20" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="个人记账" Click="JiZhang_Button">
-                    <Button.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="359.7"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Button.RenderTransform>
-                </Button>
-                <Button Grid.Column="2" x:Name="button3" Foreground="Black" FontSize="20" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="提供者目录" Click="button3_Click">
-                    <Button.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="359.7"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Button.RenderTransform>
-                </Button>
-            </Grid>
-        </StackPanel>
-        <StackPanel x:Name="deng"  HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <StackPanel HorizontalAlignment="Left" Grid.Row="0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70"/>
-                            <ColumnDefinition Width="160"/>
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
+        <Viewbox x:Name="v1">
+            <StackPanel x:Name="caozuo"  HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Name="button1" Foreground="Black" FontSize="20" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="会员" Click="SignIn_Button" >
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="359.7"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
+                    <Button Grid.Column="1" x:Name="button2" Foreground="Black" FontSize="20" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="账目核对" Click="JiZhang_Button">
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="359.7"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
+                    <Button Grid.Column="2" x:Name="button3" Foreground="Black" FontSize="20" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="提供者目录" Click="button3_Click">
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="359.7"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Viewbox>
+        <Viewbox>
+            <StackPanel x:Name="deng"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,0">
 
-                        <Label x:Name="label1" Content="会员ID:"  Width="69" Grid.Column="0"/>
-                        <TextBox x:Name="Hui"  Text=""  Width="150" Grid.Column="1" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="39,4,41,4" TextChanged="Hui_TextChanged"/>
-                        <Label x:Name="Result" Content="" Width="60" Grid.Column="2" Margin="49,0,-39,0" />
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Row="1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Expander x:Name="expander" VerticalAlignment="Stretch" ExpandDirection="Down" HorizontalContentAlignment="Left"  Grid.Row="0">
-                            <Expander.Header>
-                                <TextBlock Text="test" FontSize="14" FontWeight="Bold" />
-                            </Expander.Header>
-                            <Expander.Content>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition Height="auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="160"/>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="50" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label x:Name="tlabel1" Content="当前日期：" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
-                                    <DatePicker x:Name="Date" Grid.Column="1" Grid.Row="0" Width="150" Height="25" VerticalAlignment="Center"/>
-                                    <Label x:Name="tlabel2" Content="服务号：" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
-                                    <TextBox x:Name="fuWuText" Grid.Column="1" Grid.Row="1" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="fuWuText_TextChanged"/>
-                                    <Button x:Name="MuLu" Grid.Column="2" Grid.Row="1" Width="90" Height="25" VerticalAlignment="Center" Click="MuLu_Click">提供者目录</Button>
-                                    <Label x:Name="NameFu" Content="hh" Height="25" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1" />
-                                    <Label x:Name="Feilabel" Content="费用(¥)：" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
-                                    <Label x:Name="Fee" Content="0" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
-                                    <Label x:Name="ZhuLabel" Content="注释：" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center"/>
-                                    <TextBox x:Name="Zhu" Width="250" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" />
-                                    <Button Grid.Column="1" Grid.Row="4" Width="150" Height="25" VerticalAlignment="Center" Click="Button_Click_Submit">提交</Button>
-                                    
-                                </Grid>
-                            </Expander.Content>
-                        </Expander>
+                <Grid>
 
-                        <Button Height="25" Width="80" Click="BackHome_Button" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">返回</Button>
-                    </Grid>
-                </StackPanel>
-            </Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-        </StackPanel>
-        <StackPanel x:Name="JiZhang" >
-            <Grid x:Name="gridJZ" ShowGridLines="True">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <StackPanel HorizontalAlignment="Left" Grid.Row="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
 
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Label x:Name="Jz" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="个人记账" FontSize="24" FontFamily="MV Boli" FontWeight="Bold" Margin="0,-2,0,3" />
-                <Label x:Name="datelabel" Grid.Column="0" Grid.Row="1" Content="当前日期:" VerticalAlignment="Center"/>
-                <DatePicker x:Name="ToDate" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
-                <Label x:Name="FWlabel" Grid.Column="0" Grid.Row="2" Content="服务日期：" VerticalAlignment="Center"/>
-                <DatePicker x:Name="FWDate" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
-                <Label x:Name="HYMLabel" Grid.Column="0" Grid.Row="3" Content="会员名：" VerticalAlignment="Center"/>
-                <TextBox x:Name="HYM" Grid.Column="1" Grid.Row="3" Width="230" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center"/>
-                <Label x:Name="HYHlabel" Grid.Column="0" Grid.Row="4" Content="会员号码：" VerticalAlignment="Center"/>
-                <TextBox x:Name="HYH" Grid.Column="1" Grid.Row="4" Width="230" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25"/>
-                <Label x:Name="FWDMlabel" Grid.Column="0" Grid.Row="5" Content="服务代码:" VerticalAlignment="Center"/>
-                <TextBox x:Name="FWDM" Grid.Column="1" Grid.Row="5" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25"/>
-                <Label x:Name="FeiLabel" Grid.Column="0" Grid.Row="6"  Content="费用:" VerticalAlignment="Center"/>
-                <TextBox x:Name="Fei" Grid.Column="1" Grid.Row="6" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25"/>
-                <Button x:Name="TiJiao" Grid.Column="1" Grid.Row="7" Width="60" Height="30" HorizontalAlignment="Right" Content="记录" Click="TiJiao_Click"/>
+                            <Label x:Name="label1" Content="会员ID:"  Width="69" Grid.Column="0"/>
+                            <TextBox x:Name="Hui"  Text=""  Width="100" Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Center" TextChanged="Hui_TextChanged" KeyDown="Hui_KeyDown">
+                                <TextBox.ToolTip>
+                                    <TextBlock FontWeight="Normal">输入9位会员ID</TextBlock>
+                                </TextBox.ToolTip>
+                            </TextBox>
+                            <Label x:Name="Result" Content="" Width="80" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="8" />
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Expander x:Name="expander" VerticalAlignment="Stretch" ExpandDirection="Down" HorizontalContentAlignment="Left"  Grid.Row="0">
+                                <Expander.Header>
+                                    <TextBlock Text="记账" FontSize="14" FontWeight="Bold" />
+                                </Expander.Header>
+                                <Expander.Content>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="160"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="50" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label x:Name="HNlabel" Content="会员名称：" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" />
+                                        <TextBox x:Name="HuiName" Text="" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" Width="150" IsEnabled="False"/>
+                                        <Label x:Name="tlabel1" Content="当前日期：" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
+                                        <DatePicker x:Name="Date" Grid.Column="1" Grid.Row="1" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <Label x:Name="tlabel2" Content="服务号：" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
+                                        <TextBox x:Name="fuWuText" Grid.Column="1" Grid.Row="2" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" TextChanged="fuWuText_TextChanged" KeyDown="fuWuText_KeyDown">
+                                            <TextBox.ToolTip>
+                                                <TextBlock FontWeight="Normal">输入6位服务号码</TextBlock>
+                                            </TextBox.ToolTip>
+                                        </TextBox>
+                                        <Button x:Name="MuLu" Grid.Column="2" Grid.Row="2" Width="90" Height="25" VerticalAlignment="Center" Click="MuLu_Click">提供者目录</Button>
+                                        <Label x:Name="NameFu" Content="hh" Height="25" VerticalAlignment="Center" Grid.Column="3" Grid.Row="2" />
+                                        <Label x:Name="Feilabel" Content="费用(¥)：" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center"/>
+                                        <Label x:Name="Fee" Content="0" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
+                                        <Label x:Name="ZhuLabel" Content="注释：" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center"/>
+                                        <TextBox x:Name="Zhu" Width="250" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" />
+                                        <Button Grid.Column="1" Grid.Row="5" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Button_Click_Submit">提交</Button>
 
-            </Grid>
-            <Button x:Name="Back" Width="100" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Content="返回" Click="Back_Click" />
-        </StackPanel>
-        <Label x:Name="exit" Width="30" Height="25" Content="exit" HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseDown="exit_MouseDown" />
-        <Label x:Name="full" Width="60" Height="25" Content="full|small" HorizontalAlignment="Right" VerticalAlignment="Top" MouseDown="fullScreen_MouseDown" />
+                                    </Grid>
+                                </Expander.Content>
+                            </Expander>
+                            <Button Height="25" Width="61" Click="BackHome_Button" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,19,0" >返回</Button>
 
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
+
+        </Viewbox>
+        <Viewbox>
+            <StackPanel x:Name="JiZhang" >
+                <Grid x:Name="gridJZ" ShowGridLines="True" Margin="0,30,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" x:Name="data" ItemsSource="{Binding Sum}"  />
+
+                    <Button Grid.Row="1" x:Name="Back" Width="100" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Content="返回" Click="Back_Click" />
+
+                </Grid>
+
+            </StackPanel>
+        </Viewbox>
+
+        <Label  x:Name="exit" Width="96" Height="41" Content="exit" HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseDown="exit_MouseDown" FontSize="30" Margin="0,0,-22,9" />
+        <Label x:Name="D" Width="224" Height="59" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" MouseDown="D_MouseDown" />
 
         <Button Content="SignIn" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click" Visibility="Hidden"/>
         <Button Content="Init" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_1" Visibility="Hidden"/>
@@ -233,5 +232,7 @@
         <Button Content="GetServerPrice" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_4" Visibility="Hidden"/>
         <Button Content="SaveServerRecord" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_5" Visibility="Hidden"/>
         <Button Content="GetProviderSum" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_6" Visibility="Hidden"/>
+
     </Grid>
+
 </Window>

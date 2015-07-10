@@ -3,10 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
        Title="Login" Height="192.538" Width="502.985" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
-        <TextBox x:Name="login" HorizontalAlignment="Left" Height="26" Margin="156,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.664,-0.204" TextChanged="login_TextChanged"/>
-        <Button x:Name="exit" Content="exit" HorizontalAlignment="Left" Height="31" Margin="352,120,0,0" VerticalAlignment="Top" Width="94" Click="exit_Click"/>
+        <TextBox x:Name="login" HorizontalAlignment="Left" Height="26" Margin="156,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.664,-0.204" TextChanged="login_TextChanged" MaxLength="9" KeyDown="login_KeyDown">
+            <TextBox.ToolTip>
+                <TextBlock FontWeight="Normal">输入服务者ID(数字)</TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <Button x:Name="exit" Content="退出" HorizontalAlignment="Left" Height="31" Margin="352,120,0,0" VerticalAlignment="Top" Width="94" Click="exit_Click"/>
         <Label Content="登录界面" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="服务者ID：" HorizontalAlignment="Left" Height="26" Margin="57,50,0,0" VerticalAlignment="Top" Width="73"/>
+        <Button x:Name="Deng" Content="登录" HorizontalAlignment="Left" Height="30" Margin="352,54,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" />
 
     </Grid>
 </Window>
