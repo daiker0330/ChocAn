@@ -546,7 +546,7 @@ bool Network::_DoAccpet(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoC
 	// 把这个有效的客户端信息，加入到ContextList中去
 	this->_AddToContextList(pNewSocketContext);
 
-	string msg = "0";
+	string msg = "0:0:";
 	send(pNewSocketContext->m_Socket, msg.c_str(), strlen(msg.c_str()), 0);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1038,11 +1038,11 @@ void Network::_SignIn(char* recv_msg, char* msg)
 	res = ser->SignIn(id);
 	if (res)
 	{
-		sprintf_s(msg, 256, "%d:",MSG_SIGNIN_SUCCESS);
+		sprintf_s(msg, 256, "%d:0:",MSG_SIGNIN_SUCCESS);
 	}
 	else
 	{
-		sprintf_s(msg, 256, "%d:",MSG_SIGNIN_FAILED);
+		sprintf_s(msg, 256, "%d:0:",MSG_SIGNIN_FAILED);
 	}
 
 	//sprintf_s(msg, 256, "%d:", MSG_SIGNIN_SUCCESS);
@@ -1065,19 +1065,19 @@ void Network::_IsValid(char* recv_msg, char* msg)
 	res = ser->IsValid(id);
 	if (res==1)
 	{
-		sprintf_s(msg, 256, "%d:",MSG_ISVALID_VALID);
+		sprintf_s(msg, 256, "%d:0:",MSG_ISVALID_VALID);
 	}
 	else if (res==0)
 	{
-		sprintf_s(msg, 256, "%d:",MSG_ISVALID_INVALID);
+		sprintf_s(msg, 256, "%d:0:",MSG_ISVALID_INVALID);
 	}
 	else if (res==-1)
 	{
-		sprintf_s(msg, 256, "%d:",MSG_ISVALID_SUSPEND);
+		sprintf_s(msg, 256, "%d:0:",MSG_ISVALID_SUSPEND);
 	}
 	else
 	{
-		sprintf_s(msg, 256, "%d:",MSG_ISVALID_INVALID);
+		sprintf_s(msg, 256, "%d:0:",MSG_ISVALID_INVALID);
 	}
 
 	//sprintf_s(msg, 256, "%d:", MSG_ISVALID_SUSPEND);
@@ -1155,11 +1155,11 @@ void Network::_SaveServerRecord(char* recv_msg, char* msg)
 	res = ser->SaveServerRecord(sr);
 	if (res)
 	{
-		sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);
+		sprintf_s(msg, 256, "%d:0:", MSG_SERVRECORD_SUCCESS);
 	}
 	else
 	{
-		sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_FAILED);
+		sprintf_s(msg, 256, "%d:0:", MSG_SERVRECORD_FAILED);
 	}
 
 	//sprintf_s(msg, 256, "%d:", MSG_SERVRECORD_SUCCESS);

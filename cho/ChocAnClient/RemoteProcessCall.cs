@@ -98,16 +98,17 @@ namespace ChocAnClient
         //负责初始化网络模块
         public bool init()
         {
+            Console.WriteLine("开始连接服务器");
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
                 clientSocket.Connect(new IPEndPoint(ip, port)); //配置服务器IP与端口
                 if (clientSocket.Connected)
                 {
-                    Console.WriteLine("连接服务器成功");
                     SendMessage("connect");
                     ReceiveMessage();
                     isInit = true;
+                    Console.WriteLine("连接服务器成功");
                     return true;
                 }
                 else
@@ -118,7 +119,7 @@ namespace ChocAnClient
             }
             catch
             {
-                Console.WriteLine("连接服务器失败！");
+                Console.WriteLine("连接服务器异常！");
                 return false;
             }
         }
