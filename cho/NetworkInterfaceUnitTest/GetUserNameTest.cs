@@ -5,7 +5,7 @@ using ChocAnClient;
 namespace NetworkInterfaceUnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public class GetUserNameTest
     {
         RemoteProcessCall network = new RemoteProcessCall();
         [TestMethod]
@@ -13,6 +13,13 @@ namespace NetworkInterfaceUnitTest
         {
             network.init();
             String res = network.GetUserName("");
+            Assert.AreEqual("Invalid", res);
+        }
+        [TestMethod]
+        public void GetUserNameTest2()
+        {
+            network.init();
+            String res = network.GetUserName("123456789");
             Assert.AreEqual("Invalid", res);
         }
     }

@@ -56,7 +56,7 @@
     <Compile Include="TestBase.cs" />
     <Compile Include="GetServerPriceTest.cs" />
     <Compile Include="GetProviderSumTest.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="GetUserNameTest.cs" />
     <Compile Include="Validtest.cs" />
   </ItemGroup>
   <ItemGroup>
