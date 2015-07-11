@@ -52,6 +52,7 @@ namespace ChocAnClient
         }
         public string tNumber;
         public List<Suppler> list = new List<Suppler>();
+        public List<Suppler> resultList = new List<Suppler>();
         public SuplierList()
         {
             InitializeComponent();
@@ -107,7 +108,7 @@ namespace ChocAnClient
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           if(fuH.Content!="")
+           if(fuH.Content.ToString()!="")
            {
                tNumber = fuH.Content.ToString();
                
@@ -117,21 +118,51 @@ namespace ChocAnClient
 
         private void FM_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (FM.Text.Length == 7)
+            for (int i = 0; i < list.Count; i++)
             {
-                for (int i = 0; i < list.Count; i++)
+                if (FM.Text == list[i].Service)
                 {
-                    if (FM.Text == list[i].Service)
-                    {
-                        fuH.Content = list[i].Number;
-                        break;
-                    }
-                    else
-                    {
-                        fuH.Content = "";
-                    }
+                    fuH.Content = list[i].Number;
+                    break;
+                }
+                else
+                {
+                    fuH.Content = "";
                 }
             }
+            bool ct = false;
+            resultList.Clear();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Service.Contains(FM.Text))
+                {
+                    resultList.Add(list[i]);
+                    ct = true;
+                }
+
+            }
+            if (!ct)
+            {
+                l1.ItemsSource = null;
+            }
+            else
+            {
+                l1.ItemsSource = resultList;
+            }
+
+            if (FM.Text == "")
+            {
+                l1.ItemsSource = list;
+            }
+            else
+            {
+                ;
+            }
+        }
+
+        private void FM_KeyDown(object sender, KeyEventArgs e)
+        {
+           
         }
     }
 }

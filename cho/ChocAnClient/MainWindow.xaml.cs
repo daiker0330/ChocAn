@@ -35,7 +35,7 @@ namespace ChocAnClient
         public double w_left = 0;
         public double w_top = 0;
         public string suplier = "";
-        public const int MemberID_length = 8;
+        public const int MemberID_length = 9;
         bool re;
         string result;
         string Ip;
@@ -113,7 +113,8 @@ namespace ChocAnClient
             w1.Width = SystemParameters.MaximizedPrimaryScreenWidth - 8d;
             WindowStartupLocation = WindowStartupLocation.Manual;
             w1.Left = 0; w1.Top = 0;
-           re = true;
+            HuiName.IsEnabled = false;
+           re = false;
 
            FileStream fs = new FileStream("../../IpPort.ini", FileMode.Open, FileAccess.Read);
 
@@ -311,9 +312,20 @@ namespace ChocAnClient
             adapter.InsertCommand.Connection = con;
             adapter.InsertCommand.ExecuteNonQuery();
         }
+        
+        public bool List_Right()
+        {
+            if (HuiName.Text == "")
+                return false;
+            if (fuWuText.Text == "")
+                return false;
+            if (Fee.Content.ToString() == "-1" || Fee.Content.ToString() == "无效的服务代码" || Fee.Content.ToString() == "")
+                return false;
+            return true;
+        }
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("提交到服务器");
+         //   MessageBox.Show("提交到服务器");
             ServerRecord server = new ServerRecord();
             DateTime time = new DateTime();
             time = Convert.ToDateTime(Date.Text);
@@ -332,28 +344,35 @@ namespace ChocAnClient
             server.server_id = fuWuText.Text;
             server.other = Zhu.Text;
           // MessageBox.Show(server.Serialization());
-            Write_to_Access(server);
-         if(network.SaveServerRecord(server))
-         {
-             MessageBox.Show("记账成功");
-             HuiName.Text = "";
-             Hui.Text = "";
-             Date.Text = System.DateTime.Now.ToString();
-             fuWuText.Text = "";
-             NameFu.Content = "";
-             Fee.Content = "0";
-             Zhu.Text = "";
-             Result.Content = "";
-             expander.IsEnabled = false;
-             expander.IsExpanded = false;
+            if (List_Right())
+            {
+                if (network.SaveServerRecord(server))
+                {
+                    Write_to_Access(server);
+                    MessageBox.Show("记账成功");
+                    HuiName.Text = "";
+                    Hui.Text = "";
+                    Date.Text = System.DateTime.Now.ToString();
+                    fuWuText.Text = "";
+                    NameFu.Content = "";
+                    Fee.Content = "0";
+                    Zhu.Text = "";
+                    Result.Content = "";
+                    expander.IsEnabled = false;
+                    expander.IsExpanded = false;
 
-         }
-         else
-         {
-             MessageBox.Show("记账失败");
-         }
 
-         
+                }
+                else
+                {
+                    MessageBox.Show("记账失败");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("账单不完整,请填写完整");
+            }
         }
 
         private void TiJiao_Click(object sender, RoutedEventArgs e)
@@ -378,10 +397,11 @@ namespace ChocAnClient
 
         private void w1_Loaded(object sender, RoutedEventArgs e)
         {
-            network.init();
-            network.SetIp(Ip);
-            network.SetPort(Port);
-         //  re= network.init();
+           
+         //   network.SetIp(Ip);
+         //   network.SetPort(Port); 
+         //   network.init();
+           re= network.init();
             Login logo = new Login(network,re); w1.Visibility = System.Windows.Visibility.Hidden;
 
             logo.ShowDialog();
@@ -424,8 +444,8 @@ namespace ChocAnClient
                 {
                     expander.IsEnabled = true;
                     Result.Content = "Validated";
-                   // HuiName.Text = network.GetUserName(Hui.Text);
-                    HuiName.IsEnabled = true;
+                    HuiName.Text = network.GetUserName(Hui.Text);
+                    HuiName.IsEnabled = false;
                 }
                 else if (state == 0)
                 {
@@ -442,6 +462,12 @@ namespace ChocAnClient
                     expander.IsEnabled = false;
                     Result.Content = "传回的数不对";
                 }
+            }
+            else
+            {
+                expander.IsEnabled = false;
+                Result.Content = "";
+                expander.IsExpanded = false;
             }
         }
 
@@ -468,6 +494,10 @@ namespace ChocAnClient
              {
                  NameFu.Content = network.GetServerName(fuWuText.Text);
                  Fee.Content = network.GetServerPrice(fuWuText.Text);
+                if(Fee.Content.ToString()=="-1")
+                {
+                    Fee.Content ="无效的服务代码";
+                }
              }
         }
 

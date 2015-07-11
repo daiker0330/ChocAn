@@ -12,7 +12,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="FM" HorizontalAlignment="Left" Height="25" Margin="71,7,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="116" TextChanged="FM_TextChanged"/>
+        <TextBox x:Name="FM" HorizontalAlignment="Left" Height="25" Margin="71,7,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="116" TextChanged="FM_TextChanged" KeyDown="FM_KeyDown"/>
         <Label Content="服务号：" HorizontalAlignment="Left" Margin="192,7,0,0" VerticalAlignment="Top" Width="100"/>
         <Label x:Name="fuH" Content="" HorizontalAlignment="Left" Height="25" Margin="297,7,0,0" VerticalAlignment="Top" Width="88"/>
         <Button Content="确定" HorizontalAlignment="Left" Height="22" Margin="398,7,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click"/>

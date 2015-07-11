@@ -21,7 +21,7 @@ namespace ChocAnClient
     {
 
         public bool result = false;
-        public const int ServerID_length = 8;//服务者ID长度
+        public const int ServerID_length = 9;//服务者ID长度
         public bool exitbutton = false;
         public RemoteProcessCall net = new RemoteProcessCall();
         public Login(RemoteProcessCall network,bool re)
@@ -35,6 +35,11 @@ namespace ChocAnClient
             {
                 Deng.Content = "重新连接";
                 Deng.IsEnabled = true;
+                login.IsEnabled = false;
+            }
+            else
+            {
+                MessageBox.Show("连接成功");
             }
         }
 
@@ -70,7 +75,7 @@ namespace ChocAnClient
 
 
             
-            if (login.Text.Length== ServerID_length)
+            if (login.Text.Length== ServerID_length||!result)
             {
                 Deng.IsEnabled = true;
             }
@@ -113,6 +118,7 @@ namespace ChocAnClient
         {
             if (result)
             {
+               
                 if (net.SignIn(login.Text))
                 //if(login.Text=="123456789")
                 {
@@ -130,6 +136,18 @@ namespace ChocAnClient
             else
             {
                 result=net.init();
+                if (result)
+                {
+                    Deng.Content = "登录";
+                    MessageBox.Show("连接成功");
+                    login.IsEnabled = true;
+                }
+                else
+                {
+                    Deng.Content = "重新连接";
+                    MessageBox.Show("连接失败,请重新连接");
+                    login.IsEnabled = false;
+                }
             }
         }
     }
