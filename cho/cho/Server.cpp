@@ -208,7 +208,7 @@ string Server::make_email_for_member(member_LIST list)
 	char buf[5],yy[5],dd[5],mm[5];
 	for (i = 0; i < list.n; i++)
 	{
-		itoa(i, buf, 10);
+		itoa(i+1, buf, 10);
 		text += "第" + ((string)buf) + "次服务：  ";
 		text += "服务名——";
 		text += list.ser_name[i]+"    ";
@@ -247,7 +247,8 @@ string Server::make_email_for_supporter(supporter_LIST list)
 	string mem_name;
 	for (i = 0; i < list.n; i++)
 	{
-		itoa(i, buf, 10);
+		//cout << i << "    ***" << endl;
+		itoa(i+1, buf, 10);
 		text += "第" + ((string)buf) + "次服务：  ";
 		
 
@@ -309,12 +310,16 @@ void Server::send_member_email()
 	string mail_addr;
 	for (i = 0; i < mems.size(); i++)
 	{
+		//cout << i << "  !!!!" << endl;
 		mem = mems[i];
 		mlist = db.get_member_list(mem, from, to);
+		//cout << "1111" << endl;
 		mail = make_email_for_member(mlist);
-
+		//cout << "2222" << endl;
 		mail_addr = db.get_mem_email(mem);
+		//cout << mail_addr << "    EEEE" << endl;
 		net->send_email(mail_addr,"巧克力爱好者匿名每周会员服务清单", mail, "Invalid");
+		//cout << i << "||||" << endl;
 	}
 
 
@@ -344,11 +349,13 @@ void Server::send_supporter_email()
 	string mail_addr;
 	for (i = 0; i < spts.size(); i++)
 	{
+		cout << i << "    1111" << endl;
 		spt = spts[i];
 		slist = db.get_supporter_list(spt, from, to);
 		mail = make_email_for_supporter(slist);
 
-		mail_addr = db.get_mem_email(spt);
+		mail_addr = db.get_spt_email(spt);
+		cout << mail_addr << "    AAAA" << endl;
 		net->send_email(mail_addr,"巧克力爱好者匿名每周提供者服务清单", mail, "Invalid");
 
 		insert_trans(slist);
