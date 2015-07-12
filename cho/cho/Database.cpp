@@ -370,7 +370,10 @@ bool Database::add_supporter(spt_MSG spt){
 	if (!access.SetFieldValue(6, _variant_t(spt.account.c_str()))){
 		return false;
 	}
-	if (!access.SetFieldValue(7, _variant_t(spt.email.c_str()))){
+	if (!access.SetFieldValue(7, _variant_t("Doctor"))){
+		return false;
+	}
+	if (!access.SetFieldValue(8, _variant_t(spt.email.c_str()))){
 		return false;
 	}
 	if (!access.ExecuteUpdate()){

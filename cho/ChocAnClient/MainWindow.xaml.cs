@@ -398,8 +398,9 @@ namespace ChocAnClient
         private void w1_Loaded(object sender, RoutedEventArgs e)
         {
            
-         //   network.SetIp(Ip);
-         //   network.SetPort(Port); 
+            
+            network.SetIp(Ip);
+            network.SetPort(Port); 
          //   network.init();
            re= network.init();
             Login logo = new Login(network,re); w1.Visibility = System.Windows.Visibility.Hidden;

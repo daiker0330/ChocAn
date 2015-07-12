@@ -101,9 +101,12 @@ namespace ChocAnClient
         public bool init()
         {
             Console.WriteLine("开始连接服务器");
+
+
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
+                Console.WriteLine(ip);
                 clientSocket.Connect(new IPEndPoint(ip, port)); //配置服务器IP与端口
                 if (clientSocket.Connected)
                 {
