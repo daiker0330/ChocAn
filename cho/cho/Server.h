@@ -69,6 +69,15 @@ public:
 	//发送 : 提供者编号
 	//回复 : 合计费用 / 提供者编号错误(返回 - 1)
 	double GetProviderSum(string id);
+
+
+	//发送提供者目录
+	bool SendProviderServes(string id);
+
+	//获取会员名称
+	//发送:会员编号
+	//返回:会员名称
+	string GetUserName(string id);
 };
 
 

@@ -33,8 +33,10 @@ void Server::run()
 			"      3-删除一个会员\n"
 			"      4-删除一个提供者\n"
 			"      5-打印经理报告\n"
-			"      6-关闭服务器" << endl;
-		cout << "输入1/2/3/4/5/6:";
+			"      6-给会员发送每周邮件\n"
+			"      7-给提供者发送每周邮件\n"
+			"      8-关闭服务器" << endl;
+		cout << "输入1/2/3/4/5/6/7/8:";
 		cin >> op;
 
 		if (op == 1)
@@ -56,6 +58,14 @@ void Server::run()
 		else if (op == 5)
 		{
 			print_report();
+		}
+		else if (op == 6)
+		{
+			send_member_email();
+		}
+		else if (op == 7)
+		{
+			send_supporter_email();
 		}
 		else
 		{
@@ -160,6 +170,20 @@ double Server::GetProviderSum(string id)
 	return 0.0;
 }
 
+
+string Server::GetUserName(string id)
+{
+	int t=db.check_member_id(id);
+	
+	if (t == 0)
+	{
+		return "Invaild";
+	}
+
+	member_MSG mem=db.get_mem_msg(id);
+
+	return mem.name;
+}
 
 string Server::make_email_for_member(member_LIST list)
 {
@@ -333,6 +357,30 @@ void Server::send_supporter_email()
 
 	return;
 }
+
+bool Server::SendProviderServes(string id)
+{
+	supporter_INDEX idx = db.get_stp_index();
+
+	string spt;
+	string mail;
+	string mail_addr;
+	char p[21];
+	int i;
+	mail = "  服务号     服务名称     服务价格（$）\n";
+	for (i = 0; i < idx.n; i++)
+	{
+		//ftoa(idx.price[i], p, 10);
+		sprintf(p, "%lf", idx.price[i]);
+		mail = mail + idx.id[i] + "    " + idx.name[i] + "    " + ((string)p) + "\n";
+	}
+	mail_addr = db.get_spt_email(id);
+
+	net->send_email(mail_addr, "提供者目录", mail, "Invalid");
+
+	return true;
+}
+
 
 
 bool Server::insert_trans(supporter_LIST list)
