@@ -61,7 +61,7 @@ namespace ChocAnClient
         double GetProviderSum(string id);
 
         //发送提供者目录
-        void SendProviderServes();
+        void SendProviderServes(string id);
 
         //设置IP地址
         void SetIp(string _ip);

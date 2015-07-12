@@ -116,7 +116,7 @@ DWORD WINAPI Network::_WorkerThread(LPVOID lpParam)
 			// 判断是否有客户端断开了
 			if ((0 == dwBytesTransfered) && (RECV_POSTED == pIoContext->m_OpType || SEND_POSTED == pIoContext->m_OpType))
 			{
-				printf("client %s:%d disconnect.\n", inet_ntoa(pSocketContext->m_ClientAddr.sin_addr), ntohs(pSocketContext->m_ClientAddr.sin_port));
+				//fprintf(f,"client %s:%d disconnect.\n", inet_ntoa(pSocketContext->m_ClientAddr.sin_addr), ntohs(pSocketContext->m_ClientAddr.sin_port));
 
 				string ip_add;
 				int ip_port;
@@ -158,7 +158,7 @@ DWORD WINAPI Network::_WorkerThread(LPVOID lpParam)
 				}
 					break;
 				default:
-					printf("_WorkThread中的 pIoContext->m_OpType 参数异常.\n");
+					//fprintf(f,"_WorkThread中的 pIoContext->m_OpType 参数异常.\n");
 					break;
 				} //switch
 			}//if
@@ -166,7 +166,7 @@ DWORD WINAPI Network::_WorkerThread(LPVOID lpParam)
 
 	}//while
 
-	printf("工作者线程 %d 号退出.\n", nThreadNo);
+	//fprintf(f,"工作者线程 %d 号退出.\n", nThreadNo);
 
 	// 释放线程参数
 	RELEASE(lpParam);
@@ -193,7 +193,7 @@ bool Network::LoadSocketLib()
 	// 错误
 	if (NO_ERROR != nResult)
 	{
-		printf("init WinSock 2.2 fail !\n");
+		fprintf(f,"init WinSock 2.2 fail !\n");
 		return false;
 	}
 
@@ -213,27 +213,27 @@ bool Network::Start()
 	// 初始化IOCP
 	if (false == _InitializeIOCP())
 	{
-		printf("init IOCP fail !\n");
+		fprintf(f,"init IOCP fail !\n");
 		return false;
 	}
 	else
 	{
-		printf("\nIOCP init finish.\n");
+		fprintf(f,"\nIOCP init finish.\n");
 	}
 
 	// 初始化Socket
 	if (false == _InitializeListenSocket())
 	{
-		printf("Listen Socket init fail !\n");
+		fprintf(f,"Listen Socket init fail !\n");
 		this->_DeInitialize();
 		return false;
 	}
 	else
 	{
-		printf("Listen Socket init finish.\n");
+		fprintf(f,"Listen Socket init finish.\n");
 	}
 
-	printf("system ready, waiting....\n");
+	fprintf(f,"system ready, waiting....\n");
 
 	return true;
 }
@@ -262,7 +262,7 @@ void Network::Stop()
 		// 释放其他资源
 		this->_DeInitialize();
 
-		printf("stop listening\n");
+		fprintf(f,"stop listening\n");
 	}
 }
 
@@ -275,7 +275,7 @@ bool Network::_InitializeIOCP()
 
 	if (NULL == m_hIOCompletionPort)
 	{
-		printf("start complication port fail! error code: %d!\n", WSAGetLastError());
+		fprintf(f,"start complication port fail! error code: %d!\n", WSAGetLastError());
 		return false;
 	}
 
@@ -295,7 +295,7 @@ bool Network::_InitializeIOCP()
 		m_phWorkerThreads[i] = ::CreateThread(0, 0, _WorkerThread, (void *)pThreadParams, 0, &nThreadID);
 	}
 
-	printf(" creat _WorkerThread %d.\n", m_nThreads);
+	fprintf(f," creat _WorkerThread %d.\n", m_nThreads);
 
 	return true;
 }
@@ -318,24 +318,24 @@ bool Network::_InitializeListenSocket()
 	m_pListenContext->m_Socket = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
 	if (INVALID_SOCKET == m_pListenContext->m_Socket)
 	{
-		printf("init Socket fail, error code: %d.\n", WSAGetLastError());
+		fprintf(f,"init Socket fail, error code: %d.\n", WSAGetLastError());
 		return false;
 	}
 	else
 	{
-		printf("WSASocket() finish.\n");
+		fprintf(f,"WSASocket() finish.\n");
 	}
 
 	// 将Listen Socket绑定至完成端口中
 	if (NULL == CreateIoCompletionPort((HANDLE)m_pListenContext->m_Socket, m_hIOCompletionPort, (DWORD)m_pListenContext, 0))
 	{
-		printf("bind Listen Socket fail! error code: %d\n", WSAGetLastError());
+		fprintf(f,"bind Listen Socket fail! error code: %d\n", WSAGetLastError());
 		RELEASE_SOCKET(m_pListenContext->m_Socket);
 		return false;
 	}
 	else
 	{
-		printf("Listen Socket bind success.\n");
+		fprintf(f,"Listen Socket bind success.\n");
 	}
 
 	// 填充地址信息
@@ -354,23 +354,23 @@ bool Network::_InitializeListenSocket()
 	// 绑定地址和端口
 	if (SOCKET_ERROR == bind(m_pListenContext->m_Socket, (struct sockaddr *) &ServerAddress, sizeof(ServerAddress)))
 	{
-		printf("bind() do error.\n");
+		fprintf(f,"bind() do error.\n");
 		return false;
 	}
 	else
 	{
-		printf("bind() finish.\n");
+		fprintf(f,"bind() finish.\n");
 	}
 
 	// 开始进行监听
 	if (SOCKET_ERROR == listen(m_pListenContext->m_Socket, SOMAXCONN))
 	{
-		printf("Listen() do error.\n");
+		fprintf(f,"Listen() do error.\n");
 		return false;
 	}
 	else
 	{
-		printf("Listen() finish.\n");
+		fprintf(f,"Listen() finish.\n");
 	}
 
 	// 获取AcceptEx函数指针
@@ -386,7 +386,7 @@ bool Network::_InitializeListenSocket()
 		NULL,
 		NULL))
 	{
-		printf("WSAIoctl can not get AcceptEx pointer. error code: %d\n", WSAGetLastError());
+		fprintf(f,"WSAIoctl can not get AcceptEx pointer. error code: %d\n", WSAGetLastError());
 		this->_DeInitialize();
 		return false;
 	}
@@ -403,7 +403,7 @@ bool Network::_InitializeListenSocket()
 		NULL,
 		NULL))
 	{
-		printf("WSAIoctl can not get GuidGetAcceptExSockAddrs pointer. error code %d\n", WSAGetLastError());
+		fprintf(f,"WSAIoctl can not get GuidGetAcceptExSockAddrs pointer. error code %d\n", WSAGetLastError());
 		this->_DeInitialize();
 		return false;
 	}
@@ -422,7 +422,7 @@ bool Network::_InitializeListenSocket()
 		}
 	}
 
-	printf("post %d AcceptEx finish\n", MAX_POST_ACCEPT);
+	fprintf(f,"post %d AcceptEx finish\n", MAX_POST_ACCEPT);
 
 	return true;
 }
@@ -451,7 +451,7 @@ void Network::_DeInitialize()
 	// 关闭监听Socket
 	RELEASE(m_pListenContext);
 
-	printf("release finish.\n");
+	fprintf(f,"release finish.\n");
 
 
 }
@@ -479,7 +479,7 @@ bool Network::_PostAccept(PER_IO_CONTEXT* pAcceptIoContext)
 	pAcceptIoContext->m_sockAccept = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 	if (INVALID_SOCKET == pAcceptIoContext->m_sockAccept)
 	{
-		printf("creat use for Accept的Socket fail! error code: %d\n", WSAGetLastError());
+		fprintf(f,"creat use for Accept的Socket fail! error code: %d\n", WSAGetLastError());
 		return false;
 	}
 
@@ -489,7 +489,7 @@ bool Network::_PostAccept(PER_IO_CONTEXT* pAcceptIoContext)
 	{
 		if (WSA_IO_PENDING != WSAGetLastError())
 		{
-			printf("post AcceptEx fail, error code: %d\n", WSAGetLastError());
+			fprintf(f,"post AcceptEx fail, error code: %d\n", WSAGetLastError());
 			return false;
 		}
 	}
@@ -510,7 +510,7 @@ bool Network::_DoAccpet(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoC
 	this->m_lpfnGetAcceptExSockAddrs(pIoContext->m_wsaBuf.buf, pIoContext->m_wsaBuf.len - ((sizeof(SOCKADDR_IN) + 16) * 2),
 		sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, (LPSOCKADDR*)&LocalAddr, &localLen, (LPSOCKADDR*)&ClientAddr, &remoteLen);
 
-	printf("accept  %s:%d\n", inet_ntoa(ClientAddr->sin_addr), ntohs(ClientAddr->sin_port));
+	fprintf(f,"accept  %s:%d\n", inet_ntoa(ClientAddr->sin_addr), ntohs(ClientAddr->sin_port));
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 将ListenSocket上的Context复制出来一份为新连入的Socket新建一个SocketContext
@@ -577,7 +577,7 @@ bool Network::_PostRecv(PER_IO_CONTEXT* pIoContext)
 	// 重叠请求失败
 	if ((SOCKET_ERROR == nBytesRecv) && (WSA_IO_PENDING != WSAGetLastError()))
 	{
-		printf("post WSARecv fail!\n");
+		fprintf(f,"post WSARecv fail!\n");
 		return false;
 	}
 	return true;
@@ -594,7 +594,7 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 	/////////////////////////////////////////////////////////////////
 	// 编写处理消息流程
 
-	printf("receive  %s:%d message:%s\n", inet_ntoa(ClientAddr->sin_addr), ntohs(ClientAddr->sin_port), pIoContext->m_wsaBuf.buf);
+	fprintf(f,"receive  %s:%d message:%s\n", inet_ntoa(ClientAddr->sin_addr), ntohs(ClientAddr->sin_port), pIoContext->m_wsaBuf.buf);
 
 	char *msg, *recv_msg;
 	//string user = "daiker", psd = "12345", msg_str;
@@ -608,7 +608,7 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 
 	sscanf_s(recv_msg, "%d", &type);
 
-	printf("type:%x\n", type);
+	fprintf(f,"type:%x\n", type);
 
 	//处理消息
 	switch (type)
@@ -653,10 +653,15 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 		_GetUserName(recv_msg, msg);
 		break;
 	}
+	case MSG_SERVEEMAIL_REQUEST:
+	{
+		_SendProviderServes(recv_msg, msg);
+		break;
+	}
 	}
 
 	//回复消息
-	printf("send:%s\n", msg);
+	fprintf(f,"send:%s\n", msg);
 	send(pSocketContext->m_Socket, msg, sizeof(char)*256, 0);
 
 	// 然后开始投递下一个WSARecv请求
@@ -672,7 +677,7 @@ bool Network::_AssociateWithIOCP(PER_SOCKET_CONTEXT *pContext)
 
 	if (NULL == hTemp)
 	{
-		printf("run CreateIoCompletionPort() error. error code: %d\n", GetLastError());
+		fprintf(f,"run CreateIoCompletionPort() error. error code: %d\n", GetLastError());
 		return false;
 	}
 
@@ -743,21 +748,27 @@ void Network::_ClearContextList()
 // 启动网络组建
 void Network::Init(Server* ser)
 {
+	f = fopen("NetworkLog.txt", "a");
+	fout.open("EmailLog.txt");
+
+	
 	SetIPAddress();
 
 	if (false == LoadSocketLib())
 	{
-		printf("load Socket lib error\n");
+		fprintf(f,"load Socket lib error\n");
 		exit(0);
 	}
 
 	if (false == Start())
 	{
-		printf("start Socket error\n");
+		fprintf(f,"start Socket error\n");
 		exit(0);
 	}
 
 	this->ser = ser;
+
+	
 }
 
 
@@ -824,7 +835,7 @@ bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 		// 确认客户端是否还活着...
 		if (!_IsSocketAlive(pContext->m_Socket))
 		{
-			printf("client error finish!\n");
+			fprintf(f,"client error finish!\n");
 
 			string ip_add;
 			int ip_port;
@@ -838,7 +849,7 @@ bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 		}
 		else
 		{
-			printf("network timeout! trying...\n");
+			fprintf(f,"network timeout! trying...\n");
 			return true;
 		}
 	}
@@ -846,7 +857,7 @@ bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 	// 可能是客户端异常退出了
 	else if (ERROR_NETNAME_DELETED == dwErr)
 	{
-		printf("client error finish!!\n");
+		fprintf(f,"client error finish!!\n");
 
 		string ip_add;
 		int ip_port;
@@ -861,7 +872,7 @@ bool Network::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
 
 	else
 	{
-		printf("complication port error, thread killed. error code: %d\n", dwErr);
+		fprintf(f,"complication port error, thread killed. error code: %d\n", dwErr);
 		return false;
 	}
 }
@@ -971,42 +982,42 @@ bool Network::send_email(string email_addr, string email_title, string email_con
 	Send(s, Base64Encode(username) + "\r\n");
 	Recv(s, recvBuffer, sizeof(recvBuffer));
 	if (string(recvBuffer).substr(0, 3) != "334") {
-		cout << "username is error!" << endl;
+		fout << "username is error!" << endl;
 		return false;
 	}
 
 	Send(s, Base64Encode(pw) + "\r\n");
 	Recv(s, recvBuffer, sizeof(recvBuffer));
 	if (string(recvBuffer).substr(0, 3) != "235") {
-		cout << "password error" << endl;
+		fout << "password error" << endl;
 		return false;
 	}
 
 	//Set sender
 	Send(s, "mail from:<" + username + ">\r\n");
 	Recv(s, recvBuffer, sizeof(recvBuffer));    //should recv "250 Mail OK"
-	cout << recvBuffer << endl;
+	fout << recvBuffer << endl;
 
 	//set receiver
 	Send(s, "rcpt to:<" + email_addr + ">\r\n");
 	Recv(s, recvBuffer, sizeof(recvBuffer));    //should recv "250 Mail OK"
-	cout << recvBuffer << endl;
+	fout << recvBuffer << endl;
 
 	//send data
 	Send(s, (string)"data\r\n");
 	Recv(s, recvBuffer, sizeof(recvBuffer));    //should recv "354 End data with <CR><LF>.<CR><LF>"
-	cout << recvBuffer << endl;
+	fout << recvBuffer << endl;
 
 	Send(s, "to:" + email_addr + "\r\n" + "subject:" + email_title + "\r\n\r\n" + email_content + "\r\n.\r\n");
 	Recv(s, recvBuffer, sizeof(recvBuffer));
-	cout << recvBuffer << endl;
+	fout << recvBuffer << endl;
 
 	Send(s, (string)"quit\r\n");
 	Recv(s, recvBuffer, sizeof(recvBuffer));
-	cout << recvBuffer << endl;
+	fout << recvBuffer << endl;
 	closesocket(s);
 
-	cout << "Send Email Success" << endl;
+	fout << "Send Email Success" << endl;
 
 	return true;
 }
@@ -1033,7 +1044,7 @@ void Network::_SignIn(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	cout << "SignIn: id-" << id << endl;
+	fout << "SignIn: id-" << id << endl;
 
 	res = ser->SignIn(id);
 	if (res)
@@ -1060,7 +1071,7 @@ void Network::_IsValid(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	cout << "IsValid: id-" << id << endl;
+	fout << "IsValid: id-" << id << endl;
 
 	res = ser->IsValid(id);
 	if (res==1)
@@ -1095,10 +1106,10 @@ void Network::_GetUserName(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	//res = ser->GetUserName(id);
-	//sprintf_s(msg, 256, "%d:%s:", MSG_SEVRNAME_RETURN, res.c_str());
+	res = ser->GetUserName(id);
+	sprintf_s(msg, 256, "%d:%s:", MSG_SEVRNAME_RETURN, res.c_str());
 
-	sprintf_s(msg, 256, "%d:%s:", MSG_USERNAME_RETURN, "Invalid");
+	//sprintf_s(msg, 256, "%d:%s:", MSG_USERNAME_RETURN, "Invalid");
 }
 
 void Network::_GetServerName(char* recv_msg, char* msg)
@@ -1188,8 +1199,14 @@ void Network::_SendProviderServes(char* recv_msg, char* msg)
 	OutputDebugString(L"_SendProviderServes\n");
 
 	bool res;
+	string id;
+	char *p;
 
-	//res = ser->SendProviderServes();
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	res = ser->SendProviderServes(p);
 
 	sprintf_s(msg, 256, "%d:", MSG_SERVEEMAIL_RETURN,res);
 }

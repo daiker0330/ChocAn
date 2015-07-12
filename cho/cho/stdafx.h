@@ -13,6 +13,7 @@
 #include <tchar.h>
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include <winsock2.h>
 #include<windows.h>

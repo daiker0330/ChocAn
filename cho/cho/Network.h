@@ -351,6 +351,9 @@ private:
 	static string _msg;
 
 	Server* ser;
+
+	FILE* f;
+	ofstream fout;
 };
 
 #endif 

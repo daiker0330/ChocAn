@@ -264,10 +264,10 @@ namespace ChocAnClient
         }
 
         //发送提供者目录
-        public void SendProviderServes()
+        public void SendProviderServes(string id)
         {
             string msg;
-            msg = MSG_PRODSUM_REQUEST.ToString() + ":";
+            msg = MSG_SERVEEMAIL_REQUEST.ToString() + ":" + id;
             SendMessage(msg);
 
             String[] recv;
