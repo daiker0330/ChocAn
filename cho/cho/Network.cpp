@@ -1182,3 +1182,14 @@ void Network::_GetProviderSum(char* recv_msg, char* msg)
 
 	//sprintf_s(msg, 256, "%d:%f:", MSG_PRODSUM_RETURN, 2.1);
 }
+
+void Network::_SendProviderServes(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_SendProviderServes\n");
+
+	bool res;
+
+	//res = ser->SendProviderServes();
+
+	sprintf_s(msg, 256, "%d:", MSG_SERVEEMAIL_RETURN,res);
+}

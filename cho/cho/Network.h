@@ -197,6 +197,14 @@ public:
 	//以下函数需要服务器实现
 	//在客户端发出调用请求时, 网络模块自动调用对应函数
 
+	//发送提供者目录
+	//bool SendProviderServes();
+
+	//获取会员名称
+	//发送:会员编号
+	//返回:会员名称
+	//string GetUserName(string id);
+
 	//提供者登陆终端
 	//功能: 终端开机后服务提供者输入他的提供者编号
 	//发送: 提供者编号
@@ -234,6 +242,7 @@ public:
 	//回复 : 合计费用 / 提供者编号错误(返回 - 1)
 	//double GetProviderSum(string id);
 
+	
 private:
 
 	// 启动服务器
@@ -310,6 +319,7 @@ private:
 	void _GetServerPrice(char* recv_msg, char* msg);
 	void _SaveServerRecord(char* recv_msg, char* msg);
 	void _GetProviderSum(char* recv_msg, char* msg);
+	void _SendProviderServes(char* recv_msg, char* msg);
 
 	//发送邮件辅助函数
 	void Send(SOCKET& s, string& data);

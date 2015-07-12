@@ -30,6 +30,9 @@
 #define MSG_USERNAME_REQUEST	0x70
 #define MSG_USERNAME_RETURN		0x71
 
+#define MSG_SERVEEMAIL_REQUEST	0x80
+#define MSG_SERVEEMAIL_RETURN	0x81
+
 class CMessage
 {
 public:

@@ -60,6 +60,9 @@ namespace ChocAnClient
 		//回复 : 合计费用 / 提供者编号错误(返回 - 1)
         double GetProviderSum(string id);
 
+        //发送提供者目录
+        void SendProviderServes();
+
         //设置IP地址
         void SetIp(string _ip);
 

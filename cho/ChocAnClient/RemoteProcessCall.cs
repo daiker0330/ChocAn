@@ -33,6 +33,8 @@ namespace ChocAnClient
         private static int MSG_PRODSUM_RETURN = 0x61;
         private static int MSG_USERNAME_REQUEST = 0x70;
         private static int MSG_USERNAME_RETURN	= 0x71;
+        private static int MSG_SERVEEMAIL_REQUEST = 0x80;
+        private static int MSG_SERVEEMAIL_RETURN = 0x81;
 
         //setting
         private int port = 12345;
@@ -256,6 +258,17 @@ namespace ChocAnClient
             recv = ReceiveMessage();
 
             return Convert.ToDouble(recv[1]);
+        }
+
+        //发送提供者目录
+        public void SendProviderServes()
+        {
+            string msg;
+            msg = MSG_PRODSUM_REQUEST.ToString() + ":";
+            SendMessage(msg);
+
+            String[] recv;
+            recv = ReceiveMessage();
         }
     }
 }
