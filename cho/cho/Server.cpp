@@ -444,9 +444,14 @@ bool Server::add_mem()
 bool Server::del_mem()
 {
 	string id;
+	cout << "请输入要删除的会员id：";
 	cin>>id;
 	int flag = db.check_member_id(id);
-	if (flag == 0)return false;
+	if (flag == 0)
+	{
+		cout << "失败，请检查会员号" << endl;
+		return false;
+	}
 	cout << "成功" << endl;
 	return db.delete_member(id);
 }
@@ -470,9 +475,14 @@ bool Server::add_spt()
 bool Server::del_spt()
 {
 	string id;
+	cout << "请输入要删除的提供者id";
 	cin>>id;
 	bool flag = db.check_supporter_id(id);
-	if (flag == false)return false;
+	if (flag == false)
+	{
+		cout << "失败，请检查提供者号" << endl;
+		return false;
+	}
 	cout << "成功" << endl;
 	return db.delete_supporter(id);
 }
