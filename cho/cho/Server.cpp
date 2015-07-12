@@ -75,7 +75,9 @@ bool Server::SignIn(string id)
 
 int Server::IsValid(string id)
 {
-	return db.check_member_id(id);
+	int r=db.check_member_id(id);
+	cout<<r<<"    SSSSSSSSS"<<endl;
+	return r;
 }
 
 string Server::GetServerName(string id)
@@ -394,6 +396,7 @@ bool Server::add_mem()
 bool Server::del_mem()
 {
 	string id;
+	cin>>id;
 	int flag = db.check_member_id(id);
 	if (flag == 0)return false;
 	cout << "成功" << endl;
@@ -419,6 +422,7 @@ bool Server::add_spt()
 bool Server::del_spt()
 {
 	string id;
+	cin>>id;
 	bool flag = db.check_supporter_id(id);
 	if (flag == false)return false;
 	cout << "成功" << endl;
