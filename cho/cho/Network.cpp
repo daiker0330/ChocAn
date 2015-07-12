@@ -1054,7 +1054,7 @@ void Network::_IsValid(char* recv_msg, char* msg)
 
 	string id;
 	char *p;
-	bool res;
+	int res;
 
 	p = FilterMessage(recv_msg);
 
