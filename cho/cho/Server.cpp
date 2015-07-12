@@ -86,7 +86,7 @@ bool Server::SignIn(string id)
 int Server::IsValid(string id)
 {
 	int r=db.check_member_id(id);
-	cout<<r<<"    SSSSSSSSS"<<endl;
+	//cout<<r<<"    SSSSSSSSS"<<endl;
 	return r;
 }
 
@@ -109,7 +109,7 @@ string Server::GetServerName(string id)
 	}
 	else
 	{
-		return "Invaild";
+		return "Invalid";
 	}
 
 }
@@ -177,7 +177,7 @@ string Server::GetUserName(string id)
 	
 	if (t == 0)
 	{
-		return "Invaild";
+		return "Invalid";
 	}
 
 	member_MSG mem=db.get_mem_msg(id);
