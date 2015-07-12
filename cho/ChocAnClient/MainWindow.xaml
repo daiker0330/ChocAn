@@ -62,9 +62,9 @@
                 <GradientStop Color="#FFF09844" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Rectangle Name="MyRectangle" Width="2000" Height="1000">
+        <Rectangle Name="MyRectangle" Margin="-1692.068,-1572.358,-1670.932,-1557.642" >
             <Rectangle.Fill>
-                <SolidColorBrush x:Name="MySolidColorBrush" Color="Blue" />
+                <SolidColorBrush x:Name="MySolidColorBrush" Color="White" />
             </Rectangle.Fill>
             <Rectangle.Triggers>
                 <EventTrigger RoutedEvent="Page.Loaded">
@@ -135,7 +135,7 @@
                     <StackPanel HorizontalAlignment="Left" Grid.Row="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100" />
                             </Grid.ColumnDefinitions>
@@ -146,7 +146,7 @@
                                     <TextBlock FontWeight="Normal">输入9位会员ID</TextBlock>
                                 </TextBox.ToolTip>
                             </TextBox>
-                            <Label x:Name="Result" Content="" Width="80" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="8" />
+                            <Label x:Name="Result" Content="" Width="100" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="8" />
                         </Grid>
                     </StackPanel>
                     <StackPanel Grid.Row="1">
@@ -170,28 +170,28 @@
                                             <RowDefinition Height="auto" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition Width="160"/>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="80" />
                                         </Grid.ColumnDefinitions>
                                         <Label x:Name="HNlabel" Content="会员名称：" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" />
-                                        <TextBox x:Name="HuiName" Text="" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" Width="150" IsEnabled="False"/>
-                                        <Label x:Name="tlabel1" Content="当前日期：" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
-                                        <DatePicker x:Name="Date" Grid.Column="1" Grid.Row="1" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBox x:Name="HuiName" Text="" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" Width="120" IsEnabled="False"/>
+                                        <Label x:Name="tlabel1" Content="服务日期：" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
+                                        <DatePicker x:Name="Date" Grid.Column="1" Grid.Row="1" Width="120" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                         <Label x:Name="tlabel2" Content="服务号：" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
-                                        <TextBox x:Name="fuWuText" Grid.Column="1" Grid.Row="2" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" TextChanged="fuWuText_TextChanged" KeyDown="fuWuText_KeyDown" MaxLength="6">
+                                        <TextBox x:Name="fuWuText" Grid.Column="1" Grid.Row="2" Width="120" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" TextChanged="fuWuText_TextChanged" KeyDown="fuWuText_KeyDown" MaxLength="6">
                                             <TextBox.ToolTip>
                                                 <TextBlock FontWeight="Normal">输入6位服务号码</TextBlock>
                                             </TextBox.ToolTip>
                                         </TextBox>
-                                        <Button x:Name="MuLu" Grid.Column="2" Grid.Row="2" Width="90" Height="25" VerticalAlignment="Center" Click="MuLu_Click">提供者目录</Button>
+                                        <Button x:Name="MuLu" Grid.Column="2" Grid.Row="2" Width="80" Height="25" VerticalAlignment="Center" Click="MuLu_Click">提供者目录</Button>
                                         <Label x:Name="NameFu" Content="" Height="25" VerticalAlignment="Center" Grid.Column="3" Grid.Row="2" />
                                         <Label x:Name="Feilabel" Content="费用(¥)：" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center"/>
-                                        <Label x:Name="Fee" Content="0" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
+                                        <Label x:Name="Fee" Content="0" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120"/>
                                         <Label x:Name="ZhuLabel" Content="注释：" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center"/>
-                                        <TextBox x:Name="Zhu" Width="250" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" />
-                                        <Button Grid.Column="1" Grid.Row="5" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Button_Click_Submit">提交</Button>
+                                        <TextBox x:Name="Zhu" Width="250" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" />
+                                        <Button Grid.Column="1" Grid.Row="5" Width="120" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Button_Click_Submit">提交</Button>
 
                                     </Grid>
                                 </Expander.Content>

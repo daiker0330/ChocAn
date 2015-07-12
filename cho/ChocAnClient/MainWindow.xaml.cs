@@ -40,6 +40,7 @@ namespace ChocAnClient
         string result;
         string Ip;
         int Port;
+        public DateTime SendEmailTime;
         /*****************UI******************************/
         public MainWindow()
         {
@@ -123,6 +124,8 @@ namespace ChocAnClient
            Ip = MyStreamReader.ReadLine();
            string P = MyStreamReader.ReadLine();
            Port=Convert.ToInt32(P);
+           SendEmailTime = new DateTime(2012,1,1,1,1,1);
+           
 
         }
         private void SignIn_Button(object sender, RoutedEventArgs e)
@@ -321,6 +324,7 @@ namespace ChocAnClient
                 return false;
             if (Fee.Content.ToString() == "-1" || Fee.Content.ToString() == "无效的服务代码" || Fee.Content.ToString() == "")
                 return false;
+          
             return true;
         }
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
@@ -329,6 +333,11 @@ namespace ChocAnClient
             ServerRecord server = new ServerRecord();
             DateTime time = new DateTime();
             time = Convert.ToDateTime(Date.Text);
+            if (time > System.DateTime.Now)
+            {
+                MessageBox.Show("服务日期有误,超过当前日期");
+                return;
+            }
             server.Y = time.Year;
             server.M = time.Month;
             server.D = time.Day;
@@ -344,6 +353,7 @@ namespace ChocAnClient
             server.server_id = fuWuText.Text;
             server.other = Zhu.Text;
           // MessageBox.Show(server.Serialization());
+            
             if (List_Right())
             {
                 if (network.SaveServerRecord(server))
@@ -385,13 +395,32 @@ namespace ChocAnClient
         private void button3_Click(object sender, RoutedEventArgs e)
         {
            // MessageBox.Show("给服务器发消息发邮件");
-            if(network.GetProviderSum(suplier)==-1)
-            {
-                MessageBox.Show("发送失败");
+       //    
+            bool SendYN=true;
+            if ((DateTime.Now.Year == SendEmailTime.Year) && (DateTime.Now.Month == SendEmailTime.Month) && (DateTime.Now.Day == SendEmailTime.Day)&&(DateTime.Now.Hour==SendEmailTime.Hour))
+            { 
+                if((DateTime.Now.Minute-SendEmailTime.Minute)<5)
+                {
+                    SendYN = false;
+                }
+                else
+                {
+                    SendYN = true;
+                }
             }
             else
             {
+                SendYN = true;
+            }
+            if (SendYN)
+            {
+                SendEmailTime = DateTime.Now;
+                network.SendProviderServes(suplier);
                 MessageBox.Show("发送成功");
+            }
+            else
+            {
+                MessageBox.Show("发送邮件过于频繁,请5分钟后在试试");
             }
         }
 
