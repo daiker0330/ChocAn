@@ -21,6 +21,7 @@ void Server::init()
 
 void Server::run()
 {
+	net->send_email("t3cmax@qq.com", "email_test", "klewygligeqligtligqlitug", "");
 	cout << "服务器已开启" << endl;
 
 	int op;
