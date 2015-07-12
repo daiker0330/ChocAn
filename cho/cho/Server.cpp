@@ -21,7 +21,7 @@ void Server::init()
 
 void Server::run()
 {
-	net->send_email("t3cmax@qq.com", "email_test", "klewygligeqligtligqlitug", "");
+	//net->send_email("t3cmax@qq.com", "email_test", "klewygligeqligtligqlitug", "");
 	cout << "服务器已开启" << endl;
 
 	int op;
@@ -84,7 +84,16 @@ string Server::GetServerName(string id)
 
 	if (flag == true)
 	{
-		return "Valid";
+		//return "Valid";
+		supporter_INDEX idx = db.get_stp_index();
+		int i;
+		for (i = 0; i < idx.n; i++)
+		{
+			if (idx.id[i] == id)
+			{
+				return idx.name[i];
+			}
+		}
 	}
 	else
 	{
