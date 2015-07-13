@@ -62,7 +62,7 @@
                 <GradientStop Color="#FFF09844" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Rectangle Name="MyRectangle" Margin="-1692.068,-1572.358,-1670.932,-1557.642" >
+        <Rectangle Name="MyRectangle" Margin="-1,-1,-1,-1" >
             <Rectangle.Fill>
                 <SolidColorBrush x:Name="MySolidColorBrush" Color="White" />
             </Rectangle.Fill>
