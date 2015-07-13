@@ -10,3 +10,12 @@ Listen Socket init finish.
 system ready, waiting....
 release finish.
 stop listening
+ creat _WorkerThread 8.
+
+IOCP init finish.
+WSASocket() finish.
+Listen Socket bind success.
+bind() do error.
+Listen Socket init fail !
+release finish.
+start Socket error
