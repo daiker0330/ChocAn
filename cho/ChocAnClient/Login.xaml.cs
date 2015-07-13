@@ -12,12 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using MahApps.Metro.Controls;
+using MahApps.Metro;
+using MahApps.Metro.Controls.Dialogs;
+
 namespace ChocAnClient
 {
     /// <summary>
     /// Login.xaml 的交互逻辑
     /// </summary>
-    public partial class Login : Window
+    public partial class Login :Window
     {
 
         public bool result = false;
@@ -39,7 +43,9 @@ namespace ChocAnClient
             }
             else
             {
-                MessageBox.Show("连接成功");
+                //MessageBox.Show("连接成功");
+                
+              
             }
         }
 
