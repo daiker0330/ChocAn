@@ -1198,6 +1198,8 @@ void Network::_SendProviderServes(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_SendProviderServes\n");
 
+	fout << L"_SendProviderServes\n"<<endl;
+
 	bool res;
 	string id;
 	char *p;

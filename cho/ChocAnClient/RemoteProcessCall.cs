@@ -268,6 +268,7 @@ namespace ChocAnClient
         {
             string msg;
             msg = MSG_SERVEEMAIL_REQUEST.ToString() + ":" + id;
+            //Console.WriteLine("!!!!!!!!!!!");
             SendMessage(msg);
 
             String[] recv;

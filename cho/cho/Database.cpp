@@ -5,8 +5,8 @@
 void Database::init()
 {
 	_bstr_t str = "Database\\Choc.mdb";
-	if (access.OpenConnect(str) == true)
-		puts("数据库连接成功！");
+	if (access.OpenConnect(str) == true);
+		//puts("数据库连接成功！");
 	return;
 }
 

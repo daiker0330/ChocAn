@@ -349,13 +349,13 @@ void Server::send_supporter_email()
 	string mail_addr;
 	for (i = 0; i < spts.size(); i++)
 	{
-		cout << i << "    1111" << endl;
+		//cout << i << "    1111" << endl;
 		spt = spts[i];
 		slist = db.get_supporter_list(spt, from, to);
 		mail = make_email_for_supporter(slist);
 
 		mail_addr = db.get_spt_email(spt);
-		cout << mail_addr << "    AAAA" << endl;
+		//cout << mail_addr << "    AAAA" << endl;
 		net->send_email(mail_addr,"巧克力爱好者匿名每周提供者服务清单", mail, "Invalid");
 
 		insert_trans(slist);
@@ -367,6 +367,7 @@ void Server::send_supporter_email()
 
 bool Server::SendProviderServes(string id)
 {
+	//cout << "!!!!!!!!!!!!!!!" << endl;
 	supporter_INDEX idx = db.get_stp_index();
 
 	string spt;
@@ -382,7 +383,7 @@ bool Server::SendProviderServes(string id)
 		mail = mail + idx.id[i] + "    " + idx.name[i] + "    " + ((string)p) + "\n";
 	}
 	mail_addr = db.get_spt_email(id);
-
+	//cout << mail_addr << "    AAAA" << endl;
 	net->send_email(mail_addr, "提供者目录", mail, "Invalid");
 
 	return true;

@@ -68,7 +68,7 @@ bool DBAssistant::CloseConnection() {
 // 根据sql查询
 bool DBAssistant::ExecuteQuery(_bstr_t sql)
 {
-	cout << sql << endl;
+	//cout << sql << endl;
 	try {
 		
 		m_pResultset.CreateInstance(__uuidof(Recordset));
@@ -82,7 +82,7 @@ bool DBAssistant::ExecuteQuery(_bstr_t sql)
 		IsFirstRecord = true;
 	}
 	catch (_com_error e) {
-		cout << "查询出错：" << e.ErrorMessage() << endl;
+		//cout << "查询出错：" << e.ErrorMessage() << endl;
 		return false;
 	}
 	return true;
@@ -206,7 +206,7 @@ bool DBAssistant::SetFieldValue(int nIndex, _variant_t fieldValue) {
 		m_pResultset->Fields->GetItem(vtIndex)->Value = fieldValue;
 	}
 	catch (_com_error e) {
-		cout << "设置记录出错：" << e.ErrorMessage() << endl;
+		//cout << "设置记录出错：" << e.ErrorMessage() << endl;
 		return false;
 	}
 	return true;
@@ -217,7 +217,7 @@ bool DBAssistant::SetFieldValue(const char* FieldName, _variant_t fieldValue) {
 		m_pResultset->Fields->GetItem(FieldName)->Value = fieldValue;
 	}
 	catch (_com_error e) {
-		cout << "设置记录出错：" << e.ErrorMessage() << endl;
+		//cout << "设置记录出错：" << e.ErrorMessage() << endl;
 		return false;
 	}
 	return true;

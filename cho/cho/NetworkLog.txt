@@ -1,0 +1,12 @@
+ creat _WorkerThread 8.
+
+IOCP init finish.
+WSASocket() finish.
+Listen Socket bind success.
+bind() finish.
+Listen() finish.
+post 10 AcceptEx finish
+Listen Socket init finish.
+system ready, waiting....
+release finish.
+stop listening

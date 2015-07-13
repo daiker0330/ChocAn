@@ -1,0 +1,22 @@
+250 Mail OK
+
+250 Mail OK
+
+354 End data with <CR><LF>.<CR><LF>
+
+250 Mail OK queued as smtp1,C8mowECZVERUGKNV9YQFBA--.4691S2 1436751957
+
+221 Bye
+
+Send Email Success
+250 Mail OK
+
+250 Mail OK
+
+354 End data with <CR><LF>.<CR><LF>
+
+250 Mail OK queued as smtp1,C8mowEDZ2EtVGKNVN4UFBA--.4679S2 1436751957
+
+221 Bye
+
+Send Email Success
