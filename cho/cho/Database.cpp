@@ -32,7 +32,7 @@ member_MSG Database::get_mem_msg(string id){
 		ret.addr = access.GetString("Street");
 		ret.city = access.GetString("City");
 		ret.nation = access.GetString("Nation");
-		ret.name = access.GetString("Nama");
+		ret.name = access.GetString("MemberName");
 		ret.id = id;
 		ret.zip = access.GetString("ZIP");
 		ret.email = access.GetString("Email");
@@ -84,7 +84,7 @@ supporter_INDEX Database::get_stp_index(){
 	while (access.Next()){
 		ret.id.push_back(_com_util::ConvertBSTRToString(access.GetString((_bstr_t)"ID")));
 		//cout << access.GetString((_bstr_t)"ID") << endl;
-		ret.name.push_back(_com_util::ConvertBSTRToString(access.GetString((_bstr_t)"Nama")));
+		ret.name.push_back(_com_util::ConvertBSTRToString(access.GetString((_bstr_t)"Type")));
 		double tmp;
 		sstr << access.GetString((_bstr_t)"Price");
 		sstr >> tmp;
@@ -148,7 +148,7 @@ member_LIST Database::get_member_list(string id, Date start, Date end){
 		ret.mem.addr = access.GetString("Street");
 		ret.mem.city = access.GetString("City");
 		ret.mem.nation = access.GetString("Nation");
-		ret.mem.name = access.GetString("Nama");
+		ret.mem.name = access.GetString("MemberName");
 		ret.mem.id = id;
 		ret.mem.zip = access.GetString("ZIP");
 	}
@@ -157,14 +157,14 @@ member_LIST Database::get_member_list(string id, Date start, Date end){
 	//	"from ServiceRecord, Provider, Service where ServiceID = Service.ID and MemberID = '" + id.c_str() +
 	//	"' and ProviderID = Provider.ID and DoDate >= #" + getDateString(start).c_str()
 	//	+ "# and DoDate <= #" + getDateString(end).c_str() + "#";
-	_bstr_t str = "SELECT datepart(\"yyyy\", DoDate), datepart(\"m\", DoDate),datepart(\"d\", DoDate), Service.Nama, Provider.Nama from ServiceRecord, Provider, Service where ServiceID = Service.ID and MemberID = '" 
+	_bstr_t str = "SELECT datepart(\"yyyy\", DoDate), datepart(\"m\", DoDate),datepart(\"d\", DoDate), Service.Type, Provider.ProviderName from ServiceRecord, Provider, Service where ServiceID = Service.ID and MemberID = '" 
 		+ (_bstr_t)id.c_str() + "' and ProviderID = Provider.ID and DoDate >= #" 
 		+ (_bstr_t)getDateString(start).c_str()+ "# and DoDate <= #" + getDateString(end).c_str() + "#";
 	access.ExecuteQuery(str);
 	ret.n = access.GetRecordCount();
 	while (access.Next()){
-		ret.ser_name.push_back(access.GetString("Service.Nama"));
-		ret.spt_name.push_back(access.GetString("Provider.Nama"));
+		ret.ser_name.push_back(access.GetString("Type"));
+		ret.spt_name.push_back(access.GetString("ProviderName"));
 		ret.d.push_back(sti(access.GetString(2)));
 		ret.m.push_back(sti(access.GetString(1)));
 		ret.y.push_back(sti(access.GetString(0)));
@@ -180,7 +180,7 @@ supporter_LIST Database::get_supporter_list(string id, Date start, Date end){
 		ret.mem.addr = access.GetString("Street");
 		ret.mem.city = access.GetString("City");
 		ret.mem.nation = access.GetString("Nation");
-		ret.mem.name = access.GetString("Nama");
+		ret.mem.name = access.GetString("ProviderName");
 		ret.mem.id = id;
 		ret.mem.zip = access.GetString("ZIP");
 	}
