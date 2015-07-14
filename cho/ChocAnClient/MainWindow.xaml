@@ -208,13 +208,13 @@
         </Viewbox>
         <Viewbox>
             <StackPanel x:Name="JiZhang" >
-                <Grid x:Name="gridJZ" ShowGridLines="True" Margin="0,30,0,0">
+                <Grid x:Name="gridJZ" ShowGridLines="True" Margin="0,50,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <DataGrid FontFamily="Microsoft YaHei UI" Background="LightGray" Grid.Row="0" x:Name="data" ItemsSource="{Binding Sum}"  />
+                    <DataGrid FontFamily="Microsoft YaHei UI" Background="LightGray" Grid.Row="0" x:Name="data" ItemsSource="{Binding Sum}" MaxHeight="550"   />
 
                     <Button FontFamily="Microsoft YaHei UI" Grid.Row="1" x:Name="Back" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Content="返回" Click="Back_Click" />
 
@@ -231,7 +231,7 @@
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
                 <Label FontFamily="Microsoft YaHei UI" x:Name="D" Width="250" Height="60" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="25"  Grid.Row="0" Grid.Column="0" />
-                <Button FontFamily="Microsoft YaHei UI" x:Name="LogOut" Height="40" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" Click="LogOut_Click" Visibility="Visible" >注销</Button>
+                <Button FontFamily="Microsoft YaHei UI" x:Name="LogOut" Height="40" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" Click="LogOut_Click" FontSize="25" Background="LightGray" Visibility="Visible" >注销</Button>
             </Grid>
         </StackPanel>
 
