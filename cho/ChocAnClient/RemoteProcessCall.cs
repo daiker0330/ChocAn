@@ -80,7 +80,7 @@ namespace ChocAnClient
 
             int receiveLength = clientSocket.Receive(result);
 
-            msg = Encoding.ASCII.GetString(result, 0, receiveLength);
+            msg = Encoding.Unicode.GetString(result, 0, receiveLength);
 
             char[] separator = { ':' };
             String[] splitStrings = new String[5];
