@@ -53,10 +53,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="mem_MSG.cs" />
     <Compile Include="IRemoteProcessCall.cs" />
     <Compile Include="RecheckWindow.xaml.cs">
       <DependentUpon>RecheckWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="spt_MSG.cs" />
     <Compile Include="RemoteProcessCall.cs" />
     <Page Include="Add_mem.xaml">
       <SubType>Designer</SubType>
