@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChoAnClient_for_Admin;
 
-namespace ChocAnClient
+namespace ChoAnClient_for_Admin
 {
 
     public interface IRemoteProcessCall

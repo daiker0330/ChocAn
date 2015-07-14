@@ -8,7 +8,7 @@ using System.Net.Sockets;
 using System.Threading;
 using ChoAnClient_for_Admin;
 
-namespace ChocAnClient
+namespace ChoAnClient_for_Admin
 {
     public class RemoteProcessCall : IRemoteProcessCall
     {

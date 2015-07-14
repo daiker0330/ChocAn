@@ -1073,7 +1073,7 @@ void Network::_SignIn(char* recv_msg, char* msg)
 
 	string id;
 	char *p;
-	bool res;
+	bool res = false;
 
 	p = FilterMessage(recv_msg);
 
@@ -1187,7 +1187,7 @@ void Network::_SaveServerRecord(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_SaveServerRecord\n");
 
-	bool res;
+	bool res = false;
 	string id;
 	char *p;
 
@@ -1235,7 +1235,7 @@ void Network::_SendProviderServes(char* recv_msg, char* msg)
 
 	//fout << L"_SendProviderServes\n"<<endl;
 
-	bool res;
+	bool res = false;
 	string id;
 	char *p;
 
@@ -1252,7 +1252,9 @@ void Network::_far_add_mem(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_far_add_mem\n");
 
-	bool res;
+	fout << "_far_add_mem\n"<<endl;
+
+	bool res = false;
 	member_MSG mem;
 	char *p;
 
@@ -1262,14 +1264,19 @@ void Network::_far_add_mem(char* recv_msg, char* msg)
 
 	//res = ser->far_add_mem(mem);
 
-	sprintf_s(msg, 256, "%d:%d:", MSG_FAR_ADD_MEM_RETURN, res);
+	if (res)
+		sprintf_s(msg, 256, "%d:true:", MSG_FAR_ADD_MEM_RETURN);
+	else
+		sprintf_s(msg, 256, "%d:false:", MSG_FAR_ADD_MEM_RETURN);
 }
 
 void Network::_far_del_mem(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_far_del_mem\n");
 
-	bool res;
+	fout << "_far_del_mem\n" << endl;
+
+	bool res = false;
 	string id;
 	char *p;
 
@@ -1279,14 +1286,19 @@ void Network::_far_del_mem(char* recv_msg, char* msg)
 
 	//res = ser->far_del_mem(id);
 
-	sprintf_s(msg, 256, "%d:%d:", MSG_FAR_DEL_MEM_RETURN, res);
+	if (res)
+		sprintf_s(msg, 256, "%d:true:", MSG_FAR_DEL_MEM_RETURN);
+	else
+		sprintf_s(msg, 256, "%d:false:", MSG_FAR_DEL_MEM_RETURN);
 }
 
 void Network::_far_add_spt(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_far_add_spt\n");
 
-	bool res;
+	fout << "_far_add_spt\n" << endl;
+
+	bool res = false;
 	spt_MSG mem;
 	char *p;
 
@@ -1296,14 +1308,19 @@ void Network::_far_add_spt(char* recv_msg, char* msg)
 
 	//res = ser->far_add_spt(mem);
 
-	sprintf_s(msg, 256, "%d:%d:", MSG_FAR_ADD_SPT_RETURN, res);
+	if (res)
+		sprintf_s(msg, 256, "%d:true:", MSG_FAR_ADD_SPT_RETURN);
+	else
+		sprintf_s(msg, 256, "%d:false:", MSG_FAR_ADD_SPT_RETURN);
 }
 
 void Network::_far_del_spt(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_far_del_spt\n");
 
-	bool res;
+	fout << "_far_del_spt\n" << endl;
+
+	bool res = false;
 	string id;
 	char *p;
 
@@ -1313,12 +1330,17 @@ void Network::_far_del_spt(char* recv_msg, char* msg)
 
 	//res = ser->far_del_spt(id);
 
-	sprintf_s(msg, 256, "%d:%d:", MSG_FAR_DEL_SPT_RETURN, res);
+	if (res)
+		sprintf_s(msg, 256, "%d:true:", MSG_FAR_DEL_SPT_RETURN);
+	else
+		sprintf_s(msg, 256, "%d:false:", MSG_FAR_DEL_SPT_RETURN);
 }
 
 void Network::_send_member_email(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_send_member_email\n");
+
+	fout << "_send_member_email\n" << endl;
 
 	ser->send_member_email();
 
@@ -1329,6 +1351,8 @@ void Network::_send_supporter_email(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_send_supporter_email\n");
 
+	fout << "_send_supporter_email\n" << endl;
+
 	ser->send_supporter_email();
 
 	sprintf_s(msg, 256, "%d:", MSG_SEND_SUPPORTER_EMAIL_RETURN);
@@ -1338,7 +1362,14 @@ void Network::_print_report(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_print_report\n");
 
-	ser->print_report();
+	fout << "_print_report\n" << endl;
 
-	sprintf_s(msg, 256, "%d:", MSG_PRINT_REPORT_RETURN);
+	bool res = false;
+
+	res = ser->print_report();
+
+	if (res)
+		sprintf_s(msg, 256, "%d:true:", MSG_PRINT_REPORT_RETURN);
+	else
+		sprintf_s(msg, 256, "%d:false:", MSG_PRINT_REPORT_RETURN);
 }
