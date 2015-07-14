@@ -69,12 +69,14 @@ namespace ChoAnClient_for_Admin
 
         private void add_supporter_Click(object sender, RoutedEventArgs e)
         {
-
+            Add_spt win = new Add_spt();
+            win.ShowDialog();
         }
 
         private void del_supporter_Click(object sender, RoutedEventArgs e)
         {
-
+            Del_spt win = new Del_spt();
+            win.ShowDialog();
         }
         private void send_mem_email_Click(object sender, RoutedEventArgs e)
         {

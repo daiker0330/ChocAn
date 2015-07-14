@@ -23,11 +23,11 @@ using System.Data;
 namespace ChoAnClient_for_Admin
 {
     /// <summary>
-    /// Del_mem.xaml 的交互逻辑
+    /// Del_spt.xaml 的交互逻辑
     /// </summary>
-    public partial class Del_mem : Window
+    public partial class Del_spt : Window
     {
-        public Del_mem()
+        public Del_spt()
         {
             InitializeComponent();
         }
@@ -51,7 +51,7 @@ namespace ChoAnClient_for_Admin
 
             //MessageD_Box(ID_box.Text);
 
-            bool flag = network.far_del_mem(ID_box.Text);
+            bool flag = network.far_del_spt(ID_box.Text);
 
             //Console.WriteLine(flag);
             //MessageBox.Show(flag.ToString());
@@ -67,9 +67,6 @@ namespace ChoAnClient_for_Admin
                 RecheckWindow win2 = new RecheckWindow();
                 win2.ShowDialog();
             }
-
-           // CheckWindow win = new CheckWindow();
-           // win.ShowDialog();
         }
     }
 }
