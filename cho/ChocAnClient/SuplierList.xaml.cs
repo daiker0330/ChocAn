@@ -13,12 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
+using MahApps.Metro.Controls;
+using MahApps.Metro;
+using MahApps.Metro.Controls.Dialogs;
+
 namespace ChocAnClient
 {
     /// <summary>
     /// SuplierList.xaml 的交互逻辑
     /// </summary>
-    public partial class SuplierList : Window
+    public partial class SuplierList :MetroWindow
     {
         public class Suppler
         {
