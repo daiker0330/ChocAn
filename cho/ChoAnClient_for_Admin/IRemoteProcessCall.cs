@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChoAnClient_for_Admin;
 
 namespace ChocAnClient
 {
@@ -17,9 +18,9 @@ namespace ChocAnClient
 		//负责初始化网络模块
         bool init();
 
-        //bool far_add_mem(member_MSG mem);
+        bool far_add_mem(mem_MSG mem);
         bool far_del_mem(string id);
-        //bool far_add_spt(spt_MSG mem);
+        bool far_add_spt(spt_MSG mem);
         bool far_del_spt(string id);
         void send_member_email();
         void send_supporter_email();

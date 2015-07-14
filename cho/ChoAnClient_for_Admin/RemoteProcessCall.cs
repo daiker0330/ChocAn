@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using ChoAnClient_for_Admin;
 
 namespace ChocAnClient
 {
     public class RemoteProcessCall : IRemoteProcessCall
     {
-        public RemoteProcessCall(){}
+        public RemoteProcessCall() { }
 
         //message type
         private static int MSG_NULL = 0x00;
@@ -43,7 +44,7 @@ namespace ChocAnClient
         {
             ip = IPAddress.Parse(_ip);
         }
-        
+
         public void SetPort(int _port)
         {
             port = _port;
@@ -123,21 +124,21 @@ namespace ChocAnClient
             }
         }
 
-        //bool far_add_mem(member_MSG mem)
-        //{
-        //    string msg;
-        //    msg = MSG_FAR_ADD_MEM_REQUEST.ToString() + ":" + mem.Serialization();
-        //    SendMessage(msg);
+        public bool far_add_mem(mem_MSG mem)
+        {
+            string msg;
+            msg = MSG_FAR_ADD_MEM_REQUEST.ToString() + ":" + mem.Serialization();
+            SendMessage(msg);
 
-        //    String[] recv;
-        //    recv = ReceiveMessage();
+            String[] recv;
+            recv = ReceiveMessage();
 
-        //    Console.WriteLine("*data:" + recv[1]);
+            Console.WriteLine("*data:" + recv[1]);
 
-        //    return Convert.ToBoolean(recv[1]);
-        //}
+            return Convert.ToBoolean(recv[1]);
+        }
 
-        bool far_del_mem(string id)
+        public bool far_del_mem(string id)
         {
             string msg;
             msg = MSG_FAR_DEL_MEM_REQUEST.ToString() + ":" + id;
@@ -151,21 +152,21 @@ namespace ChocAnClient
             return Convert.ToBoolean(recv[1]);
         }
 
-        //bool far_add_spt(spt_MSG mem)
-        //{
-        //    string msg;
-        //    msg = MSG_FAR_ADD_SPT_REQUEST.ToString() + ":" + mem.Serialization();
-        //    SendMessage(msg);
+        public bool far_add_spt(spt_MSG mem)
+        {
+            string msg;
+            msg = MSG_FAR_ADD_SPT_REQUEST.ToString() + ":" + mem.Serialization();
+            SendMessage(msg);
 
-        //    String[] recv;
-        //    recv = ReceiveMessage();
+            String[] recv;
+            recv = ReceiveMessage();
 
-        //    Console.WriteLine("*data:" + recv[1]);
+            Console.WriteLine("*data:" + recv[1]);
 
-        //    return Convert.ToBoolean(recv[1]);
-        //}
+            return Convert.ToBoolean(recv[1]);
+        }
 
-        bool far_del_spt(string id)
+        public bool far_del_spt(string id)
         {
             string msg;
             msg = MSG_FAR_DEL_SPT_REQUEST.ToString() + ":" + id;
@@ -179,7 +180,7 @@ namespace ChocAnClient
             return Convert.ToBoolean(recv[1]);
         }
 
-        void send_member_email()
+        public void send_member_email()
         {
             string msg;
             msg = MSG_SEND_MEMBER_EMAIL_REQUEST.ToString();
@@ -189,7 +190,7 @@ namespace ChocAnClient
             ReceiveMessage();
         }
 
-        void send_supporter_email()
+        public void send_supporter_email()
         {
             string msg;
             msg = MSG_SEND_SUPPORTER_EMAIL_REQUEST.ToString();
@@ -199,7 +200,7 @@ namespace ChocAnClient
             ReceiveMessage();
         }
 
-        bool print_report()
+        public bool print_report()
         {
             string msg;
             msg = MSG_PRINT_REPORT_REQUEST.ToString();
@@ -212,4 +213,5 @@ namespace ChocAnClient
 
             return Convert.ToBoolean(recv[1]);
         }
+    }
 }

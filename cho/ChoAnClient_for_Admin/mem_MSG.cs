@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChoAnClient_for_Admin
 {
-    class mem_MSG
+    public class mem_MSG
     {
         public string name;
 	    //修改char id[9];
