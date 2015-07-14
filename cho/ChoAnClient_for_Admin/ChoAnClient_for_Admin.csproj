@@ -53,6 +53,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Del_mem.xaml.cs">
+      <DependentUpon>Del_mem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="mem_MSG.cs" />
     <Compile Include="IRemoteProcessCall.cs" />
     <Compile Include="RecheckWindow.xaml.cs">
@@ -65,6 +68,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CheckWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Del_mem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

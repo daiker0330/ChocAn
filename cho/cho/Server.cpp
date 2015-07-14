@@ -352,7 +352,7 @@ void Server::send_supporter_email()
 		//cout << i << "    1111" << endl;
 		spt = spts[i];
 		slist = db.get_supporter_list(spt, from, to);
-		mail = make_email_for_supporter(slist);
+		mail = make_email_for_supporter(slist);  
 
 		mail_addr = db.get_spt_email(spt);
 		//cout << mail_addr << "    AAAA" << endl;
@@ -494,19 +494,19 @@ bool Server::del_spt()
 	cout << "³É¹¦" << endl;
 	return db.delete_supporter(id);
 }
-bool far_add_mem(member_MSG mem)
+bool Server::far_add_mem(member_MSG mem)
 {
 	return true;
 }
-bool far_del_mem(string id)
+bool Server::far_del_mem(string id)
 {
 	return true;
 }
-bool far_add_spt(spt_MSG mem)
+bool Server::far_add_spt(spt_MSG mem)
 {
 	return true;
 }
-bool far_del_spt(string id)
+bool Server::far_del_spt(string id)
 {
 	return true;
 }

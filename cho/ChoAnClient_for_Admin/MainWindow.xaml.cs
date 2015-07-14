@@ -50,10 +50,6 @@ namespace ChoAnClient_for_Admin
             InitializeComponent();
         }
 
-        private void del_member_Copy_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void add_member_Click(object sender, RoutedEventArgs e)
         {
@@ -65,7 +61,10 @@ namespace ChoAnClient_for_Admin
 
         private void del_member_Click(object sender, RoutedEventArgs e)
         {
-
+            //Console.WriteLine("(*&^%$#");
+            //MessageBox.Show("*&^%$");
+            Del_mem win = new Del_mem();
+            win.ShowDialog();
         }
 
         private void add_supporter_Click(object sender, RoutedEventArgs e)
