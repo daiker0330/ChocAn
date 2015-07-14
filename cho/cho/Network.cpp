@@ -658,6 +658,41 @@ bool Network::_DoRecv(PER_SOCKET_CONTEXT* pSocketContext, PER_IO_CONTEXT* pIoCon
 		_SendProviderServes(recv_msg, msg);
 		break;
 	}
+	case MSG_FAR_ADD_MEM_REQUEST:
+	{
+		_far_add_mem(recv_msg, msg);
+		break;
+	}
+	case MSG_FAR_DEL_MEM_REQUEST:
+	{
+		_far_del_mem(recv_msg, msg);
+		break;
+	}
+	case MSG_FAR_ADD_SPT_REQUEST:
+	{
+		_far_add_spt(recv_msg, msg);
+		break;
+	}
+	case MSG_FAR_DEL_SPT_REQUEST:
+	{
+		_far_del_spt(recv_msg, msg);
+		break;
+	}
+	case MSG_SEND_MEMBER_EMAIL_REQUEST:
+	{
+		_send_member_email(recv_msg, msg);
+		break;
+	}
+	case MSG_SEND_SUPPORTER_EMAIL_REQUEST:
+	{
+		_send_supporter_email(recv_msg, msg);
+		break;
+	}
+	case MSG_PRINT_REPORT_REQUEST:
+	{
+		_print_report(recv_msg, msg);
+		break;
+	}
 	}
 
 	//»Ø¸´ÏûÏ¢
@@ -1198,7 +1233,7 @@ void Network::_SendProviderServes(char* recv_msg, char* msg)
 {
 	OutputDebugString(L"_SendProviderServes\n");
 
-	fout << L"_SendProviderServes\n"<<endl;
+	//fout << L"_SendProviderServes\n"<<endl;
 
 	bool res;
 	string id;
@@ -1208,7 +1243,102 @@ void Network::_SendProviderServes(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	res = ser->SendProviderServes(p);
+	res = ser->SendProviderServes(id);
 
-	sprintf_s(msg, 256, "%d:", MSG_SERVEEMAIL_RETURN,res);
+	sprintf_s(msg, 256, "%d:", MSG_SERVEEMAIL_RETURN);
+}
+
+void Network::_far_add_mem(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_far_add_mem\n");
+
+	bool res;
+	member_MSG mem;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	mem.Deserialization(p);
+
+	//res = ser->far_add_mem(mem);
+
+	sprintf_s(msg, 256, "%d:%d:", MSG_FAR_ADD_MEM_RETURN, res);
+}
+
+void Network::_far_del_mem(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_far_del_mem\n");
+
+	bool res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	//res = ser->far_del_mem(id);
+
+	sprintf_s(msg, 256, "%d:%d:", MSG_FAR_DEL_MEM_RETURN, res);
+}
+
+void Network::_far_add_spt(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_far_add_spt\n");
+
+	bool res;
+	spt_MSG mem;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	mem.Deserialization(p);
+
+	//res = ser->far_add_spt(mem);
+
+	sprintf_s(msg, 256, "%d:%d:", MSG_FAR_ADD_SPT_RETURN, res);
+}
+
+void Network::_far_del_spt(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_far_del_spt\n");
+
+	bool res;
+	string id;
+	char *p;
+
+	p = FilterMessage(recv_msg);
+
+	id.append(p);
+
+	//res = ser->far_del_spt(id);
+
+	sprintf_s(msg, 256, "%d:%d:", MSG_FAR_DEL_SPT_RETURN, res);
+}
+
+void Network::_send_member_email(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_send_member_email\n");
+
+	ser->send_member_email();
+
+	sprintf_s(msg, 256, "%d:", MSG_SEND_MEMBER_EMAIL_RETURN);
+}
+
+void Network::_send_supporter_email(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_send_supporter_email\n");
+
+	ser->send_supporter_email();
+
+	sprintf_s(msg, 256, "%d:", MSG_SEND_SUPPORTER_EMAIL_RETURN);
+}
+
+void Network::_print_report(char* recv_msg, char* msg)
+{
+	OutputDebugString(L"_print_report\n");
+
+	ser->print_report();
+
+	sprintf_s(msg, 256, "%d:", MSG_PRINT_REPORT_RETURN);
 }
