@@ -19,3 +19,23 @@ bind() do error.
 Listen Socket init fail !
 release finish.
 start Socket error
+ creat _WorkerThread 8.
+
+IOCP init finish.
+WSASocket() finish.
+Listen Socket bind success.
+bind() finish.
+Listen() finish.
+post 10 AcceptEx finish
+Listen Socket init finish.
+system ready, waiting....
+accept  127.0.0.1:6928
+receive  127.0.0.1:6928 message:152
+type:98
+send:153:
+client error finish!!
+accept  127.0.0.1:6938
+receive  127.0.0.1:6938 message:152
+type:98
+send:153:
+client error finish!!
