@@ -1262,7 +1262,7 @@ void Network::_far_add_mem(char* recv_msg, char* msg)
 
 	mem.Deserialization(p);
 
-	//res = ser->far_add_mem(mem);
+	res = ser->far_add_mem(mem);
 
 	if (res)
 		sprintf_s(msg, 256, "%d:true:", MSG_FAR_ADD_MEM_RETURN);
@@ -1284,7 +1284,7 @@ void Network::_far_del_mem(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	//res = ser->far_del_mem(id);
+	res = ser->far_del_mem(id);
 
 	if (res)
 		sprintf_s(msg, 256, "%d:true:", MSG_FAR_DEL_MEM_RETURN);
@@ -1306,7 +1306,7 @@ void Network::_far_add_spt(char* recv_msg, char* msg)
 
 	mem.Deserialization(p);
 
-	//res = ser->far_add_spt(mem);
+	res = ser->far_add_spt(mem);
 
 	if (res)
 		sprintf_s(msg, 256, "%d:true:", MSG_FAR_ADD_SPT_RETURN);
@@ -1328,7 +1328,7 @@ void Network::_far_del_spt(char* recv_msg, char* msg)
 
 	id.append(p);
 
-	//res = ser->far_del_spt(id);
+	res = ser->far_del_spt(id);
 
 	if (res)
 		sprintf_s(msg, 256, "%d:true:", MSG_FAR_DEL_SPT_RETURN);
