@@ -54,7 +54,7 @@ namespace ChoAnClient_for_Admin
             bool flag = network.far_del_mem(ID_box.Text);
 
             //Console.WriteLine(flag);
-           // MessageBox.Show(flag.ToString());
+            //MessageBox.Show(flag.ToString());
 
             if (flag == true)
             {
