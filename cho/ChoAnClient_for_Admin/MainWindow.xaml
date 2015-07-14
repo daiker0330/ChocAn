@@ -5,12 +5,12 @@
     <Grid>
         <Button x:Name="add_member" Content="添加会员" HorizontalAlignment="Left" Margin="91,55,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="add_member_Click"/>
         <Button x:Name="del_member" Content="删除会员" HorizontalAlignment="Left" Margin="298,55,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="del_member_Click"/>
-        <Button x:Name="add_supporter" Content="添加提供者" HorizontalAlignment="Left" Margin="91,116,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="add_member_Click"/>
-        <Button x:Name="send_mem_email" Content="发会员邮件" HorizontalAlignment="Left" Margin="91,177,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="add_member_Click"/>
-        <Button x:Name="print_report" Content="打印经理报告" HorizontalAlignment="Left" Margin="91,238,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="add_member_Click"/>
-        <Button x:Name="del_supporter" Content="删除提供者" HorizontalAlignment="Left" Margin="298,116,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="del_member_Copy_Click"/>
-        <Button x:Name="send_spt_email" Content="发提供者邮件" HorizontalAlignment="Left" Margin="298,177,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="del_member_Copy_Click"/>
-        <Button x:Name="exit" Content="退出" HorizontalAlignment="Left" Margin="298,238,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="del_member_Copy_Click"/>
+        <Button x:Name="add_supporter" Content="添加提供者" HorizontalAlignment="Left" Margin="91,116,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="add_supporter_Click"/>
+        <Button x:Name="send_mem_email" Content="发会员邮件" HorizontalAlignment="Left" Margin="91,177,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="send_mem_email_Click"/>
+        <Button x:Name="print_report" Content="打印经理报告" HorizontalAlignment="Left" Margin="91,238,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="print_report_Click"/>
+        <Button x:Name="del_supporter" Content="删除提供者" HorizontalAlignment="Left" Margin="298,116,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="del_supporter_Click"/>
+        <Button x:Name="send_spt_email" Content="发提供者邮件" HorizontalAlignment="Left" Margin="298,177,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="send_spt_email_Click"/>
+        <Button x:Name="exit" Content="退出" HorizontalAlignment="Left" Margin="298,238,0,0" VerticalAlignment="Top" Width="126" Height="37" Click="exit_Click"/>
 
     </Grid>
 </Window>

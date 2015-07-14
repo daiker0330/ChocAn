@@ -32,12 +32,44 @@ namespace ChoAnClient_for_Admin
 
         private void add_member_Click(object sender, RoutedEventArgs e)
         {
+            Add_mem win=new Add_mem();
+            win.ShowDialog();
+
 
         }
 
         private void del_member_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void add_supporter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void del_supporter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void send_mem_email_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void send_spt_email_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void print_report_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
