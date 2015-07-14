@@ -61,6 +61,9 @@ struct member_MSG{
 	//修改char zip[5];
 	string zip;
 	string email;
+public:
+	string Serialization();
+	void Deserialization(string seri);
 };
 struct spt_MSG{   //跟会员其实是一样的，但是还是先分开了
 	string name;
@@ -73,6 +76,9 @@ struct spt_MSG{   //跟会员其实是一样的，但是还是先分开了
 	string zip;
 	string account;
 	string email;
+public:
+	string Serialization();
+	void Deserialization(string seri);
 };
 
 //服务记录

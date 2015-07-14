@@ -19,6 +19,11 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Data;
 
+using MahApps.Metro.Controls;
+using MahApps.Metro;
+using MahApps.Metro.Controls.Dialogs;
+
+
 namespace ChocAnClient
 {
     /// <summary>
@@ -26,7 +31,7 @@ namespace ChocAnClient
     /// </summary>
     /// 
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         
         RemoteProcessCall network = new RemoteProcessCall();
@@ -125,8 +130,10 @@ namespace ChocAnClient
            string P = MyStreamReader.ReadLine();
            Port=Convert.ToInt32(P);
            SendEmailTime = new DateTime(2012,1,1,1,1,1);
-           
 
+         
+
+           
         }
         private void SignIn_Button(object sender, RoutedEventArgs e)
         {
@@ -184,10 +191,7 @@ namespace ChocAnClient
             
         }
 
-        private void exit_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+       
 
         private void fullScreen_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -437,8 +441,9 @@ namespace ChocAnClient
             logo.ShowDialog();
            // MessageBox.Show(logo.login.Text);
             suplier = logo.login.Text;
-            D.Content = suplier;
-            D.Content += ":注销";
+            D.Content = "提供者ID:";
+            D.Content += suplier;
+            //   D.Content += ":注销";
             if (logo.exitbutton == true)
             {
                 Application.Current.Shutdown();
@@ -473,19 +478,19 @@ namespace ChocAnClient
                 if (state == 1)
                 {
                     expander.IsEnabled = true;
-                    Result.Content = "Validated";
+                    Result.Content = "有效";
                     HuiName.Text = network.GetUserName(Hui.Text);
                     HuiName.IsEnabled = false;
                 }
                 else if (state == 0)
                 {
                     expander.IsEnabled = false;
-                    Result.Content = "Invalid number";
+                    Result.Content = "无效";
                 }
                 else if(state==-1)
                 {
                     expander.IsEnabled = false;
-                    Result.Content = "Member suspended";
+                    Result.Content = "欠费";
                 }
                 else
                 {
@@ -531,34 +536,7 @@ namespace ChocAnClient
              }
         }
 
-        private void D_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            suplier = ""; Hui.Text = ""; fuWuText.Text = ""; NameFu.Content = ""; Zhu.Text = ""; Fee.Content = "0"; Result.Content = ""; HuiName.Text = "";
-            caozuo.Visibility = System.Windows.Visibility.Visible;
-            deng.Visibility = System.Windows.Visibility.Hidden;
-            JiZhang.Visibility = System.Windows.Visibility.Hidden;
-           
-            Date.Text = System.DateTime.Now.ToString();
-           
-           
-           
-            
-            expander.IsEnabled = false;
-            expander.IsExpanded = false;
-
-            Login logo = new Login(network,re); w1.Visibility = System.Windows.Visibility.Hidden;
-
-            logo.ShowDialog();
-            // MessageBox.Show(logo.login.Text);
-            suplier = logo.login.Text;
-            D.Content = suplier;
-            D.Content += ":注销";
-            if (logo.exitbutton == true)
-            {
-                Application.Current.Shutdown();
-            }
-            w1.Visibility = System.Windows.Visibility.Visible;
-        }
+        
 
         private void Hui_KeyDown(object sender, KeyEventArgs e)
         {
@@ -616,6 +594,41 @@ namespace ChocAnClient
             {
                 e.Handled = true;
             }
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            suplier = ""; Hui.Text = ""; fuWuText.Text = ""; NameFu.Content = ""; Zhu.Text = ""; Fee.Content = "0"; Result.Content = ""; HuiName.Text = "";
+            caozuo.Visibility = System.Windows.Visibility.Visible;
+            deng.Visibility = System.Windows.Visibility.Hidden;
+            JiZhang.Visibility = System.Windows.Visibility.Hidden;
+
+            Date.Text = System.DateTime.Now.ToString();
+
+
+
+
+            expander.IsEnabled = false;
+            expander.IsExpanded = false;
+
+            Login logo = new Login(network, re); w1.Visibility = System.Windows.Visibility.Hidden;
+
+            logo.ShowDialog();
+            // MessageBox.Show(logo.login.Text);
+            suplier = logo.login.Text;
+            D.Content = "提供者ID:";
+            D.Content += suplier;
+            //   D.Content += ":注销";
+            if (logo.exitbutton == true)
+            {
+                Application.Current.Shutdown();
+            }
+            w1.Visibility = System.Windows.Visibility.Visible;
         }
         /**************************UI的代码******************************************************************/
     }

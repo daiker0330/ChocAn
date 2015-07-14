@@ -12,12 +12,11 @@ class Network;
 class Server
 {
 private:
-	void send_member_email();
-	void send_supporter_email();
+	
 	string make_email_for_member(member_LIST list);
 	string make_email_for_supporter(supporter_LIST list);
 	bool insert_trans(supporter_LIST list);
-	bool print_report();
+	
 	bool add_mem();
 	bool del_mem();
 	bool add_spt();
@@ -28,6 +27,17 @@ private:
 	Database db;
 	Network *net;
 public:
+	//以下7个需要支持远程调用，对应的客户端是ChoAnServer_for_Admin
+	//struct的数据定义在MSG_Define里，有序列化
+	bool far_add_mem(member_MSG mem);
+	bool far_del_mem(string id);
+	bool far_add_spt(spt_MSG mem);
+	bool far_del_spt(string id);
+	void send_member_email();
+	void send_supporter_email();
+	bool print_report();
+
+
 	void run();
 	void init();
 	//以下函数需要服务器实现

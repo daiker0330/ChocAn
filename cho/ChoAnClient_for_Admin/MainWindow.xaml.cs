@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace ChoAnClient_for_Admin
+{
+    /// <summary>
+    /// MainWindow.xaml 的交互逻辑
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void del_member_Copy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void add_member_Click(object sender, RoutedEventArgs e)
+        {
+            Add_mem win=new Add_mem();
+            win.ShowDialog();
+
+
+        }
+
+        private void del_member_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void add_supporter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void del_supporter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void send_mem_email_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void send_spt_email_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void print_report_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+    }
+}

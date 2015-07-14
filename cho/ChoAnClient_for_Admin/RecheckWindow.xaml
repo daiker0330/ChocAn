@@ -1,0 +1,10 @@
+﻿<Window x:Class="ChoAnClient_for_Admin.RecheckWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RecheckWindow" Height="200" Width="600">
+    <Grid>
+        <Label Content="失败，请检查输入信息是否合法" HorizontalAlignment="Left" Margin="45,35,0,0" VerticalAlignment="Top" FontSize="36"/>
+        <Button x:Name="reBsure" Content="确定" HorizontalAlignment="Left" Margin="249,110,0,0" VerticalAlignment="Top" Width="75" FontSize="16" Click="reBsure_Click"/>
+
+    </Grid>
+</Window>
