@@ -494,3 +494,19 @@ bool Server::del_spt()
 	cout << "³É¹¦" << endl;
 	return db.delete_supporter(id);
 }
+bool far_add_mem(member_MSG mem)
+{
+	return true;
+}
+bool far_del_mem(string id)
+{
+	return true;
+}
+bool far_add_spt(spt_MSG mem)
+{
+	return true;
+}
+bool far_del_spt(string id)
+{
+	return true;
+}
