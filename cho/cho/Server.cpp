@@ -496,17 +496,50 @@ bool Server::del_spt()
 }
 bool Server::far_add_mem(member_MSG mem)
 {
-	return true;
+	int flag = db.check_member_id(mem.id);
+
+	if (flag != 0)
+	{
+		cout << "该编号的会员已经存在" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.add_member(mem);
+	
 }
 bool Server::far_del_mem(string id)
 {
-	return true;
+	int flag = db.check_member_id(id);
+	if (flag == 0)
+	{
+		cout << "失败，请检查会员号" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.delete_member(id);
 }
 bool Server::far_add_spt(spt_MSG mem)
 {
-	return true;
+	bool flag = db.check_supporter_id(mem.id);
+
+	if (flag == true)
+	{
+		cout << "该编号的提供者已经存在" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.add_supporter(mem);
+
 }
 bool Server::far_del_spt(string id)
 {
-	return true;
+	bool flag = db.check_supporter_id(id);
+	if (flag == false)
+	{
+		cout << "失败，请检查提供者号" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.delete_supporter(id);
+
 }
