@@ -1,0 +1,24 @@
+﻿<Window x:Name="Add_mem1" x:Class="ChoAnClient_for_Admin.Add_mem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add_mem" Height="350" Width="500" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="请输入会员信息：" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label Content="姓名：" HorizontalAlignment="Left" Margin="31,46,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="Bname" HorizontalAlignment="Left" Height="31" Margin="89,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" FontSize="16"/>
+        <Label Content="编号：" HorizontalAlignment="Left" Margin="279,46,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="Bid" HorizontalAlignment="Left" Height="31" Margin="337,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" FontSize="16"/>
+        <Label Content="国籍：" HorizontalAlignment="Left" Margin="31,95,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="Bnation" HorizontalAlignment="Left" Height="31" Margin="89,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" FontSize="16"/>
+        <Label Content="城市：" HorizontalAlignment="Left" Margin="279,95,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="Bcity" HorizontalAlignment="Left" Height="31" Margin="337,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" FontSize="16"/>
+        <Label Content="zip号：" HorizontalAlignment="Left" Margin="25,144,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="Bzip" HorizontalAlignment="Left" Height="31" Margin="89,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" FontSize="16"/>
+        <Label Content="电子邮件：" HorizontalAlignment="Left" Margin="247,144,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="Bemail" HorizontalAlignment="Left" Height="31" Margin="337,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" FontSize="16"/>
+        <Label Content="地址：" HorizontalAlignment="Left" Margin="31,193,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="Baddr" HorizontalAlignment="Left" Height="31" Margin="89,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="376" FontSize="16"/>
+        <Button x:Name="Bsubmit" Content="添加" HorizontalAlignment="Left" Margin="196,255,0,0" VerticalAlignment="Top" Width="75" FontSize="16" Click="Bsubmit_Click"/>
+
+    </Grid>
+</Window>
