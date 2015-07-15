@@ -13,6 +13,7 @@ class Server
 {
 private:
 	
+	CRITICAL_SECTION cs;
 	string make_email_for_member(member_LIST list);
 	string make_email_for_supporter(supporter_LIST list);
 	bool insert_trans(supporter_LIST list);
