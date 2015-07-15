@@ -16,14 +16,14 @@ void dbCheck(){
 	Database db;
 	//freopen("out.txt", "w", stdout);
 	db.init();
-	if (db.check_supporter_id("12070001"))
+	if (db.check_supporter_id("120700010"))
 		puts("查询成功！");
 	else
 		puts("查询失败！");
 	//正确结果：1 -1 0
-	cout << db.check_member_id("12070404") << endl;
-	cout << db.check_member_id("12070403") << endl;
-	cout << db.check_member_id("12070410") << endl;
+	cout << db.check_member_id("120704040") << endl;
+	cout << db.check_member_id("120704030") << endl;
+	cout << db.check_member_id("120704100") << endl;
 	//正确结果：1 0
 	cout << db.check_serve_id("000002") << endl;
 	cout << db.check_serve_id("000003") << endl;
@@ -37,7 +37,7 @@ void dbCheck(){
 	}
 
 	//测试删除：测试一次之后就被删掉了，所以结果均为0
-	cout << db.delete_member("12070406") << endl;
+	cout << db.delete_member("120704060") << endl;
 	cout << db.delete_supporter("12070003") << endl;
 
 	//测试查看在一段时间内工作过的id
@@ -53,14 +53,14 @@ void dbCheck(){
 	}
 
 	//测试给定id查看报告
-	member_LIST ml = db.get_member_list("12070405", Date(2015, 6, 15), Date(2015, 6, 26));
+	member_LIST ml = db.get_member_list("120704050", Date(2015, 6, 15), Date(2015, 6, 26));
 	puts("会员信息：");
 	cout << ml.mem.id << "," << ml.mem.nation << "," << ml.mem.city << "," << ml.mem.addr << "," << ml.mem.name << "," << ml.mem.zip << endl;
 	puts("参加的服务信息：");
 	for (int i = 0; i < ml.n; i++){
 		cout << ml.ser_name[i] << "," << ml.spt_name[i] << "," << ml.y[i] << "," << ml.m[i] << "," << ml.d[i] << endl;
 	}
-	supporter_LIST sl = db.get_supporter_list("12070002", Date(2015, 6, 20), Date(2015, 6, 26));
+	supporter_LIST sl = db.get_supporter_list("120700020", Date(2015, 6, 20), Date(2015, 6, 26));
 	puts("提供者信息：");
 	cout << sl.mem.id << "," << sl.mem.nation << "," << sl.mem.city << "," << sl.mem.addr << "," << sl.mem.name << "," << sl.mem.zip << "," <<sl.sum_price<<endl;
 	puts("提供的服务信息：");
@@ -91,11 +91,11 @@ void dbCheck(){
 	cout << db.insert_trans_account_list(ta) << ","<<db.make_trans(ta)<<endl;
 
 	//测试挂起
-	cout << db.hang_on_member("12070403") << endl;
+	cout << db.hang_on_member("120704030") << endl;
 
 	//测试加入会员
 	member_MSG mm;
-	mm.id = "12070410";
+	mm.id = "120704100";
 	mm.name = "Yang";
 	mm.nation = "England";
 	mm.zip = "98765";
@@ -103,7 +103,7 @@ void dbCheck(){
 
 	//测试加入提供者
 	spt_MSG sm;
-	sm.id = "12070010";
+	sm.id = "120700100";
 	sm.name = "Yang";
 	sm.nation = "China";
 	sm.zip = "98765";
@@ -119,8 +119,8 @@ void dbCheck(){
 	sem.m = 5;
 	sem.s = 9;
 	sem.server_id = "000001";
-	sem.spt_id = "12070010";
-	sem.mem_id = "12070404";
+	sem.spt_id = "120700100";
+	sem.mem_id = "120704040";
 	sem.other = "Hello World";
 	cout << db.write_serve_list(sem) << endl;
 }
@@ -154,9 +154,9 @@ int main()
 
 	Client clt;
 	Server ser;
-	Database db;
+	//Database db;
 
-	db.init();
+	//db.init();
 	//dbCheck();//数据库接口测试
 	
 	//network.Init(&ser);

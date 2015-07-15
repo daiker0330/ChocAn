@@ -8,6 +8,7 @@
 #include<stdio.h>
 #include<vector>
 #include<windows.h>
+//#include "afxmt.h"
 using namespace std;
 
 void Server::init()
@@ -79,19 +80,25 @@ void Server::run()
 
 bool Server::SignIn(string id)
 {
-	
-	return db.check_supporter_id(id);
+	EnterCriticalSection(&cs);
+	bool flag= db.check_supporter_id(id);
+	LeaveCriticalSection(&cs);
+
+	return flag;
 }
 
 int Server::IsValid(string id)
 {
+	EnterCriticalSection(&cs);
 	int r=db.check_member_id(id);
 	//cout<<r<<"    SSSSSSSSS"<<endl;
+	LeaveCriticalSection(&cs);
 	return r;
 }
 
 string Server::GetServerName(string id)
 {
+	EnterCriticalSection(&cs);
 	bool flag=db.check_serve_id(id);
 
 	if (flag == true)
@@ -103,12 +110,14 @@ string Server::GetServerName(string id)
 		{
 			if (idx.id[i] == id)
 			{
+				LeaveCriticalSection(&cs);
 				return idx.name[i];
 			}
 		}
 	}
 	else
 	{
+		LeaveCriticalSection(&cs);
 		return "Invalid";
 	}
 
@@ -116,6 +125,7 @@ string Server::GetServerName(string id)
 
 double Server::GetServerPrice(string id)
 {
+	EnterCriticalSection(&cs);
 	bool flag = db.check_serve_id(id);
 	
 	if (flag == false)
@@ -123,21 +133,30 @@ double Server::GetServerPrice(string id)
 		return -1.0;
 	}
 
-	return db.get_price_of_serve(id);
+	double tmp= db.get_price_of_serve(id);
+	LeaveCriticalSection(&cs);
+	return tmp;
 }
 
 
 bool Server::SaveServerRecord(serve_MSG sr)
 {
+	EnterCriticalSection(&cs);
 	bool flag=db.write_serve_list(sr);
+	LeaveCriticalSection(&cs);
 	return flag;
 }
 
 double Server::GetProviderSum(string id)
 {
+	EnterCriticalSection(&cs);
 	int flag=db.check_supporter_id(id);
 
-	if (flag == false)return -1.0;
+	if (flag == false)
+	{
+		LeaveCriticalSection(&cs);
+		return -1.0;
+	}
 
 
 	Date from,to;
@@ -163,25 +182,28 @@ double Server::GetProviderSum(string id)
 		if (spt == id)
 		{
 			slist = db.get_supporter_list(spt, from, to);
+			LeaveCriticalSection(&cs);
 			return slist.sum_price;
 		}
 	}
-
+	LeaveCriticalSection(&cs);
 	return 0.0;
 }
 
 
 string Server::GetUserName(string id)
 {
+	EnterCriticalSection(&cs);
 	int t=db.check_member_id(id);
 	
 	if (t == 0)
 	{
+		LeaveCriticalSection(&cs);
 		return "Invalid";
 	}
 
 	member_MSG mem=db.get_mem_msg(id);
-
+	LeaveCriticalSection(&cs);
 	return mem.name;
 }
 
@@ -352,7 +374,7 @@ void Server::send_supporter_email()
 		//cout << i << "    1111" << endl;
 		spt = spts[i];
 		slist = db.get_supporter_list(spt, from, to);
-		mail = make_email_for_supporter(slist);
+		mail = make_email_for_supporter(slist);  
 
 		mail_addr = db.get_spt_email(spt);
 		//cout << mail_addr << "    AAAA" << endl;
@@ -493,4 +515,53 @@ bool Server::del_spt()
 	}
 	cout << "成功" << endl;
 	return db.delete_supporter(id);
+}
+bool Server::far_add_mem(member_MSG mem)
+{
+	int flag = db.check_member_id(mem.id);
+
+	if (flag != 0)
+	{
+		cout << "该编号的会员已经存在" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.add_member(mem);
+	
+}
+bool Server::far_del_mem(string id)
+{
+	int flag = db.check_member_id(id);
+	if (flag == 0)
+	{
+		cout << "失败，请检查会员号" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.delete_member(id);
+}
+bool Server::far_add_spt(spt_MSG mem)
+{
+	bool flag = db.check_supporter_id(mem.id);
+
+	if (flag == true)
+	{
+		cout << "该编号的提供者已经存在" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.add_supporter(mem);
+
+}
+bool Server::far_del_spt(string id)
+{
+	bool flag = db.check_supporter_id(id);
+	if (flag == false)
+	{
+		cout << "失败，请检查提供者号" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.delete_supporter(id);
+
 }

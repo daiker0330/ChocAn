@@ -10,3 +10,64 @@ Listen Socket init finish.
 system ready, waiting....
 release finish.
 stop listening
+ creat _WorkerThread 8.
+
+IOCP init finish.
+WSASocket() finish.
+Listen Socket bind success.
+bind() do error.
+Listen Socket init fail !
+release finish.
+start Socket error
+ creat _WorkerThread 8.
+
+IOCP init finish.
+WSASocket() finish.
+Listen Socket bind success.
+bind() finish.
+Listen() finish.
+post 10 AcceptEx finish
+Listen Socket init finish.
+system ready, waiting....
+accept  127.0.0.1:6928
+receive  127.0.0.1:6928 message:152
+type:98
+send:153:
+client error finish!!
+accept  127.0.0.1:6938
+receive  127.0.0.1:6938 message:152
+type:98
+send:153:
+client error finish!!
+ creat _WorkerThread 8.
+
+IOCP init finish.
+WSASocket() finish.
+Listen Socket bind success.
+bind() finish.
+Listen() finish.
+post 10 AcceptEx finish
+Listen Socket init finish.
+system ready, waiting....
+accept  127.0.0.1:5518
+receive  127.0.0.1:5518 message:148:kwc^685492374^St.Peterson^London^English^100123^34578964879659^kk@sina.com^
+type:94
+send:149:true:
+client error finish!!
+accept  127.0.0.1:5534
+receive  127.0.0.1:5534 message:146:999999996
+type:92
+send:147:false:
+accept  127.0.0.1:5535
+receive  127.0.0.1:5535 message:146:999999999
+type:92
+send:147:true:
+client error finish!!
+client error finish!!
+accept  127.0.0.1:5545
+receive  127.0.0.1:5545 message:150:685492374
+type:96
+send:151:true:
+client error finish!!
+release finish.
+stop listening

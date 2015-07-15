@@ -320,6 +320,13 @@ private:
 	void _SaveServerRecord(char* recv_msg, char* msg);
 	void _GetProviderSum(char* recv_msg, char* msg);
 	void _SendProviderServes(char* recv_msg, char* msg);
+	void _far_add_mem(char* recv_msg, char* msg);
+	void _far_del_mem(char* recv_msg, char* msg);
+	void _far_add_spt(char* recv_msg, char* msg);
+	void _far_del_spt(char* recv_msg, char* msg);
+	void _send_member_email(char* recv_msg, char* msg);
+	void _send_supporter_email(char* recv_msg, char* msg);
+	void _print_report(char* recv_msg, char* msg);
 
 	//·¢ËÍÓÊ¼þ¸¨Öúº¯Êý
 	void Send(SOCKET& s, string& data);
