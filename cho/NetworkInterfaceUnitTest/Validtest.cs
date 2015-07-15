@@ -13,7 +13,7 @@ namespace NetworkInterfaceUnitTest
         public void ValidTest1()
         {
             network.init();
-            int res = network.IsValid("12070405");
+            int res = network.IsValid("120704050");
             Assert.AreEqual(1, res);
         }
 
@@ -21,7 +21,7 @@ namespace NetworkInterfaceUnitTest
         public void ValidTest2()
         {
             network.init();
-            int res = network.IsValid("12070403");
+            int res = network.IsValid("120704030");
             Assert.AreEqual(-1, res);
         }
 
@@ -29,7 +29,7 @@ namespace NetworkInterfaceUnitTest
         public void ValidTest3()
         {
             network.init();
-            int res = network.IsValid("12070000");
+            int res = network.IsValid("120700000");
             Assert.AreEqual(0, res);
         }
 
