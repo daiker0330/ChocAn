@@ -7,6 +7,7 @@ void Database::init()
 	_bstr_t str = "Database\\Choc.mdb";
 	if (access.OpenConnect(str) == true);
 		//puts("数据库连接成功！");
+	srand((unsigned)time(NULL));
 	return;
 }
 
@@ -487,4 +488,81 @@ string Database::toString(int data){
 	sstr << data;
 	sstr >> ret;
 	return ret;
+}
+
+// 获取一个num位长的数字字符串
+string Database::getRandomNumString(int num)
+{
+	string ret;
+	for (int i = 0; i < num; i++){
+		ret += toString(rand() % 10);
+	}
+	return ret;
+}
+
+//添加n条spt记录
+void Database::add_spt(int n){
+
+}
+//添加n条member记录
+void Database::add_mem(int n,int m){
+	cout << n << " " << m << endl;
+	vector<string> name;
+	vector<string> street;
+	vector<string> zip;
+	freopen("temp\\name.txt", "r", stdin);
+	for (int i = 0; i < n+m; i++){
+		string tmp;
+		cin >> tmp;
+		name.push_back(tmp);
+	}
+	freopen("temp\\street.txt", "r", stdin);
+	for (int i = 0; i < n+m; i++){
+		string tmp;
+		cin >> tmp;
+		street.push_back(tmp);
+		cin >> tmp;
+		zip.push_back(tmp);
+	}
+	member_MSG add;
+	spt_MSG add2;
+	add.city = "北京";
+	add.nation = "中国";
+	add2.nation = "中国";
+	add2.city = "北京";
+	for (int i = 0; i < n; i++){
+		add.addr = street[i];
+		add.name = name[i];
+		add.zip = zip[i];
+		add.id = "0000";
+		if (i < 9){
+			add.id += '0';
+			add.id += toString(i+1);
+		}
+		else{
+			add.id += toString(i+1);
+		}
+		add.email = getRandomNumString(9);
+		add.email += "@qq.com";
+		add_member(add);
+		Sleep(1000);
+	}
+	for (int i = n; i < n + m; i++){
+		add2.addr = street[i];
+		add2.name = name[i];
+		add2.zip = zip[i];
+		add2.id = "0000";
+		if (i - n + 1 < 10){
+			add2.id += '0';
+			add2.id += toString(i - n + 1);
+		}
+		else{
+			add2.id += toString(i - n + 1);
+		}
+		add2.email = getRandomNumString(9);
+		add2.email += "@qq.com";
+		add2.account = getRandomNumString(18);
+		add_supporter(add2);
+		Sleep(1000);
+	}
 }

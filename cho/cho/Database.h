@@ -6,6 +6,9 @@
 #include "DBAssistant.h"
 #include <sstream>
 #include <string>
+#include <stdlib.h>
+#include <time.h>
+#include <map>
 using namespace std;
 class Database
 {
@@ -74,6 +77,15 @@ protected:
 	//把double转换为string
 	static string toString(double data);
 	static string toString(int data);
+
+	// 获取一个num位长的数字字符串
+	string getRandomNumString(int num);
+public:
+	//添加n条spt记录
+	void add_spt(int n);
+	//添加n条member记录
+	void add_mem(int n,int m);
+
 };
 
 #endif 

@@ -1,0 +1,2 @@
+insert into Member (ID, MemberName, City, Street, Nation, ZIP, Validated, Email)
+select '00000001', 'ZhangBoWen', 'Beijing', 'PingLeYuan', 'China', '10013', 1, '12704233@qq.com' 

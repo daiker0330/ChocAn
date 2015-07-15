@@ -157,10 +157,11 @@ int main()
 	//Database db;
 
 	//db.init();
+	//db.add_mem(20,10);
 	//dbCheck();//数据库接口测试
 	
 	//network.Init(&ser);
-
+	//getchar();
 	clt.init();
 	clt.run();
 	ser.init();
