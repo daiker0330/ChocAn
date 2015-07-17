@@ -8,7 +8,6 @@
 #include<stdio.h>
 #include<vector>
 #include<windows.h>
-//#include "afxmt.h"
 using namespace std;
 
 void Server::init()
@@ -80,25 +79,19 @@ void Server::run()
 
 bool Server::SignIn(string id)
 {
-	EnterCriticalSection(&cs);
-	bool flag= db.check_supporter_id(id);
-	LeaveCriticalSection(&cs);
-
-	return flag;
+	
+	return db.check_supporter_id(id);
 }
 
 int Server::IsValid(string id)
 {
-	EnterCriticalSection(&cs);
 	int r=db.check_member_id(id);
 	//cout<<r<<"    SSSSSSSSS"<<endl;
-	LeaveCriticalSection(&cs);
 	return r;
 }
 
 string Server::GetServerName(string id)
 {
-	EnterCriticalSection(&cs);
 	bool flag=db.check_serve_id(id);
 
 	if (flag == true)
@@ -110,14 +103,12 @@ string Server::GetServerName(string id)
 		{
 			if (idx.id[i] == id)
 			{
-				LeaveCriticalSection(&cs);
 				return idx.name[i];
 			}
 		}
 	}
 	else
 	{
-		LeaveCriticalSection(&cs);
 		return "Invalid";
 	}
 
@@ -125,7 +116,6 @@ string Server::GetServerName(string id)
 
 double Server::GetServerPrice(string id)
 {
-	EnterCriticalSection(&cs);
 	bool flag = db.check_serve_id(id);
 	
 	if (flag == false)
@@ -133,30 +123,21 @@ double Server::GetServerPrice(string id)
 		return -1.0;
 	}
 
-	double tmp= db.get_price_of_serve(id);
-	LeaveCriticalSection(&cs);
-	return tmp;
+	return db.get_price_of_serve(id);
 }
 
 
 bool Server::SaveServerRecord(serve_MSG sr)
 {
-	EnterCriticalSection(&cs);
 	bool flag=db.write_serve_list(sr);
-	LeaveCriticalSection(&cs);
 	return flag;
 }
 
 double Server::GetProviderSum(string id)
 {
-	EnterCriticalSection(&cs);
 	int flag=db.check_supporter_id(id);
 
-	if (flag == false)
-	{
-		LeaveCriticalSection(&cs);
-		return -1.0;
-	}
+	if (flag == false)return -1.0;
 
 
 	Date from,to;
@@ -182,28 +163,25 @@ double Server::GetProviderSum(string id)
 		if (spt == id)
 		{
 			slist = db.get_supporter_list(spt, from, to);
-			LeaveCriticalSection(&cs);
 			return slist.sum_price;
 		}
 	}
-	LeaveCriticalSection(&cs);
+
 	return 0.0;
 }
 
 
 string Server::GetUserName(string id)
 {
-	EnterCriticalSection(&cs);
 	int t=db.check_member_id(id);
 	
 	if (t == 0)
 	{
-		LeaveCriticalSection(&cs);
 		return "Invalid";
 	}
 
 	member_MSG mem=db.get_mem_msg(id);
-	LeaveCriticalSection(&cs);
+
 	return mem.name;
 }
 
