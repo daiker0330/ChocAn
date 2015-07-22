@@ -131,15 +131,22 @@ namespace ChocAnClient
            Port=Convert.ToInt32(P);
            SendEmailTime = new DateTime(2012,1,1,1,1,1);
 
-         
-
+           c1.Visibility = System.Windows.Visibility.Hidden;
+           c2.Visibility = System.Windows.Visibility.Hidden;
+           c3.Visibility = System.Windows.Visibility.Hidden;
            
+           
+        }
+        public void MessageD_Box(string message)
+        {
+            DialogManager.ShowMessageAsync(w1,"",message,MessageDialogStyle.Affirmative,null); 
         }
         private void SignIn_Button(object sender, RoutedEventArgs e)
         {
             caozuo.Visibility = System.Windows.Visibility.Hidden;
             deng.Visibility = System.Windows.Visibility.Visible;
             JiZhang.Visibility = System.Windows.Visibility.Hidden;
+           
         }
 
         private void JiZhang_Button(object sender, RoutedEventArgs e)
@@ -161,6 +168,7 @@ namespace ChocAnClient
             data.ItemsSource = ds.Tables[0].DefaultView;
 
             DataRowView selectItem = data.Items[0] as DataRowView;
+           
         }
 
         private void BackHome_Button(object sender, RoutedEventArgs e)
@@ -339,7 +347,7 @@ namespace ChocAnClient
             time = Convert.ToDateTime(Date.Text);
             if (time > System.DateTime.Now)
             {
-                MessageBox.Show("服务日期有误,超过当前日期");
+                MessageD_Box("服务日期有误,超过当前日期");
                 return;
             }
             server.Y = time.Year;
@@ -363,7 +371,7 @@ namespace ChocAnClient
                 if (network.SaveServerRecord(server))
                 {
                     Write_to_Access(server);
-                    MessageBox.Show("记账成功");
+                    MessageD_Box("记账成功");
                     HuiName.Text = "";
                     Hui.Text = "";
                     Date.Text = System.DateTime.Now.ToString();
@@ -379,19 +387,19 @@ namespace ChocAnClient
                 }
                 else
                 {
-                    MessageBox.Show("记账失败");
+                    MessageD_Box("记账失败");
                 }
 
             }
             else
             {
-                MessageBox.Show("账单不完整,请填写完整");
+                MessageD_Box("账单不完整,请填写完整");
             }
         }
 
         private void TiJiao_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("存盘");
+            MessageD_Box("存盘");
           
            
         }
@@ -420,12 +428,13 @@ namespace ChocAnClient
             {
                 SendEmailTime = DateTime.Now;
                 network.SendProviderServes(suplier);
-                MessageBox.Show("发送成功");
+                MessageD_Box("发送成功");
             }
             else
             {
-                MessageBox.Show("发送邮件过于频繁,请5分钟后在试试");
+                MessageD_Box("发送邮件过于频繁,请5分钟后在试试");
             }
+    
         }
 
         private void w1_Loaded(object sender, RoutedEventArgs e)
@@ -449,6 +458,7 @@ namespace ChocAnClient
                 Application.Current.Shutdown();
             }
             w1.Visibility = System.Windows.Visibility.Visible;
+            
         }
 
         private void Hui_TextChanged(object sender, TextChangedEventArgs e)
@@ -630,6 +640,39 @@ namespace ChocAnClient
             }
             w1.Visibility = System.Windows.Visibility.Visible;
         }
+
+        private void button1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            c1.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void button1_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            c1.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        private void button2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            c2.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void button2_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            c2.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        private void button3_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            c3.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void button3_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            c3.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        
+      
         /**************************UI的代码******************************************************************/
     }
 }

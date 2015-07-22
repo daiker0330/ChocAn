@@ -21,11 +21,11 @@ using System.Data;
 namespace ChoAnClient_for_Admin
 {
     /// <summary>
-    /// Add_mem.xaml 的交互逻辑
+    /// Add_spt.xaml 的交互逻辑
     /// </summary>
-    public partial class Add_mem : Window
+    public partial class Add_spt : Window
     {
-        public Add_mem()
+        public Add_spt()
         {
             InitializeComponent();
         }
@@ -49,21 +49,22 @@ namespace ChoAnClient_for_Admin
 
             //MessageD_Box(ID_box.Text);
 
-            mem_MSG mem = new mem_MSG();
-            mem.name = Bname.Text;
-            mem.id = Bid.Text;
-            mem.addr = Baddr.Text;
-            mem.city = Bcity.Text;
-            mem.nation = Bnation.Text;
-            mem.zip = Bzip.Text;
-            mem.email = Bemail.Text;
+            spt_MSG spt = new spt_MSG();
+            spt.name = Bname.Text;
+            spt.id = Bid.Text;
+            spt.addr = Baddr.Text;
+            spt.city = Bcity.Text;
+            spt.nation = Bnation.Text;
+            spt.zip = Bzip.Text;
+            spt.account = Baccount.Text;
+            spt.email = Bemail.Text;
 
 
-            bool flag = network.far_add_mem(mem);
+            bool flag = network.far_add_spt(spt);
 
             //Console.WriteLine(flag);
             //MessageBox.Show(flag.ToString());
-            
+
             if (flag == true)
             {
                 CheckWindow win2 = new CheckWindow();
@@ -77,8 +78,6 @@ namespace ChoAnClient_for_Admin
             }
             
 
-
-            //this.Close();
         }
     }
 }

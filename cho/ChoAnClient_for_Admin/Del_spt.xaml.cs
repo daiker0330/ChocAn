@@ -18,19 +18,21 @@ using System.Windows.Media.Animation;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Data;
+
+
 namespace ChoAnClient_for_Admin
 {
     /// <summary>
-    /// Add_mem.xaml 的交互逻辑
+    /// Del_spt.xaml 的交互逻辑
     /// </summary>
-    public partial class Add_mem : Window
+    public partial class Del_spt : Window
     {
-        public Add_mem()
+        public Del_spt()
         {
             InitializeComponent();
         }
 
-        private void Bsubmit_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             FileStream fs = new FileStream("../../IpPort.ini", FileMode.Open, FileAccess.Read);
 
@@ -49,21 +51,11 @@ namespace ChoAnClient_for_Admin
 
             //MessageD_Box(ID_box.Text);
 
-            mem_MSG mem = new mem_MSG();
-            mem.name = Bname.Text;
-            mem.id = Bid.Text;
-            mem.addr = Baddr.Text;
-            mem.city = Bcity.Text;
-            mem.nation = Bnation.Text;
-            mem.zip = Bzip.Text;
-            mem.email = Bemail.Text;
-
-
-            bool flag = network.far_add_mem(mem);
+            bool flag = network.far_del_spt(ID_box.Text);
 
             //Console.WriteLine(flag);
             //MessageBox.Show(flag.ToString());
-            
+
             if (flag == true)
             {
                 CheckWindow win2 = new CheckWindow();
@@ -75,10 +67,6 @@ namespace ChoAnClient_for_Admin
                 RecheckWindow win2 = new RecheckWindow();
                 win2.ShowDialog();
             }
-            
-
-
-            //this.Close();
         }
     }
 }

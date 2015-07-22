@@ -21,7 +21,7 @@ namespace ChocAnClient
     /// <summary>
     /// Login.xaml 的交互逻辑
     /// </summary>
-    public partial class Login :Window
+    public partial class Login:MetroWindow
     {
 
         public bool result = false;
@@ -35,21 +35,13 @@ namespace ChocAnClient
             net = network;
             Deng.IsEnabled = false;
             result = re;
-            if(!result)
-            {
-                Deng.Content = "重新连接";
-                Deng.IsEnabled = true;
-                login.IsEnabled = false;
-            }
-            else
-            {
-                //MessageBox.Show("连接成功");
-                
-              
-            }
+           
         }
 
-        
+        public void MessageD_Box(string message)
+        {
+            DialogManager.ShowMessageAsync(wlogin, "", message, MessageDialogStyle.Affirmative, null);
+        }
         private void submit_Click(object sender, RoutedEventArgs e)
         {
             //if (login.Text == "hahaha")
@@ -128,12 +120,12 @@ namespace ChocAnClient
                 if (net.SignIn(login.Text))
                 //if(login.Text=="123456789")
                 {
-                    MessageBox.Show("登陆成功");
+                    MessageD_Box("连接成功");
                     wlogin.Close();
                 }
                 else
                 {
-                    MessageBox.Show("TnT没找到这个账号，请重新输入");
+                    MessageD_Box("TnT没找到这个账号，请重新输入");
                     login.Text = "";
 
                 }
@@ -145,15 +137,31 @@ namespace ChocAnClient
                 if (result)
                 {
                     Deng.Content = "登录";
-                    MessageBox.Show("连接成功");
+                    MessageD_Box("连接成功");
                     login.IsEnabled = true;
                 }
                 else
                 {
                     Deng.Content = "重新连接";
-                    MessageBox.Show("连接失败,请重新连接");
+                    MessageD_Box("连接失败,请重新连接");
                     login.IsEnabled = false;
                 }
+            }
+        }
+
+        private void wlogin_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!result)
+            {
+                Deng.Content = "重新连接";
+                Deng.IsEnabled = true;
+                login.IsEnabled = false;
+            }
+            else
+            {
+                //MessageBox.Show("连接成功");
+                MessageD_Box("连接成功");
+
             }
         }
     }

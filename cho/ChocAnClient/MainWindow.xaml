@@ -49,10 +49,10 @@
         </Grid.Triggers>
 
         <Grid.Resources>
-            <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
+            <ControlTemplate x:Name="ct" x:Key="ButtonTemplate" TargetType="{x:Type Button}">
                 <Grid>
-                    <Ellipse  Name="OuterRing" Width="100" Height="100" Fill="LightGray"/>
-                    <Ellipse  Name="InnerRing" Width="80" Height="80" Fill="MintCream"/>
+                    <Ellipse Name="OuterRing" Width="100" Height="100" Fill="LightGray"/>
+                    <Ellipse Name="InnerRing" Width="80" Height="80" Fill="MintCream"/>
                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
@@ -83,6 +83,7 @@
             </Rectangle.Triggers>
         </Rectangle>
         <Viewbox x:Name="v1">
+            
             <StackPanel x:Name="caozuo"  HorizontalAlignment="Center" VerticalAlignment="Center" >
                 <Grid >
                     <Grid.ColumnDefinitions>
@@ -90,7 +91,8 @@
                         <ColumnDefinition Width="120"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" FontFamily="Microsoft YaHei UI" Name="button1" Foreground="Black" FontSize="15" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="会员" Click="SignIn_Button" >
+                    <Ellipse x:Name="c1" Width="102" Height="102" Fill="Black" Grid.Column="0"></Ellipse>
+                    <Button Grid.Column="0" FontFamily="Microsoft YaHei UI" Name="button1" Foreground="Black" FontSize="15" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="会员" Click="SignIn_Button" PreviewMouseLeftButtonDown="button1_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="button1_PreviewMouseLeftButtonUp"   >
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -100,7 +102,8 @@
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
-                    <Button Grid.Column="1" FontFamily="Microsoft YaHei UI"   x:Name="button2" Foreground="Black" FontSize="15" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="账目核对" Click="JiZhang_Button" >
+                    <Ellipse x:Name="c2" Width="102" Height="102" Fill="Black" Grid.Column="1"></Ellipse>
+                    <Button Grid.Column="1" FontFamily="Microsoft YaHei UI"   x:Name="button2" Foreground="Black" FontSize="15" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="账目核对" Click="JiZhang_Button" PreviewMouseLeftButtonDown="button2_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="button2_PreviewMouseLeftButtonUp"  >
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -110,7 +113,8 @@
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
-                    <Button Grid.Column="2" FontFamily="Microsoft YaHei UI" x:Name="button3" Foreground="Black" FontSize="15" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="提供者目录" Click="button3_Click">
+                    <Ellipse x:Name="c3" Width="102" Height="102" Fill="Black" Grid.Column="2"></Ellipse>
+                    <Button Grid.Column="2" FontFamily="Microsoft YaHei UI" x:Name="button3" Foreground="Black" FontSize="15" Template="{StaticResource ButtonTemplate}"  RenderTransformOrigin="0.5,0.5" Content="提供者目录" Click="button3_Click" PreviewMouseLeftButtonDown="button3_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="button3_PreviewMouseLeftButtonUp" >
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -137,8 +141,8 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="80" />
                             </Grid.ColumnDefinitions>
 
                             <Label x:Name="label1" Content="会员ID:"  Width="69" Grid.Column="0" FontFamily="Microsoft YaHei UI"/>

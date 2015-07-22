@@ -261,8 +261,8 @@ string Server::make_email_for_supporter(supporter_LIST list)
 		itoa(list.ser_msg[i].h, h, 10); itoa(list.ser_msg[i].m, m, 10); itoa(list.ser_msg[i].s, s, 10);
 		text += ((string)yy) + "年" + ((string)mm) + "月" + ((string)dd) + "日" + "    " + ((string)h) + "时" + ((string)m) + "分" + ((string)s)+"秒"+"\n";
 
-		text += "被服务者姓名——";
-		text += list.ser_msg[i].mem_id + "\n";
+		//text += "被服务者姓名——";
+		//text += list.ser_msg[i]. + "\n";
 		text += "被服务者会员号——";
 		text += list.ser_msg[i].mem_id + "\n";
 		text += "服务号——";
@@ -276,7 +276,8 @@ string Server::make_email_for_supporter(supporter_LIST list)
 	}
 
 	text += "被服务会员总计——";
-	text += list.sum_times + "\n";
+	itoa(list.n, h, 10);
+	text += ((string)h) + "\n";
 
 	sprintf(p, "%lf", list.sum_price);
 	text += "合计金额——";
@@ -352,7 +353,7 @@ void Server::send_supporter_email()
 		//cout << i << "    1111" << endl;
 		spt = spts[i];
 		slist = db.get_supporter_list(spt, from, to);
-		mail = make_email_for_supporter(slist);
+		mail = make_email_for_supporter(slist);  
 
 		mail_addr = db.get_spt_email(spt);
 		//cout << mail_addr << "    AAAA" << endl;
@@ -494,19 +495,52 @@ bool Server::del_spt()
 	cout << "成功" << endl;
 	return db.delete_supporter(id);
 }
-bool far_add_mem(member_MSG mem)
+bool Server::far_add_mem(member_MSG mem)
 {
-	return true;
+	int flag = db.check_member_id(mem.id);
+
+	if (flag != 0)
+	{
+		cout << "该编号的会员已经存在" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.add_member(mem);
+	
 }
-bool far_del_mem(string id)
+bool Server::far_del_mem(string id)
 {
-	return true;
+	int flag = db.check_member_id(id);
+	if (flag == 0)
+	{
+		cout << "失败，请检查会员号" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.delete_member(id);
 }
-bool far_add_spt(spt_MSG mem)
+bool Server::far_add_spt(spt_MSG mem)
 {
-	return true;
+	bool flag = db.check_supporter_id(mem.id);
+
+	if (flag == true)
+	{
+		cout << "该编号的提供者已经存在" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.add_supporter(mem);
+
 }
-bool far_del_spt(string id)
+bool Server::far_del_spt(string id)
 {
-	return true;
+	bool flag = db.check_supporter_id(id);
+	if (flag == false)
+	{
+		cout << "失败，请检查提供者号" << endl;
+		return false;
+	}
+	cout << "成功" << endl;
+	return db.delete_supporter(id);
+
 }

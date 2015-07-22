@@ -20,7 +20,7 @@ namespace NetworkInterfaceUnitTest
         public void SignInTest2()
         {
             network.init();
-            bool res = network.SignIn("12070001");
+            bool res = network.SignIn("120700010");
             Assert.IsTrue(res);
         }
 
@@ -30,6 +30,17 @@ namespace NetworkInterfaceUnitTest
             network.init();
             bool res = network.SignIn("");
             Assert.IsFalse(res);
+        }
+
+        [TestMethod]
+        public void ManySignInTest()
+        {
+            for(int i=1;i<=100;i++)
+            {
+                network.init();
+                bool res = network.SignIn("hahaha");
+                Assert.IsFalse(res);
+            }
         }
     }
 }
