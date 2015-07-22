@@ -154,11 +154,11 @@ int main()
 
 	Client clt;
 	Server ser;
-	//Database db;
+	Database db;
 
-	//db.init();
+	db.init();
 	//db.add_mem(20,10);
-	//dbCheck();//数据库接口测试
+	dbCheck();//数据库接口测试
 	
 	//network.Init(&ser);
 	//getchar();
