@@ -261,8 +261,8 @@ string Server::make_email_for_supporter(supporter_LIST list)
 		itoa(list.ser_msg[i].h, h, 10); itoa(list.ser_msg[i].m, m, 10); itoa(list.ser_msg[i].s, s, 10);
 		text += ((string)yy) + "年" + ((string)mm) + "月" + ((string)dd) + "日" + "    " + ((string)h) + "时" + ((string)m) + "分" + ((string)s)+"秒"+"\n";
 
-		text += "被服务者姓名——";
-		text += list.ser_msg[i].mem_id + "\n";
+		//text += "被服务者姓名——";
+		//text += list.ser_msg[i]. + "\n";
 		text += "被服务者会员号——";
 		text += list.ser_msg[i].mem_id + "\n";
 		text += "服务号——";
@@ -276,7 +276,8 @@ string Server::make_email_for_supporter(supporter_LIST list)
 	}
 
 	text += "被服务会员总计——";
-	text += list.sum_times + "\n";
+	itoa(list.n, h, 10);
+	text += ((string)h) + "\n";
 
 	sprintf(p, "%lf", list.sum_price);
 	text += "合计金额——";
