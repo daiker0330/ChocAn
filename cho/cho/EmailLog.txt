@@ -1,0 +1,28 @@
+_send_supporter_email
+
+250 Mail OK
+
+250 Mail OK
+
+354 End data with <CR><LF>.<CR><LF>
+
+250 Mail OK queued as smtp1,C8mowEBZVUhBL7BV2NaDAQ--.16917S2 1437609802
+
+221 Bye
+
+Send Email Success
+_print_report
+
+_send_member_email
+
+250 Mail OK
+
+250 Mail OK
+
+354 End data with <CR><LF>.<CR><LF>
+
+250 Mail OK queued as smtp1,C8mowEBJKUVuL7BVBd2DAQ--.17629S2 1437609838
+
+221 Bye
+
+Send Email Success
